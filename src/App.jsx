@@ -1,22 +1,22 @@
 import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ResponsiveDrawer from './Components/Dashboard/Dashboard';
-import Home from './Components/Home/Home';
+import Home from './Pages/Home/Home';
 import Profile from './Components/Profile/Profile';
-import Users from './Components/Users/Users';
-import UserDetails from './Components/Users/UserDetails';
-import ProductsCard from './Components/Products/ProductCard/ProductCards';
-import ProductDetails from './Components/Products/ProductDetails/ProductDetails';
-import GitHubProfileSearch from './Components/GithubUserFinder/UserFinder';
+import Users from './Pages/Users/Users';
+import UserDetails from './Pages/Users/UserDetails';
+import ProductsCard from './Pages/Products/ProductCard/ProductCards';
+import ProductDetails from './Pages/Products/ProductDetails/ProductDetails';
+import GitHubProfileSearch from './Pages/GithubUserFinder/UserFinder';
 import "@fontsource/montserrat";  // Defaults to weight 400
 import "@fontsource/montserrat/700.css"; // Specify bold weight
 import './index.css';  // Ensure global styles are applied
-import ContactPage from './Components/Contact/Contact';
-import LoginPage from './Components/Access/Login/Login';
-import SignupPage from './Components/Access/Signup/Signup';
-import StudentRegistrationForm from './Components/Pages/Students/StudentRegistration';
-import StudentList from './Components/Pages/Students/StudentList';
-import DataTable from './Components/Pages/Students/StudentList';
+import ContactPage from './Pages/Contact/Contact';
+import LoginPage from './Access/Login/Login';
+import SignupPage from './Access/Signup/Signup';
+import StudentRegistrationForm from './Pages/Students/StudentRegistration';
+import StudentList from './Pages/Students/StudentList';
+import DataTable from './Pages/Students/StudentList';
 
 // Material UI Theme
 const theme = createTheme({

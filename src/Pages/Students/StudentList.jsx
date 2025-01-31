@@ -48,15 +48,18 @@ const paginationModel = { page: 0, pageSize: 5 };
 
 export default function DataTable() {
     return (
-        <Paper sx={{ marginTop: '80px', height: 600, width: '100%' }}>
-            <DataGrid
-                rows={rows}
-                columns={columns}
-                initialState={{ pagination: { paginationModel } }}
-                pageSizeOptions={[10, 20]}
-                checkboxSelection
-                sx={{ border: 0 }}
-            />
-        </Paper>
+        <>
+            <Paper sx={{ marginTop: '80px', height: 600, width: '100%' }}>
+
+                <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    initialState={{ pagination: { paginationModel } }}
+                    pageSizeOptions={[10, 20]}
+                    checkboxSelection
+                    sx={{ border: 0 }}
+                />
+            </Paper>
+        </>
     );
 }

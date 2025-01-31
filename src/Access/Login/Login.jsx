@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Grid, TextField, Button, Checkbox, FormControlLabel, Typography, Box, InputAdornment, IconButton } from "@mui/material";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import "./Signup.css";
-import loginImage from '../../../assets/loginImage.png'
-import Logo from '../../../assets/logo.png'
+import "./Login.css";
+import loginImage from '../../assets/loginImage.png'
+import Logo from '../../assets/logo.png'
 
-const SignupPage = () => {
+const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
     const handleClickShowPassword = () => {
@@ -33,20 +33,13 @@ const SignupPage = () => {
             <Grid item xs={12} md={6} className="rightPanel">
                 <Box>
                     <Typography variant="h5" align="start" gutterBottom>
-                        Signup
+                        LOGIN
                     </Typography>
                     <TextField fullWidth label="Email" variant="outlined" margin="normal" />
 
                     <TextField
                         fullWidth
                         label="Password"
-                        type="password"
-                        variant="outlined"
-                        margin="normal"
-                    />
-                    <TextField
-                        fullWidth
-                        label=" Confirm Password"
                         type={showPassword ? "text" : "password"} // Toggle between text and password type
                         variant="outlined"
                         margin="normal"
@@ -68,18 +61,18 @@ const SignupPage = () => {
                     <FormControlLabel control={<Checkbox />} label="Remember me" />
 
                     <Button fullWidth className="loginButton" size="large" variant="contained">
-                        Signup
+                        Login
                     </Button>
                 </Box>
                 <Typography variant="body2" align="center" className="orText">
                     Or
                 </Typography>
                 <Typography variant="body2" align="center" color="primary" className="clickable">
-                    Login
+                    Sign up
                 </Typography>
             </Grid>
         </Grid>
     );
 };
 
-export default SignupPage;
+export default LoginPage;

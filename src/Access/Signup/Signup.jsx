@@ -2,24 +2,53 @@ import React, { useState } from "react";
 import { Grid, TextField, Button, Checkbox, FormControlLabel, Typography, Box, InputAdornment, IconButton } from "@mui/material";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import "./Login.css";
-import loginImage from '../../../assets/loginImage.png'
-import Logo from '../../../assets/logo.png'
+import "./Signup.css";
+import loginImage from '../../assets/loginImage.png'
+import Logo from '../../assets/logo.png'
+import { useNavigate } from "react-router-dom";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
-const LoginPage = () => {
-    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+const SignupPage = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [credentials, setCredentials] = useState({
+        email: "",
+        password: "",
+        confirmPassword: "",
+    });
+    const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
+
+    const getCredentials = () => {
+        localStorage.setItem('userCredentials', JSON.stringify(credentials)); // Fix: Store as string
+        setOpen(true);
+        setTimeout(() => {
+            navigate('/login')
+        }, 1000)
+        console.log(credentials);
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') return;
+        setOpen(false);
+    };
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
 
     const handleMouseDownPassword = (event) => {
-        event.preventDefault(); // Prevent default behavior
+        event.preventDefault();
     };
 
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="leftPanel">
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
+                        Signup Successful!
+                    </Alert>
+                </Snackbar>
                 <Box sx={{ display: 'inline-block', marginBottom: '15px', height: '50px', width: '300px' }}>
                     <img height='100%' width='100%' src={Logo} alt="Logo" />
                 </Box>
@@ -33,14 +62,28 @@ const LoginPage = () => {
             <Grid item xs={12} md={6} className="rightPanel">
                 <Box>
                     <Typography variant="h5" align="start" gutterBottom>
-                        LOGIN
+                        Signup
                     </Typography>
-                    <TextField fullWidth label="Email" variant="outlined" margin="normal" />
-
                     <TextField
                         fullWidth
+                        onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
+                        label="Email"
+                        variant="outlined"
+                        margin="normal"
+                    />
+                    <TextField
+                        fullWidth
+                        onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                         label="Password"
-                        type={showPassword ? "text" : "password"} // Toggle between text and password type
+                        type="password"
+                        variant="outlined"
+                        margin="normal"
+                    />
+                    <TextField
+                        fullWidth
+                        label="Confirm Password"
+                        onChange={(e) => setCredentials({ ...credentials, confirmPassword: e.target.value })}
+                        type={showPassword ? "text" : "password"}
                         variant="outlined"
                         margin="normal"
                         InputProps={{
@@ -59,20 +102,19 @@ const LoginPage = () => {
                         }}
                     />
                     <FormControlLabel control={<Checkbox />} label="Remember me" />
-
-                    <Button fullWidth className="loginButton" size="large" variant="contained">
-                        Login
+                    <Button onClick={getCredentials} fullWidth className="loginButton" size="large" variant="contained">
+                        Signup
                     </Button>
                 </Box>
                 <Typography variant="body2" align="center" className="orText">
                     Or
                 </Typography>
-                <Typography variant="body2" align="center" color="primary" className="clickable">
-                    Sign up
+                <Typography variant="body2" align="center" color="primary" className="clickable" onClick={() => navigate('/login')}>
+                    Login
                 </Typography>
             </Grid>
         </Grid>
     );
 };
 
-export default LoginPage;
+export default SignupPage;

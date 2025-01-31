@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CustomizedTables from "./StudentList";
-import Input from "../../Input/Input";
+import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
