@@ -56,6 +56,8 @@ function ResponsiveDrawer(props) {
     });
 
     const pages = [
+        { name: "Students", icon: <FaHome />, route: "/student" },
+        { name: "Students List", icon: <FaHome />, route: "/student-list" },
         { name: "Home", icon: <FaHome />, route: "/home" },
         { name: "Users", icon: <FaUser />, route: "/users" },
         { name: "Products", icon: <FaCartShopping />, route: "/products" },

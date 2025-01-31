@@ -14,6 +14,9 @@ import './index.css';  // Ensure global styles are applied
 import ContactPage from './Components/Contact/Contact';
 import LoginPage from './Components/Access/Login/Login';
 import SignupPage from './Components/Access/Signup/Signup';
+import StudentRegistrationForm from './Components/Pages/Students/StudentRegistration';
+import StudentList from './Components/Pages/Students/StudentList';
+import DataTable from './Components/Pages/Students/StudentList';
 
 // Material UI Theme
 const theme = createTheme({
@@ -29,6 +32,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/*" element={<ResponsiveDrawer />}>
+          <Route path="student" element={<StudentRegistrationForm />} />
+          <Route path="student-list" element={<DataTable />} />
           <Route path="home" element={<Home />} />
           <Route path="profile" element={<Profile />} />
           <Route path="contact" element={<ContactPage />} />
