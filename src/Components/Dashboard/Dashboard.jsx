@@ -78,6 +78,12 @@ function ResponsiveDrawer(props) {
                 { name: "Subjects List", route: "/subject-list" }
             ]
         },
+        {
+            name: "Syllabus", icon: <FaHome />, children: [
+                { name: "Add Syllabus", route: "/add-syllabus" },
+                { name: "Syllabus List", route: "/syllabus-list" }
+            ]
+        },
         { name: "Users", icon: <FaUser />, route: "/users" },
         { name: "Products", icon: <FaCartShopping />, route: "/products" },
         { name: "Githubuserfinder", icon: <FaGithub />, route: "/githubuserfinder" },

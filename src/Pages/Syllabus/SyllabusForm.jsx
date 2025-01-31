@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import './AddSubject.css'
-const SubjectRegistrationForm = () => {
+import './SyllabusForm.css'
+const SyllabusForm = () => {
     let [userObj, setUserObj] = useState({
         subjectName: '',
-        subjectClass: '',
-        selectGroup: ''
+        userClass: '',
+        gender: ''
     });
 
     let [userArray, setUserArray] = useState([]);
@@ -16,16 +16,16 @@ const SubjectRegistrationForm = () => {
     const handleSubmit = () => {
         setUserArray([...userArray, userObj]);
         console.log(userArray);
-        setUserObj({ subjectName: '', userLastName: '', userEmail: '', subjectClass: '', selectGroup: '' });
-        localStorage.setItem('subjectData', JSON.stringify(userArray))
+        setUserObj({ subjectName: '', userClass: '', gender: '' });
+        localStorage.setItem('studentData', JSON.stringify(userArray))
         navigate('/student-list')
     };
 
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
             <Box className='formBox'>
-                <Typography className="addSubName" sx={{ fontWeight: 'bold' }} variant="h4" gutterBottom>
-                    Add Subject
+                <Typography className="addSyllabusName" sx={{ fontWeight: 'bold' }} variant="h4" gutterBottom>
+                    Add Syllabus
                 </Typography>
                 <Input
                     type='text'
@@ -39,22 +39,15 @@ const SubjectRegistrationForm = () => {
                     type='number'
                     label="Class"
                     placeholder='Enter your class'
-                    value={userObj.subjectClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, subjectClass: e.target.value })}
+                    value={userObj.userClass}
+                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
                 />
-                <FormControl component="fieldset" margin="normal" required>
-                    <FormLabel>Select Group</FormLabel>
-                    <RadioGroup
-                        row
-                        name="selectGroup"
-                        value={userObj.selectGroup || ''}
-                        onChange={(e) => setUserObj({ ...userObj, selectGroup: e.target.value })}
-                    >
-                        <FormControlLabel value="General-Science" control={<Radio />} label="General-Science" />
-                        <FormControlLabel value="Pre-Engineering" control={<Radio />} label="Pre-Engineering" />
-                        <FormControlLabel value="Other" control={<Radio />} label="Other" />
-                    </RadioGroup>
-                </FormControl>
+                <Input
+                    type='file'
+                    value={userObj.userClass}
+                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                />
+
                 <Button onClick={handleSubmit} size="large" variant="contained" color="primary" fullWidth>
                     Add
                 </Button>
@@ -64,4 +57,4 @@ const SubjectRegistrationForm = () => {
     );
 };
 
-export default SubjectRegistrationForm;
+export default SyllabusForm;

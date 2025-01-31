@@ -51,7 +51,7 @@ export default function AddSubject() {
     const navigate = useNavigate()
 
     const goToAddSub = () => {
-        navigate('/subject-registration')
+        navigate('/add-subject')
     }
     return (
         <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px' }}>
