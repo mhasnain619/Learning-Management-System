@@ -1,14 +1,16 @@
-/* sx= {
-        {
-        border: '1px solid #E1E1E2',
-            borderRadius: '5px', padding: '20px',
-            display: 'flex', flexDirection: 'column', gap: '20px'
-    }
-} */
-
 .formBox {
     display: flex;
     flex-direction: column;
     gap: 10px;
     /* border: 1px solid #E1E1E2; */
+}
+
+.teacherRegistrationName {
+    font-weight: bold !important;
+}
+
+@media (max-width: 768px) {
+    .teacherRegistrationName {
+        font-size: 25px !important;
+    }
 }

@@ -8,7 +8,6 @@ const TeacherRegistrationForm = () => {
         userFirstName: '',
         userLastName: '',
         userEmail: '',
-        userClass: '',
         gender: ''
     });
 
@@ -18,15 +17,15 @@ const TeacherRegistrationForm = () => {
     const handleSubmit = () => {
         setUserArray([...userArray, userObj]);
         console.log(userArray);
-        setUserObj({ userFirstName: '', userLastName: '', userEmail: '', userClass: '', gender: '' });
+        setUserObj({ userFirstName: '', userLastName: '', userEmail: '', gender: '' });
         localStorage.setItem('teachersData', JSON.stringify(userArray))
-        navigate('/student-list')
+        navigate('/teacher-list')
     };
 
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
             <Box className='formBox'>
-                <Typography sx={{ fontWeight: 'bold' }} variant="h4" gutterBottom>
+                <Typography className="teacherRegistrationName" variant="h4" gutterBottom>
                     Teacher Registration Form
                 </Typography>
                 <Input
@@ -49,13 +48,6 @@ const TeacherRegistrationForm = () => {
                     placeholder='Enter your email'
                     value={userObj.userEmail}
                     onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
-                />
-                <Input
-                    type='number'
-                    label="Class"
-                    placeholder='Enter your class'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Gender</FormLabel>

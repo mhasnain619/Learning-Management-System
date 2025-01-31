@@ -56,7 +56,7 @@ export default function DataTable() {
     return (
         <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography sx={{ fontSize: '20px', fontWeight: '600', color: '#474749' }}>
+                <Typography variant='h4' sx={{ fontSize: '23px', fontWeight: '600', color: '#474749' }}>
                     Student List
                 </Typography>
                 <Button onClick={goToAddStudent} size='medium' variant='contained'>

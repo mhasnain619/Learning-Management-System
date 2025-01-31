@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 const studentDatas = JSON.parse(localStorage.getItem('subjectData'))
 
 const columns = [
@@ -47,9 +48,22 @@ const rows = [
 const paginationModel = { page: 0, pageSize: 5 };
 
 export default function AddSubject() {
+    const navigate = useNavigate()
+
+    const goToAddSub = () => {
+        navigate('/subject-registration')
+    }
     return (
-        <>
-            <Paper sx={{ marginTop: '80px', height: 600, width: '100%' }}>
+        <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Typography variant='h4' sx={{ fontSize: '23px', fontWeight: '600', color: '#474749' }}>
+                    Subject List
+                </Typography>
+                <Button onClick={goToAddSub} size='medium' variant='contained'>
+                    Add New Subject
+                </Button>
+            </Box>
+            <Paper sx={{ marginTop: '15px', height: 600, width: '100%' }}>
 
                 <DataGrid
                     rows={rows}
@@ -60,6 +74,6 @@ export default function AddSubject() {
                     sx={{ border: 0 }}
                 />
             </Paper>
-        </>
+        </Box>
     );
 }

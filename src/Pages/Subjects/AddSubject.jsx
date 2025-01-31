@@ -5,11 +5,9 @@ import { useNavigate } from "react-router-dom";
 import './AddSubject.css'
 const SubjectRegistrationForm = () => {
     let [userObj, setUserObj] = useState({
-        userFirstName: '',
-        userLastName: '',
-        userEmail: '',
-        userClass: '',
-        gender: ''
+        subjectName: '',
+        subjectClass: '',
+        selectGroup: ''
     });
 
     let [userArray, setUserArray] = useState([]);
@@ -18,7 +16,7 @@ const SubjectRegistrationForm = () => {
     const handleSubmit = () => {
         setUserArray([...userArray, userObj]);
         console.log(userArray);
-        setUserObj({ userFirstName: '', userLastName: '', userEmail: '', userClass: '', gender: '' });
+        setUserObj({ subjectName: '', userLastName: '', userEmail: '', subjectClass: '', selectGroup: '' });
         localStorage.setItem('subjectData', JSON.stringify(userArray))
         navigate('/student-list')
     };
@@ -31,42 +29,29 @@ const SubjectRegistrationForm = () => {
                 </Typography>
                 <Input
                     type='text'
-                    label="First Name"
-                    placeholder='Enter your first name'
-                    value={userObj.userFirstName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userFirstName: e.target.value })}
+                    label="Subject Name"
+                    placeholder='Enter your subject name'
+                    value={userObj.subjectName}
+                    onChangeEvent={(e) => setUserObj({ ...userObj, subjectName: e.target.value })}
                 />
-                <Input
-                    type='text'
-                    label="Last Name"
-                    placeholder='Enter your last name'
-                    value={userObj.userLastName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userLastName: e.target.value })}
-                />
-                <Input
-                    type='text'
-                    label="Email"
-                    placeholder='Enter your email'
-                    value={userObj.userEmail}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
-                />
+
                 <Input
                     type='number'
                     label="Class"
                     placeholder='Enter your class'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                    value={userObj.subjectClass}
+                    onChangeEvent={(e) => setUserObj({ ...userObj, subjectClass: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
-                    <FormLabel>Gender</FormLabel>
+                    <FormLabel>Select Group</FormLabel>
                     <RadioGroup
                         row
-                        name="gender"
-                        value={userObj.gender || ''}
-                        onChange={(e) => setUserObj({ ...userObj, gender: e.target.value })}
+                        name="selectGroup"
+                        value={userObj.selectGroup || ''}
+                        onChange={(e) => setUserObj({ ...userObj, selectGroup: e.target.value })}
                     >
-                        <FormControlLabel value="Male" control={<Radio />} label="Male" />
-                        <FormControlLabel value="Female" control={<Radio />} label="Female" />
+                        <FormControlLabel value="General-Science" control={<Radio />} label="General-Science" />
+                        <FormControlLabel value="Pre-Engineering" control={<Radio />} label="Pre-Engineering" />
                         <FormControlLabel value="Other" control={<Radio />} label="Other" />
                     </RadioGroup>
                 </FormControl>

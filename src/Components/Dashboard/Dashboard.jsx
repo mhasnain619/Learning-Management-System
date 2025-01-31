@@ -55,15 +55,11 @@ function ResponsiveDrawer(props) {
             [name]: !prev[name],
         }));
     };
-    // Sample Dashboard Data (Can be fetched from API)
-    const [dashboardData, setDashboardData] = React.useState({
-        totalUsers: 1500,
-        totalProducts: 230,
-        totalOrders: 1200,
-        revenue: "$50,000"
-    });
+
 
     const pages = [
+        { name: "Home", icon: <FaHome />, route: "/home" },
+
         {
             name: "Students", icon: <FaHome />, children: [
                 { name: "Student Registration", route: "/student-registration" },
@@ -73,7 +69,7 @@ function ResponsiveDrawer(props) {
         {
             name: "Teachers", icon: <FaHome />, children: [
                 { name: "Teacher Registration", route: "/teacher-registration" },
-                { name: "Student List", route: "/teacher-list" }
+                { name: "Teacher List", route: "/teacher-list" }
             ]
         },
         {
@@ -82,7 +78,6 @@ function ResponsiveDrawer(props) {
                 { name: "Subjects List", route: "/subject-list" }
             ]
         },
-        { name: "Home", icon: <FaHome />, route: "/home" },
         { name: "Users", icon: <FaUser />, route: "/users" },
         { name: "Products", icon: <FaCartShopping />, route: "/products" },
         { name: "Githubuserfinder", icon: <FaGithub />, route: "/githubuserfinder" },
