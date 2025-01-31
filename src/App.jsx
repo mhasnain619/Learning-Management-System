@@ -15,7 +15,6 @@ import ContactPage from './Pages/Contact/Contact';
 import LoginPage from './Access/Login/Login';
 import SignupPage from './Access/Signup/Signup';
 import StudentRegistrationForm from './Pages/Students/StudentRegistration';
-import StudentList from './Pages/Students/StudentList';
 import DataTable from './Pages/Students/StudentList';
 
 // Material UI Theme
