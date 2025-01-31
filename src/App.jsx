@@ -16,6 +16,10 @@ import LoginPage from './Access/Login/Login';
 import SignupPage from './Access/Signup/Signup';
 import StudentRegistrationForm from './Pages/Students/StudentRegistration';
 import DataTable from './Pages/Students/StudentList';
+import TeacherRegistrationForm from './Pages/Teachers/TeacherRegistration';
+import TeacherList from './Pages/Teachers/TeachertList';
+import SubjectRegistrationForm from './Pages/Subjects/AddSubject';
+import AddSubject from './Pages/Subjects/SubjectList';
 
 // Material UI Theme
 const theme = createTheme({
@@ -28,11 +32,28 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Routes>
+        {/* Access */}
+
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+
+        {/* dashboard */}
+
         <Route path="/*" element={<ResponsiveDrawer />}>
-          <Route path="student" element={<StudentRegistrationForm />} />
+
+          {/* student Routes */}
+          <Route path="student-registration" element={<StudentRegistrationForm />} />
           <Route path="student-list" element={<DataTable />} />
+
+          {/* Teacher Routes */}
+          <Route path="teacher-registration" element={<TeacherRegistrationForm />} />
+          <Route path="teacher-list" element={<TeacherList />} />
+
+          {/* Subjects Routes */}
+          <Route path="add-subject" element={<SubjectRegistrationForm />} />
+          <Route path="subject-list" element={<AddSubject />} />
+
+
           <Route path="home" element={<Home />} />
           <Route path="profile" element={<Profile />} />
           <Route path="contact" element={<ContactPage />} />

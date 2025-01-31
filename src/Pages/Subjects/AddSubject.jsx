@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import './StudentRegistration.css'
-const StudentRegistrationForm = () => {
+import './AddSubject.css'
+const SubjectRegistrationForm = () => {
     let [userObj, setUserObj] = useState({
         userFirstName: '',
         userLastName: '',
@@ -19,15 +19,15 @@ const StudentRegistrationForm = () => {
         setUserArray([...userArray, userObj]);
         console.log(userArray);
         setUserObj({ userFirstName: '', userLastName: '', userEmail: '', userClass: '', gender: '' });
-        localStorage.setItem('studentData', JSON.stringify(userArray))
+        localStorage.setItem('subjectData', JSON.stringify(userArray))
         navigate('/student-list')
     };
 
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
             <Box className='formBox'>
-                <Typography className="studentRegistrationName" variant="h4" gutterBottom>
-                    Student Registration Form
+                <Typography sx={{ fontWeight: 'bold' }} variant="h4" gutterBottom>
+                    Add Subject
                 </Typography>
                 <Input
                     type='text'
@@ -79,4 +79,4 @@ const StudentRegistrationForm = () => {
     );
 };
 
-export default StudentRegistrationForm;
+export default SubjectRegistrationForm;

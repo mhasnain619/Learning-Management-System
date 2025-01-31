@@ -26,7 +26,7 @@ const StudentRegistrationForm = () => {
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
             <Box className='formBox'>
-                <Typography className="studentRegistrationName" variant="h4" gutterBottom>
+                <Typography sx={{ fontWeight: 'bold' }} variant="h4" gutterBottom>
                     Student Registration Form
                 </Typography>
                 <Input

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-import { Box, Button, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-const studentDatas = JSON.parse(localStorage.getItem('studentData'))
+import { Typography } from '@mui/material';
+const studentDatas = JSON.parse(localStorage.getItem('teachersData'))
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -47,32 +46,20 @@ const rows = [
 
 const paginationModel = { page: 0, pageSize: 5 };
 
-export default function DataTable() {
-    const navigate = useNavigate()
-
-    const goToAddStudent = () => {
-        navigate('/student-registration')
-    }
+export default function TeacherList() {
     return (
-        <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Typography sx={{ fontSize: '20px', fontWeight: '600', color: '#474749' }}>
-                    Student List
-                </Typography>
-                <Button onClick={goToAddStudent} size='medium' variant='contained'>
-                    Add New Student
-                </Button>
-            </Box>
-            <Paper sx={{ marginTop: '15px', height: 600, width: '100%' }}>
+        <>
+            <Paper sx={{ marginTop: '80px', height: 600, width: '100%' }}>
+
                 <DataGrid
                     rows={rows}
                     columns={columns}
                     initialState={{ pagination: { paginationModel } }}
-                    pageSizeOptions={[5, 20]}
+                    pageSizeOptions={[10, 20]}
                     checkboxSelection
                     sx={{ border: 0 }}
                 />
             </Paper>
-        </Box>
+        </>
     );
 }

@@ -19,12 +19,12 @@ import { useNavigate, Outlet, Link } from "react-router-dom";
 import jawan from '../../assets/jawan.png';
 import { FaCartShopping } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
-import { MdContactPage } from "react-icons/md";
+import { MdContactPage, MdExpandLess, MdExpandMore } from "react-icons/md";
 import { FaGithub } from "react-icons/fa6";
 import './Dashboard.css'
-import { Avatar, Menu, MenuItem, Tooltip } from '@mui/material';
+import { Avatar, Collapse, Menu, MenuItem, Tooltip } from '@mui/material';
 // import './Layout.css'
-const drawerWidth = 210;
+const drawerWidth = 205;
 
 function ResponsiveDrawer(props) {
     const { window } = props;
@@ -32,6 +32,8 @@ function ResponsiveDrawer(props) {
     const navigate = useNavigate();
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [isClosing, setIsClosing] = React.useState(false);
+    const [openMenus, setOpenMenus] = React.useState({});
+
     const handleDrawerClose = () => {
         setIsClosing(true);
         setMobileOpen(false);
@@ -47,6 +49,12 @@ function ResponsiveDrawer(props) {
         setAnchorElUser(null);
     };
 
+    const handleToggle = (name) => {
+        setOpenMenus((prev) => ({
+            ...prev,
+            [name]: !prev[name],
+        }));
+    };
     // Sample Dashboard Data (Can be fetched from API)
     const [dashboardData, setDashboardData] = React.useState({
         totalUsers: 1500,
@@ -56,8 +64,24 @@ function ResponsiveDrawer(props) {
     });
 
     const pages = [
-        { name: "Students", icon: <FaHome />, route: "/student" },
-        { name: "Students List", icon: <FaHome />, route: "/student-list" },
+        {
+            name: "Students", icon: <FaHome />, children: [
+                { name: "Student Registration", route: "/student-registration" },
+                { name: "Student List", route: "/student-list" }
+            ]
+        },
+        {
+            name: "Teachers", icon: <FaHome />, children: [
+                { name: "Teacher Registration", route: "/teacher-registration" },
+                { name: "Student List", route: "/teacher-list" }
+            ]
+        },
+        {
+            name: "Subjects", icon: <FaHome />, children: [
+                { name: "Add Subject", route: "/add-subject" },
+                { name: "Subjects List", route: "/subject-list" }
+            ]
+        },
         { name: "Home", icon: <FaHome />, route: "/home" },
         { name: "Users", icon: <FaUser />, route: "/users" },
         { name: "Products", icon: <FaCartShopping />, route: "/products" },
@@ -80,12 +104,29 @@ function ResponsiveDrawer(props) {
             <Divider />
             <List>
                 {pages.map((obj, index) => (
-                    <ListItem key={index} disablePadding>
-                        <ListItemButton onClick={() => navigate(obj.route)}>
-                            <ListItemIcon sx={{ minWidth: '35px', fontSize: '20px' }}>{obj.icon}</ListItemIcon>
-                            <ListItemText primary={obj.name} />
-                        </ListItemButton>
-                    </ListItem>
+                    <div key={index}>
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={() => obj.children ? handleToggle(obj.name) : navigate(obj.route)}>
+                                <ListItemIcon sx={{ minWidth: "35px", fontSize: "20px" }}>{obj.icon}</ListItemIcon>
+                                <ListItemText primary={obj.name} />
+                                {obj.children && (openMenus[obj.name] ? <MdExpandLess /> : <MdExpandMore />)}
+                            </ListItemButton>
+                        </ListItem>
+
+                        {obj.children && (
+                            <Collapse in={openMenus[obj.name]} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+                                    {obj.children.map((child, idx) => (
+                                        <ListItem key={idx} disablePadding>
+                                            <ListItemButton sx={{ pl: 4 }} onClick={() => navigate(child.route)}>
+                                                <ListItemText primary={child.name} />
+                                            </ListItemButton>
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </Collapse>
+                        )}
+                    </div>
                 ))}
             </List>
         </div>
