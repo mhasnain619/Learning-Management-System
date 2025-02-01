@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import './StudentRegistration.css'
-const StudentRegistrationForm = () => {
+import './AdmissionForm.css'
+const AdmissionForm = () => {
     let [userObj, setUserObj] = useState({
         userFirstName: '',
         userLastName: '',
@@ -27,7 +27,7 @@ const StudentRegistrationForm = () => {
         <Container sx={{ py: 8 }} maxWidth="sm">
             <Box className='formBox'>
                 <Typography sx={{ fontWeight: 'bold' }} variant="h4" gutterBottom>
-                    Student Registration Form
+                    Admission Form
                 </Typography>
                 <Input
                     type='text'
@@ -52,7 +52,21 @@ const StudentRegistrationForm = () => {
                 />
                 <Input
                     type='number'
-                    label="Class"
+                    label="Phone Number"
+                    placeholder='Enter your Phone Number'
+                    value={userObj.userClass}
+                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                />
+                <Input
+                    type='date'
+                    // label="Date of Birth"
+                    // placeholder='Enter your date of birth'
+                    value={userObj.userClass}
+                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                />
+                <Input
+                    type='number'
+                    label="Qualification"
                     placeholder='Enter your class'
                     value={userObj.userClass}
                     onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
@@ -79,4 +93,4 @@ const StudentRegistrationForm = () => {
     );
 };
 
-export default StudentRegistrationForm;
+export default AdmissionForm;

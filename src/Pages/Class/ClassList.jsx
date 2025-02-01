@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 const studentDatas = JSON.parse(localStorage.getItem('studentData'))
 
 const columns = [
@@ -44,13 +45,25 @@ const rows = [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-const paginationModel = { page: 0, pageSize: 5 };
+const paginationModel = { page: 0, pageSize: 10 };
 
-export default function DataTable() {
+export default function ClassList() {
+    const navigate = useNavigate()
+
+    const goToAddClass = () => {
+        navigate('/class-form')
+    }
     return (
-        <>
-            <Paper sx={{ marginTop: '80px', height: 600, width: '100%' }}>
-
+        <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px !important' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <Typography variant='h4' sx={{ fontSize: '23px', fontWeight: '600', color: '#474749' }}>
+                    Class List
+                </Typography>
+                <Button onClick={goToAddClass} size='medium' variant='contained'>
+                    Add New Class
+                </Button>
+            </Box>
+            <Paper sx={{ marginTop: '15px', height: 600, width: '100%' }}>
                 <DataGrid
                     rows={rows}
                     columns={columns}
@@ -60,6 +73,6 @@ export default function DataTable() {
                     sx={{ border: 0 }}
                 />
             </Paper>
-        </>
+        </Box>
     );
 }

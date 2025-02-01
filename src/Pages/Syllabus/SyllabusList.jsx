@@ -6,31 +6,26 @@ import { useNavigate } from 'react-router-dom';
 const studentDatas = JSON.parse(localStorage.getItem('studentData'))
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
+    { field: 'id', headerName: 'ID', width: 90 },
     {
-        field: 'firstName', headerName: 'First name', width: 130, renderCell: (params) =>
-            <Typography
-                sx={{
-                    // textAlign: 'center',
-                    // display: "flex",
-                    // justifyContent: "center",
-                    // alignItems: "center",
-                    color: "#0171BC"
-                }}>
-                {params.value}
-            </Typography>
+        field: 'firstName', headerName: 'First name', width: 200,
     },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
+    { field: 'lastName', headerName: 'Last name', width: 200 },
     {
         field: 'email',
         headerName: 'Email',
-        width: 90,
+        width: 200,
+    },
+    {
+        field: 'Age',
+        headerName: 'age',
+        width: 200,
     },
     {
         field: 'class',
         headerName: 'Class',
         type: 'number',
-        width: 90,
+        width: 100,
     },
 ];
 const rows = [
@@ -45,7 +40,7 @@ const rows = [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-const paginationModel = { page: 0, pageSize: 5 };
+const paginationModel = { page: 0, pageSize: 10 };
 
 export default function SyllabusList() {
     const navigate = useNavigate()
@@ -63,7 +58,7 @@ export default function SyllabusList() {
                     Add New Syllabus
                 </Button>
             </Box>
-            <Paper sx={{ marginTop: '15px', height: 600, width: '100%' }}>
+            <Paper elevation={3} sx={{ marginTop: '15px', height: 600, width: '100%' }}>
 
                 <DataGrid
                     rows={rows}

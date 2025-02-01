@@ -22,6 +22,9 @@ import SubjectRegistrationForm from './Pages/Subjects/AddSubject';
 import AddSubject from './Pages/Subjects/SubjectList';
 import SyllabusForm from './Pages/Syllabus/SyllabusForm';
 import SyllabusList from './Pages/Syllabus/SyllabusList';
+import ClassList from './Pages/Class/ClassList';
+import ClassForm from './Pages/Class/ClassForm';
+import AdmissionForm from './Pages/Admission/AdmissionForm';
 
 // Material UI Theme
 const theme = createTheme({
@@ -54,10 +57,21 @@ function App() {
           {/* Subjects Routes */}
           <Route path="add-subject" element={<SubjectRegistrationForm />} />
           <Route path="subject-list" element={<AddSubject />} />
+
           {/* Syllabus Routes */}
           <Route path="add-syllabus" element={<SyllabusForm />} />
           <Route path="syllabus-list" element={<SyllabusList />} />
 
+          {/* School Routes */}
+          {/* <Route path="add-student" element={<SyllabusForm />} />
+          <Route path="add-teacher" element={<SyllabusList />} /> */}
+
+          {/* Class Routes */}
+          <Route path="class-form" element={<ClassForm />} />
+          <Route path="class-list" element={<ClassList />} />
+
+          {/* Adission Form Routes */}
+          <Route path="admission-form" element={<AdmissionForm />} />
 
           <Route path="home" element={<Home />} />
           <Route path="profile" element={<Profile />} />
