@@ -24,7 +24,7 @@ import { FaGithub } from "react-icons/fa6";
 import './Dashboard.css'
 import { Avatar, Collapse, Menu, MenuItem, Tooltip } from '@mui/material';
 // import './Layout.css'
-const drawerWidth = 205;
+const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
     const { window } = props;
@@ -85,6 +85,12 @@ function ResponsiveDrawer(props) {
             ]
         },
         {
+            name: "School", icon: <FaHome />, children: [
+                { name: "Student Registration", route: "/school-student-registration" },
+                { name: "Teacher Registration", route: "/school-teacher-registration" }
+            ]
+        },
+        {
             name: "Class", icon: <FaHome />, children: [
                 { name: "Class Form", route: "/class-form" },
                 { name: "Class List", route: "/class-list" }
@@ -92,7 +98,15 @@ function ResponsiveDrawer(props) {
         },
         {
             name: "Admission", icon: <FaHome />, children: [
-                { name: "Admission Form", route: "/admission~-form" },
+                { name: "Admission Form", route: "/admission-form" },
+
+            ]
+        },
+        {
+            name: "Fees", icon: <FaHome />, children: [
+                { name: "Fees Structure", route: "/fees-structure" },
+                { name: "Fees Voucher", route: "/fees-voucher" },
+                { name: "Fees Submission", route: "/fees-submission" },
 
             ]
         },

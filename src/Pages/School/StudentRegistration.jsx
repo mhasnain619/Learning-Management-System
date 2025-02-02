@@ -3,7 +3,7 @@ import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import './StudentRegistration.css'
-const StudentRegistrationForm = () => {
+const SchoolStudentRegistration = () => {
     let [userObj, setUserObj] = useState({
         userFirstName: '',
         userLastName: '',
@@ -26,7 +26,7 @@ const StudentRegistrationForm = () => {
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
             <Box className='formBox'>
-                <Typography sx={{ fontWeight: 'bold' }} variant="h4" gutterBottom>
+                <Typography className="studentRegistrationName" variant="h4" gutterBottom>
                     Student Registration Form
                 </Typography>
                 <Input
@@ -47,6 +47,13 @@ const StudentRegistrationForm = () => {
                     type='text'
                     label="Email"
                     placeholder='Enter your email'
+                    value={userObj.userEmail}
+                    onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
+                />
+                <Input
+                    type='text'
+                    label="School Name"
+                    placeholder='Enter your school name'
                     value={userObj.userEmail}
                     onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
                 />
@@ -79,4 +86,4 @@ const StudentRegistrationForm = () => {
     );
 };
 
-export default StudentRegistrationForm;
+export default SchoolStudentRegistration;

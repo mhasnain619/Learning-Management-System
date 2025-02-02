@@ -25,6 +25,11 @@ import SyllabusList from './Pages/Syllabus/SyllabusList';
 import ClassList from './Pages/Class/ClassList';
 import ClassForm from './Pages/Class/ClassForm';
 import AdmissionForm from './Pages/Admission/AdmissionForm';
+import SchoolTeacherRegistration from './Pages/School/SchoolTeacherRegistration';
+import SchoolStudentRegistration from './Pages/School/StudentRegistration';
+import FeesStructureCard from './Pages/Fees/FeesStructure';
+import FeeVoucher from './Pages/Fees/FeesVoucher';
+import FeeSubmission from './Pages/Fees/FeesSubmission';
 
 // Material UI Theme
 const theme = createTheme({
@@ -63,15 +68,23 @@ function App() {
           <Route path="syllabus-list" element={<SyllabusList />} />
 
           {/* School Routes */}
-          {/* <Route path="add-student" element={<SyllabusForm />} />
-          <Route path="add-teacher" element={<SyllabusList />} /> */}
+          <Route path="school-student-registration" element={< SchoolStudentRegistration />} />
+          <Route path="school-teacher-registration" element={< SchoolTeacherRegistration />} />
 
           {/* Class Routes */}
           <Route path="class-form" element={<ClassForm />} />
           <Route path="class-list" element={<ClassList />} />
 
-          {/* Adission Form Routes */}
+          {/*Routes Admission Form  */}
           <Route path="admission-form" element={<AdmissionForm />} />
+
+
+          {/* Routes Fees */}
+          <Route path="fees-structure" element={<FeesStructureCard />} />
+          <Route path="fees-voucher" element={<FeeVoucher />} />
+          <Route path="fees-submission" element={<FeeSubmission />} />
+
+
 
           <Route path="home" element={<Home />} />
           <Route path="profile" element={<Profile />} />

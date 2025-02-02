@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import './AdmissionForm.css'
-const AdmissionForm = () => {
+import './StudentRegistration.css'
+const SchoolTeacherRegistration = () => {
     let [userObj, setUserObj] = useState({
         userFirstName: '',
         userLastName: '',
@@ -26,8 +26,8 @@ const AdmissionForm = () => {
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
             <Box className='formBox'>
-                <Typography sx={{ fontWeight: 'bold' }} variant="h4" gutterBottom>
-                    Admission Form
+                <Typography className="studentRegistrationName" variant="h4" gutterBottom>
+                    School Teacher Registration
                 </Typography>
                 <Input
                     type='text'
@@ -51,23 +51,16 @@ const AdmissionForm = () => {
                     onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
                 />
                 <Input
-                    type='number'
-                    label="Phone Number"
-                    placeholder='Enter your Phone Number'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
-                />
-                <Input
-                    type='date'
-                    // label="Date of Birth"
-                    // placeholder='Enter your date of birth'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                    type='text'
+                    label="School Name"
+                    placeholder='Enter your school name'
+                    value={userObj.userEmail}
+                    onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
                 />
                 <Input
                     type='number'
-                    label="Qualification"
-                    placeholder='Enter your last qyalification'
+                    label="Class"
+                    placeholder='Enter your class'
                     value={userObj.userClass}
                     onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
                 />
@@ -93,4 +86,4 @@ const AdmissionForm = () => {
     );
 };
 
-export default AdmissionForm;
+export default SchoolTeacherRegistration;
