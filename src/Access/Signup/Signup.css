@@ -29,12 +29,14 @@
     justify-content: center;
     height: 100vh;
     padding: 40px;
-    background-color: #f9f9f9;
+    background-color: #FDFDFD;
 }
 
+.welComeTo {
+    padding: 0px 50px;
+}
 
-
-.loginButton {
+/* .loginButton {
     background-color: #d4ffd4 !important;
     color: black !important;
     margin-top: 10px !important;
@@ -42,7 +44,7 @@
 
 .loginButton:hover {
     background-color: #baffba !important;
-}
+} */
 
 .clickable {
     cursor: pointer;
@@ -53,8 +55,7 @@
 }
 
 @media (max-width: 768px) {
-    .leftPanel {
-        display: none !important;
-
+    .welComeTo {
+        padding: 0px;
     }
 }

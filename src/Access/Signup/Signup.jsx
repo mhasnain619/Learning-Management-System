@@ -3,12 +3,14 @@ import { Grid, TextField, Button, Checkbox, FormControlLabel, Typography, Box, I
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import "./Signup.css";
-import loginImage from '../../assets/loginImage.png'
-import Logo from '../../assets/logo.png'
+import loginImage from '../../assets/signupBgRemove.png'
+import Logo from '../../assets/logoRemoveBg.png'
+import waveImg from '../../assets/wave.png'
 import { useNavigate } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import auth from "../../FirebaseConfiq";
 const SignupPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [credentials, setCredentials] = useState({
@@ -20,7 +22,17 @@ const SignupPage = () => {
     const navigate = useNavigate();
 
     const getCredentials = () => {
-        localStorage.setItem('userCredentials', JSON.stringify(credentials)); // Fix: Store as string
+        createUserWithEmailAndPassword(auth, credentials.email, credentials.password, credentials.confirmPassword)
+            .then((userCredential) => {
+                setOpen(true)
+                console.log(userCredential)
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage)
+
+            });
         setOpen(true);
         setTimeout(() => {
             navigate('/login')
@@ -43,26 +55,43 @@ const SignupPage = () => {
 
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} className="leftPanel">
+            <Grid item xs={12} md={6}
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    backgroundImage: `url(${waveImg})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    height: '100vh',
+                    width: '100%',
+                }} className="leftPanel">
                 <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
                         Signup Successful!
                     </Alert>
                 </Snackbar>
-                <Box sx={{ display: 'inline-block', marginBottom: '15px', height: '50px', width: '300px' }}>
-                    <img height='100%' width='100%' src={Logo} alt="Logo" />
+
+                <Box className='welComeTo'>
+                    <Typography sx={{ color: 'white', fontSize: '25px', fontWeight: 'bold' }} gutterBottom>
+                        WELCOME TO Jawan Pakistan
+                    </Typography>
+                    <Typography sx={{ color: 'white', fontSize: '25px', fontWeight: 'bold' }} gutterBottom>
+                        Learning Management Ststem
+                    </Typography>
+                    <Typography sx={{ color: '#FDFDFD', fontSize: '20px', }} gutterBottom>
+                        With a user-friendly interface and accessible resources, Jawan Pakistan LMS is committed to building a skilled and knowledgeable workforce for a brighter future.
+                    </Typography>
                 </Box>
-                <Typography variant="h4" gutterBottom>
-                    WELCOME TO LEARNING MANAGEMENT SYSTEM
-                </Typography>
-                <Box sx={{ height: '300px', width: '450px' }}>
+                <Box sx={{ height: '250px', width: '350px' }}>
                     <img height='100%' width='100%' src={loginImage} alt="Learning System" className="image" />
                 </Box>
             </Grid>
             <Grid item xs={12} md={6} className="rightPanel">
                 <Box>
                     <Typography variant="h5" align="start" gutterBottom>
-                        Signup
+                        Create Your Account
                     </Typography>
                     <TextField
                         fullWidth

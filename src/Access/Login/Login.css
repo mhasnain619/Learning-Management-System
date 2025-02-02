@@ -34,7 +34,7 @@
 
 
 
-.loginButton {
+/* .loginButton {
     background-color: #d4ffd4 !important;
     color: black !important;
     margin-top: 10px !important;
@@ -42,7 +42,7 @@
 
 .loginButton:hover {
     background-color: #baffba !important;
-}
+} */
 
 .clickable {
     cursor: pointer;
@@ -54,7 +54,6 @@
 
 @media (max-width: 768px) {
     .leftPanel {
-        display: none !important;
-
+        background-image: url('../../assets/forSmall.png');
     }
 }

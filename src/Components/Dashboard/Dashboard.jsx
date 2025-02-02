@@ -92,7 +92,7 @@ function ResponsiveDrawer(props) {
         },
         {
             name: "Admission", icon: <FaHome />, children: [
-                { name: "Admission Form", route: "/admission-form" },
+                { name: "Admission Form", route: "/admission~-form" },
 
             ]
         },
