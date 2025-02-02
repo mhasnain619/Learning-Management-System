@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, Typography, Grid, Container, Button } from "@mui/material";
 import { Payment, Download } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const feeVouchers = [
     { studentName: "Ali Khan", className: "Class 1", monthlyFee: 2000, dueDate: "10 Feb 2025", issueDate: "01 Feb 2025", voucherNo: "V001", status: "Unpaid" },
@@ -16,6 +17,7 @@ const feeVouchers = [
 ];
 
 const FeeVoucher = () => {
+    const navigate = useNavigate()
     return (
         <Container sx={{ mt: 8 }}>
             <Grid container spacing={3}>
@@ -38,6 +40,7 @@ const FeeVoucher = () => {
                                 <Grid container spacing={2} sx={{ mt: 2 }}>
                                     <Grid item xs={12}>
                                         <Button
+                                            onClick={() => navigate('/fees-submission')}
                                             variant="contained"
                                             size="large"
                                             color="primary"

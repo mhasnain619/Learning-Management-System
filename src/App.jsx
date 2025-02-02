@@ -3,11 +3,6 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import ResponsiveDrawer from './Components/Dashboard/Dashboard';
 import Home from './Pages/Home/Home';
 import Profile from './Components/Profile/Profile';
-import Users from './Pages/Users/Users';
-import UserDetails from './Pages/Users/UserDetails';
-import ProductsCard from './Pages/Products/ProductCard/ProductCards';
-import ProductDetails from './Pages/Products/ProductDetails/ProductDetails';
-import GitHubProfileSearch from './Pages/GithubUserFinder/UserFinder';
 import "@fontsource/montserrat";  // Defaults to weight 400
 import "@fontsource/montserrat/700.css"; // Specify bold weight
 import './index.css';  // Ensure global styles are applied
@@ -30,6 +25,7 @@ import SchoolStudentRegistration from './Pages/School/StudentRegistration';
 import FeesStructureCard from './Pages/Fees/FeesStructure';
 import FeeVoucher from './Pages/Fees/FeesVoucher';
 import FeeSubmission from './Pages/Fees/FeesSubmission';
+import UserProfile from './Components/Profile/Profile';
 
 // Material UI Theme
 const theme = createTheme({
@@ -50,6 +46,10 @@ function App() {
         {/* dashboard */}
 
         <Route path="/*" element={<ResponsiveDrawer />}>
+
+          {/* profile */}
+          <Route path="profile" element={<UserProfile />} />
+
 
           {/* student Routes */}
           <Route path="student-registration" element={<StudentRegistrationForm />} />
@@ -89,11 +89,6 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="profile" element={<Profile />} />
           <Route path="contact" element={<ContactPage />} />
-          <Route path="users" element={<Users />} />
-          <Route path="users/:id" element={<UserDetails />} />
-          <Route path='products' element={<ProductsCard />} />
-          <Route path='products/:id' element={<ProductDetails />} />
-          <Route path='githubuserfinder' element={<GitHubProfileSearch />} />
         </Route>
       </Routes>
     </ThemeProvider>

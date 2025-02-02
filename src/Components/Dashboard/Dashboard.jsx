@@ -22,7 +22,7 @@ import { FaUser } from "react-icons/fa";
 import { MdContactPage, MdExpandLess, MdExpandMore } from "react-icons/md";
 import { FaGithub } from "react-icons/fa6";
 import './Dashboard.css'
-import { Avatar, Collapse, Menu, MenuItem, Tooltip } from '@mui/material';
+import { Avatar, Button, Collapse, Menu, MenuItem, Tooltip } from '@mui/material';
 // import './Layout.css'
 const drawerWidth = 240;
 
@@ -39,7 +39,7 @@ function ResponsiveDrawer(props) {
         setMobileOpen(false);
     };
 
-    const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+    // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -110,9 +110,6 @@ function ResponsiveDrawer(props) {
 
             ]
         },
-        { name: "Users", icon: <FaUser />, route: "/users" },
-        { name: "Products", icon: <FaCartShopping />, route: "/products" },
-        { name: "Githubuserfinder", icon: <FaGithub />, route: "/githubuserfinder" },
         { name: "Contact Us", icon: <MdContactPage />, route: "/contact" },
     ];
 
@@ -207,11 +204,20 @@ function ResponsiveDrawer(props) {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
-                                </MenuItem>
-                            ))}
+
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Button onClick={() => navigate('/profile')} sx={{ textAlign: 'center' }}>Profile</Button>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Button sx={{ textAlign: 'center' }}>Account</Button>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Button onClick={() => navigate('/')} sx={{ textAlign: 'center' }}>Dashboard</Button>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Button sx={{ textAlign: 'center' }}>Logout</Button>
+                            </MenuItem>
+
                         </Menu>
                     </Box>
                 </Toolbar>

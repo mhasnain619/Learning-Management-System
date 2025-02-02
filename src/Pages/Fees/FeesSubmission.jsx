@@ -58,7 +58,11 @@ const FeeSubmission = () => {
                             name="studentName"
                             value={formData.studentName}
                             onChange={handleChange}
-                            sx={{ mb: 2, }}
+                            sx={{
+                                mb: 2,
+                                "& .MuiInputBase-root": {}, // Remove internal padding
+                                "& .MuiSelect-select": { minHeight: "45px", }, // Reduce height
+                            }}
                             required
                         >
                             {students.map((student, index) => (

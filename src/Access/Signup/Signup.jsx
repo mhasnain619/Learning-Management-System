@@ -78,7 +78,7 @@ const SignupPage = () => {
                         WELCOME TO Jawan Pakistan
                     </Typography>
                     <Typography sx={{ color: 'white', fontSize: '25px', fontWeight: 'bold' }} gutterBottom>
-                        Learning Management Ststem
+                        Learning Management System
                     </Typography>
                     <Typography sx={{ color: '#FDFDFD', fontSize: '20px', }} gutterBottom>
                         With a user-friendly interface and accessible resources, Jawan Pakistan LMS is committed to building a skilled and knowledgeable workforce for a brighter future.
