@@ -4,23 +4,21 @@ import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio
 import { useNavigate } from "react-router-dom";
 import './StudentRegistration.css'
 const SchoolStudentRegistration = () => {
-    let [userObj, setUserObj] = useState({
-        userFirstName: '',
-        userLastName: '',
-        userEmail: '',
-        userClass: '',
+    let [schoolStudentObj, setSchoolStudentObj] = useState({
+        SchoolStuFirstName: '',
+        schoolStuLastName: '',
+        schoolStuEmail: '',
+        schoolStuClass: '',
+        schoolStuSchoolName: '',
         gender: ''
     });
 
-    let [userArray, setUserArray] = useState([]);
     const navigate = useNavigate()
 
     const handleSubmit = () => {
-        setUserArray([...userArray, userObj]);
-        console.log(userArray);
-        setUserObj({ userFirstName: '', userLastName: '', userEmail: '', userClass: '', gender: '' });
-        localStorage.setItem('studentData', JSON.stringify(userArray))
-        navigate('/student-list')
+        console.log('school student object is ', schoolStudentObj);
+        setSchoolStudentObj({ SchoolStuFirstName: '', schoolStuLastName: '', schoolStuEmail: '', schoolStuClass: '', schoolStuSchoolName: '', gender: '' });
+        navigate('/student/student-list')
     };
 
     return (
@@ -33,44 +31,44 @@ const SchoolStudentRegistration = () => {
                     type='text'
                     label="First Name"
                     placeholder='Enter your first name'
-                    value={userObj.userFirstName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userFirstName: e.target.value })}
+                    value={schoolStudentObj.SchoolStuFirstName}
+                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, SchoolStuFirstName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Last Name"
                     placeholder='Enter your last name'
-                    value={userObj.userLastName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userLastName: e.target.value })}
+                    value={schoolStudentObj.schoolStuLastName}
+                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, schoolStuLastName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Email"
                     placeholder='Enter your email'
-                    value={userObj.userEmail}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
+                    value={schoolStudentObj.schoolStuEmail}
+                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, schoolStuEmail: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="School Name"
                     placeholder='Enter your school name'
-                    value={userObj.userEmail}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
+                    value={schoolStudentObj.schoolStuSchoolName}
+                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, schoolStuSchoolName: e.target.value })}
                 />
                 <Input
                     type='number'
                     label="Class"
                     placeholder='Enter your class'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                    value={schoolStudentObj.schoolStuClass}
+                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, schoolStuClass: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Gender</FormLabel>
                     <RadioGroup
                         row
                         name="gender"
-                        value={userObj.gender || ''}
-                        onChange={(e) => setUserObj({ ...userObj, gender: e.target.value })}
+                        value={schoolStudentObj.gender || ''}
+                        onChange={(e) => setSchoolStudentObj({ ...schoolStudentObj, gender: e.target.value })}
                     >
                         <FormControlLabel value="Male" control={<Radio />} label="Male" />
                         <FormControlLabel value="Female" control={<Radio />} label="Female" />
@@ -81,7 +79,6 @@ const SchoolStudentRegistration = () => {
                     Register
                 </Button>
             </Box>
-            {/* <CustomizedTables data={userArray} /> */}
         </Container>
     );
 };

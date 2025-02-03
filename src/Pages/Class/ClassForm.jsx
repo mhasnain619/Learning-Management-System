@@ -4,23 +4,22 @@ import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio
 import { useNavigate } from "react-router-dom";
 import './ClassForm.css'
 const ClassForm = () => {
-    let [userObj, setUserObj] = useState({
-        userFirstName: '',
-        userLastName: '',
-        userEmail: '',
-        userClass: '',
+    let [classObj, setClassObj] = useState({
+        classUserFirstName: '',
+        classUserLastName: '',
+        classUserEmail: '',
+        classUserPhone: '',
+        classUserDate: '',
+        classUserQualification: '',
         gender: ''
     });
 
-    let [userArray, setUserArray] = useState([]);
     const navigate = useNavigate()
 
     const handleSubmit = () => {
-        setUserArray([...userArray, userObj]);
-        console.log(userArray);
-        setUserObj({ userFirstName: '', userLastName: '', userEmail: '', userClass: '', gender: '' });
-        localStorage.setItem('studentData', JSON.stringify(userArray))
-        navigate('/student-list')
+        console.log('class object is ', classObj);
+        setClassObj({ classUserFirstName: '', classUserLastName: '', classUserEmail: '', classUserPhone: '', classUserDate: '', classUserQualification: '', gender: '' });
+        navigate('/class/class-list')
     };
 
     return (
@@ -33,51 +32,49 @@ const ClassForm = () => {
                     type='text'
                     label="First Name"
                     placeholder='Enter your first name'
-                    value={userObj.userFirstName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userFirstName: e.target.value })}
+                    value={classObj.classUserFirstName}
+                    onChangeEvent={(e) => setClassObj({ ...classObj, classUserFirstName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Last Name"
                     placeholder='Enter your last name'
-                    value={userObj.userLastName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userLastName: e.target.value })}
+                    value={classObj.classUserLastName}
+                    onChangeEvent={(e) => setClassObj({ ...classObj, classUserLastName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Email"
                     placeholder='Enter your email'
-                    value={userObj.userEmail}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
+                    value={classObj.classUserEmail}
+                    onChangeEvent={(e) => setClassObj({ ...classObj, classUserEmail: e.target.value })}
                 />
                 <Input
                     type='number'
                     label="Phone Number"
                     placeholder='Enter your Phone Number'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                    value={classObj.classUserPhone}
+                    onChangeEvent={(e) => setClassObj({ ...classObj, classUserPhone: e.target.value })}
                 />
                 <Input
                     type='date'
-                    // label="Date of Birth"
-                    // placeholder='Enter your date of birth'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                    value={classObj.classUserDate}
+                    onChangeEvent={(e) => setClassObj({ ...classObj, classUserDate: e.target.value })}
                 />
                 <Input
-                    type='number'
+                    type='text'
                     label="Qualification"
                     placeholder='Enter your class'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                    value={classObj.classUserQualification}
+                    onChangeEvent={(e) => setClassObj({ ...classObj, classUserQualification: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Gender</FormLabel>
                     <RadioGroup
                         row
                         name="gender"
-                        value={userObj.gender || ''}
-                        onChange={(e) => setUserObj({ ...userObj, gender: e.target.value })}
+                        value={classObj.gender || ''}
+                        onChange={(e) => setClassObj({ ...classObj, gender: e.target.value })}
                     >
                         <FormControlLabel value="Male" control={<Radio />} label="Male" />
                         <FormControlLabel value="Female" control={<Radio />} label="Female" />

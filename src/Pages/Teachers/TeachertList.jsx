@@ -63,13 +63,13 @@ export default function TeacherList() {
                     <TableHead>
                         <TableRow>
                             <StyledTableCell>Id</StyledTableCell>
-                            <StyledTableCell>T First Name</StyledTableCell>
-                            <StyledTableCell align="start">T Last Name</StyledTableCell>
-                            <StyledTableCell align="start">School Name</StyledTableCell>
-                            <StyledTableCell align="start">Class</StyledTableCell>
-                            <StyledTableCell align="start">Phone</StyledTableCell>
-                            <StyledTableCell align="start">Gender</StyledTableCell>
-                            <StyledTableCell align="start">E-mail</StyledTableCell>
+                            <StyledTableCell>T-First Name</StyledTableCell>
+                            <StyledTableCell>T-Last Name</StyledTableCell>
+                            <StyledTableCell>School Name</StyledTableCell>
+                            <StyledTableCell>Class</StyledTableCell>
+                            <StyledTableCell>Phone</StyledTableCell>
+                            <StyledTableCell>Gender</StyledTableCell>
+                            <StyledTableCell>E-mail</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -81,12 +81,12 @@ export default function TeacherList() {
                                 <StyledTableCell component="th" scope="row">
                                     {e.firstName}
                                 </StyledTableCell>
-                                <StyledTableCell align="start">{e.lastName}</StyledTableCell>
-                                <StyledTableCell align="start">{e.schoolName}</StyledTableCell>
-                                <StyledTableCell align="start">{e.class}</StyledTableCell>
-                                <StyledTableCell align="start">{e.phone}</StyledTableCell>
-                                <StyledTableCell align="start">{e.gender}</StyledTableCell>
-                                <StyledTableCell align="start">{e.email}</StyledTableCell>
+                                <StyledTableCell>{e.lastName}</StyledTableCell>
+                                <StyledTableCell>{e.schoolName}</StyledTableCell>
+                                <StyledTableCell>{e.class}</StyledTableCell>
+                                <StyledTableCell>{e.phone}</StyledTableCell>
+                                <StyledTableCell>{e.gender}</StyledTableCell>
+                                <StyledTableCell>{e.email}</StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>

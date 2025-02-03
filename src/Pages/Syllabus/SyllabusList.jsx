@@ -1,74 +1,90 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-const studentDatas = JSON.parse(localStorage.getItem('studentData'))
+import axios from 'axios';
 
-const columns = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    {
-        field: 'firstName', headerName: 'First name', width: 200,
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
     },
-    { field: 'lastName', headerName: 'Last name', width: 200 },
-    {
-        field: 'email',
-        headerName: 'Email',
-        width: 200,
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
     },
-    {
-        field: 'Age',
-        headerName: 'age',
-        width: 200,
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
     },
-    {
-        field: 'class',
-        headerName: 'Class',
-        type: 'number',
-        width: 100,
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
     },
-];
+}));
 const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+    { id: 1, subjectName: 'English', class: '12', group: 'male', },
+    { id: 2, subjectName: 'English', class: '12', group: 'male', },
+    { id: 3, subjectName: 'English', class: '12', group: 'male', },
+    { id: 4, subjectName: 'English', class: '12', group: 'male', },
+    { id: 5, subjectName: 'English', class: '12', group: 'male', },
+    { id: 6, subjectName: 'English', class: '12', group: 'male', },
+    { id: 7, subjectName: 'English', class: '12', group: 'male', },
+    { id: 8, subjectName: 'English', class: '12', group: 'male', },
+    { id: 9, subjectName: 'English', class: '12', group: 'male', },
 ];
-
-const paginationModel = { page: 0, pageSize: 10 };
-
 export default function SyllabusList() {
     const navigate = useNavigate()
 
-    const goToAddSyllabus = () => {
-        navigate('/add-syllabus')
+    const goToAddSubject = () => {
+        navigate('/subject/add-subject')
     }
     return (
-        <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px !important' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                 <Typography variant='h4' sx={{ fontSize: '23px', fontWeight: '600', color: '#474749' }}>
                     Syllabus List
                 </Typography>
-                <Button onClick={goToAddSyllabus} size='medium' variant='contained'>
+                <Button onClick={goToAddSubject} size='medium' variant='contained'>
                     Add New Syllabus
                 </Button>
             </Box>
-            <Paper elevation={3} sx={{ marginTop: '15px', height: 600, width: '100%' }}>
 
-                <DataGrid
-                    rows={rows}
-                    columns={columns}
-                    initialState={{ pagination: { paginationModel } }}
-                    pageSizeOptions={[10, 20]}
-                    checkboxSelection
-                    sx={{ border: 0 }}
-                />
-            </Paper>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>Id</StyledTableCell>
+                            <StyledTableCell>Subject Name</StyledTableCell>
+                            <StyledTableCell align="start">Class</StyledTableCell>
+                            <StyledTableCell align="start">File</StyledTableCell>
+
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((e, i) => (
+                            <StyledTableRow key={i}>
+                                <StyledTableCell component="th" scope="row">
+                                    {e.id}
+                                </StyledTableCell>
+                                <StyledTableCell component="th" scope="row">
+                                    {e.subjectName}
+                                </StyledTableCell>
+                                <StyledTableCell align="start">{e.subjectName}</StyledTableCell>
+                                <StyledTableCell align="start">{e.group}</StyledTableCell>
+                            </StyledTableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </Box>
     );
 }

@@ -51,10 +51,10 @@ export default function StudentList() {
         <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px !important' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                 <Typography variant='h4' sx={{ fontSize: '23px', fontWeight: '600', color: '#474749' }}>
-                    Teacher List
+                    Student List
                 </Typography>
                 <Button onClick={goToAddStudent} size='medium' variant='contained'>
-                    Add New Teacher
+                    Add New Student
                 </Button>
             </Box>
 
@@ -64,12 +64,12 @@ export default function StudentList() {
                         <TableRow>
                             <StyledTableCell>Id</StyledTableCell>
                             <StyledTableCell>First Name</StyledTableCell>
-                            <StyledTableCell align="start">Last Name</StyledTableCell>
-                            <StyledTableCell align="start">School Name</StyledTableCell>
-                            <StyledTableCell align="start">Class</StyledTableCell>
-                            <StyledTableCell align="start">Phone</StyledTableCell>
-                            <StyledTableCell align="start">Gender</StyledTableCell>
-                            <StyledTableCell align="start">E-mail</StyledTableCell>
+                            <StyledTableCell>Last Name</StyledTableCell>
+                            <StyledTableCell>School Name</StyledTableCell>
+                            <StyledTableCell>Class</StyledTableCell>
+                            <StyledTableCell>Phone</StyledTableCell>
+                            <StyledTableCell>Gender</StyledTableCell>
+                            <StyledTableCell>E-mail</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -81,12 +81,12 @@ export default function StudentList() {
                                 <StyledTableCell component="th" scope="row">
                                     {e.firstName}
                                 </StyledTableCell>
-                                <StyledTableCell align="start">{e.lastName}</StyledTableCell>
-                                <StyledTableCell align="start">{e.schoolName}</StyledTableCell>
-                                <StyledTableCell align="start">{e.class}</StyledTableCell>
-                                <StyledTableCell align="start">{e.phone}</StyledTableCell>
-                                <StyledTableCell align="start">{e.gender}</StyledTableCell>
-                                <StyledTableCell align="start">{e.email}</StyledTableCell>
+                                <StyledTableCell>{e.lastName}</StyledTableCell>
+                                <StyledTableCell>{e.schoolName}</StyledTableCell>
+                                <StyledTableCell>{e.class}</StyledTableCell>
+                                <StyledTableCell>{e.phone}</StyledTableCell>
+                                <StyledTableCell>{e.gender}</StyledTableCell>
+                                <StyledTableCell>{e.email}</StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>

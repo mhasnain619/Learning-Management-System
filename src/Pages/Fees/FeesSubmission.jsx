@@ -45,7 +45,7 @@ const FeeSubmission = () => {
 
     return (
         <Container sx={{ mt: 10 }}>
-            <Card sx={{ maxWidth: 500, mx: "auto", p: 3, boxShadow: 3, borderRadius: 3 }}>
+            <Card sx={{ maxWidth: 500, mx: "auto", p: 3, boxShadow: 3, borderRadius: 2 }}>
                 <CardContent>
                     <Typography variant="h5" sx={{ mb: 3, textAlign: "center", color: "#1976d2" }}>
                         Fee Submission
@@ -73,7 +73,7 @@ const FeeSubmission = () => {
                         </TextField>
 
                         <TextField
-                            label="Class Name"
+                            label="Class"
                             fullWidth
                             name="className"
                             value={formData.className}

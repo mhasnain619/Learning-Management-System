@@ -4,22 +4,20 @@ import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio
 import { useNavigate } from "react-router-dom";
 import './TeacherRegistration.css'
 const TeacherRegistrationForm = () => {
-    let [userObj, setUserObj] = useState({
-        userFirstName: '',
-        userLastName: '',
-        userEmail: '',
+    let [teacherObj, setTeacherObj] = useState({
+        teacherFirstName: '',
+        teacherLastName: '',
+        teacherEmail: '',
+        teacherNumber: '',
         gender: ''
     });
 
-    let [userArray, setUserArray] = useState([]);
     const navigate = useNavigate()
 
     const handleSubmit = () => {
-        setUserArray([...userArray, userObj]);
-        console.log(userArray);
-        setUserObj({ userFirstName: '', userLastName: '', userEmail: '', gender: '' });
-        localStorage.setItem('teachersData', JSON.stringify(userArray))
-        navigate('/teacher-list')
+        console.log('Teacher obj : ', teacherObj);
+        setTeacherObj({ teacherFirstName: '', teacherLastName: '', teacherNumber: '', teacherEmail: '', gender: '' });
+        navigate('/teacher/teacher-list')
     };
 
     return (
@@ -32,37 +30,37 @@ const TeacherRegistrationForm = () => {
                     type='text'
                     label="Teacher First Name"
                     placeholder='Enter your first name'
-                    value={userObj.userFirstName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userFirstName: e.target.value })}
+                    value={teacherObj.teacherFirstName}
+                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherFirstName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Teacher Last Name"
                     placeholder='Enter your last name'
-                    value={userObj.userLastName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userLastName: e.target.value })}
+                    value={teacherObj.teacherLastName}
+                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherLastName: e.target.value })}
                 />
                 <Input
-                    type='text'
+                    type='email'
                     label="Teacher Email"
                     placeholder='Enter your email'
-                    value={userObj.userEmail}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
+                    value={teacherObj.teacherEmail}
+                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherEmail: e.target.value })}
                 />
                 <Input
                     type='number'
                     label="Teacher Number"
                     placeholder='Enter your number'
-                    value={userObj.userEmail}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
+                    value={teacherObj.teacherNumber}
+                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherNumber: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Gender</FormLabel>
                     <RadioGroup
                         row
                         name="gender"
-                        value={userObj.gender || ''}
-                        onChange={(e) => setUserObj({ ...userObj, gender: e.target.value })}
+                        value={teacherObj.gender || ''}
+                        onChange={(e) => setTeacherObj({ ...teacherObj, gender: e.target.value })}
                     >
                         <FormControlLabel value="Male" control={<Radio />} label="Male" />
                         <FormControlLabel value="Female" control={<Radio />} label="Female" />

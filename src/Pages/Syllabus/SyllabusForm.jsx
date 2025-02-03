@@ -4,21 +4,18 @@ import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio
 import { useNavigate } from "react-router-dom";
 import './SyllabusForm.css'
 const SyllabusForm = () => {
-    let [userObj, setUserObj] = useState({
-        subjectName: '',
-        userClass: '',
-        gender: ''
+    let [syllabusObj, setSyllabusObj] = useState({
+        syllabusName: '',
+        syllabusClass: '',
+        syllabusFile: ''
     });
 
-    let [userArray, setUserArray] = useState([]);
     const navigate = useNavigate()
 
     const handleSubmit = () => {
-        setUserArray([...userArray, userObj]);
-        console.log(userArray);
-        setUserObj({ subjectName: '', userClass: '', gender: '' });
-        localStorage.setItem('studentData', JSON.stringify(userArray))
-        navigate('/student-list')
+        console.log('syllabus obj is', syllabusObj);
+        setSyllabusObj({ syllabusName: '', syllabusClass: '', syllabusFile: '' });
+        navigate('/syllabus/syllabus-list')
     };
 
     return (
@@ -31,28 +28,27 @@ const SyllabusForm = () => {
                     type='text'
                     label="Subject Name"
                     placeholder='Enter your subject name'
-                    value={userObj.subjectName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, subjectName: e.target.value })}
+                    value={syllabusObj.syllabusName}
+                    onChangeEvent={(e) => setSyllabusObj({ ...syllabusObj, syllabusName: e.target.value })}
                 />
 
                 <Input
                     type='number'
                     label="Class"
                     placeholder='Enter your class'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                    value={syllabusObj.syllabusClass}
+                    onChangeEvent={(e) => setSyllabusObj({ ...syllabusObj, syllabusClass: e.target.value })}
                 />
                 <Input
                     type='file'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                    value={syllabusObj.syllabusFile}
+                    onChangeEvent={(e) => setSyllabusObj({ ...syllabusObj, syllabusFile: e.target.value })}
                 />
 
                 <Button onClick={handleSubmit} size="large" variant="contained" color="primary" fullWidth>
                     Add
                 </Button>
             </Box>
-            {/* <CustomizedTables data={userArray} /> */}
         </Container>
     );
 };

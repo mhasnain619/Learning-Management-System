@@ -29,6 +29,7 @@ import UserProfile from './Components/Profile/Profile';
 import StudentList from './Pages/Students/StudentList';
 import SubjectList from './Pages/Subjects/SubjectList';
 import ExamScheduleCard from './Pages/Exam/ExamSchedule';
+import ExamResultCard from './Pages/Exam/ExamResult';
 
 // Material UI Theme
 const theme = createTheme({
@@ -89,7 +90,7 @@ function App() {
 
           {/* Routes for Exams */}
           <Route path="exam/exam-schedule" element={<ExamScheduleCard />} />
-          <Route path="exam/exam-result" element={<FeeVoucher />} />
+          <Route path="exam/exam-result" element={<ExamResultCard />} />
 
           <Route path="home" element={<Home />} />
           <Route path="profile" element={<Profile />} />

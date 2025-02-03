@@ -4,21 +4,18 @@ import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio
 import { useNavigate } from "react-router-dom";
 import './AddSubject.css'
 const SubjectRegistrationForm = () => {
-    let [userObj, setUserObj] = useState({
+    let [subjectObj, setSubjectObj] = useState({
         subjectName: '',
         subjectClass: '',
         selectGroup: ''
     });
 
-    let [userArray, setUserArray] = useState([]);
     const navigate = useNavigate()
 
     const handleSubmit = () => {
-        setUserArray([...userArray, userObj]);
-        console.log(userArray);
-        setUserObj({ subjectName: '', userLastName: '', userEmail: '', subjectClass: '', selectGroup: '' });
-        localStorage.setItem('subjectData', JSON.stringify(userArray))
-        navigate('/student-list')
+        console.log('subject obj is: ', subjectObj);
+        setSubjectObj({ subjectName: '', subjectClass: '', selectGroup: '' });
+        navigate('/subject/subject-list')
     };
 
     return (
@@ -31,24 +28,24 @@ const SubjectRegistrationForm = () => {
                     type='text'
                     label="Subject Name"
                     placeholder='Enter your subject name'
-                    value={userObj.subjectName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, subjectName: e.target.value })}
+                    value={subjectObj.subjectName}
+                    onChangeEvent={(e) => setSubjectObj({ ...subjectObj, subjectName: e.target.value })}
                 />
 
                 <Input
                     type='number'
                     label="Class"
                     placeholder='Enter your class'
-                    value={userObj.subjectClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, subjectClass: e.target.value })}
+                    value={subjectObj.subjectClass}
+                    onChangeEvent={(e) => setSubjectObj({ ...subjectObj, subjectClass: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Select Group</FormLabel>
                     <RadioGroup
                         row
                         name="selectGroup"
-                        value={userObj.selectGroup || ''}
-                        onChange={(e) => setUserObj({ ...userObj, selectGroup: e.target.value })}
+                        value={subjectObj.selectGroup || ''}
+                        onChange={(e) => setSubjectObj({ ...subjectObj, selectGroup: e.target.value })}
                     >
                         <FormControlLabel value="General-Science" control={<Radio />} label="General-Science" />
                         <FormControlLabel value="Pre-Engineering" control={<Radio />} label="Pre-Engineering" />
@@ -59,7 +56,6 @@ const SubjectRegistrationForm = () => {
                     Add
                 </Button>
             </Box>
-            {/* <CustomizedTables data={userArray} /> */}
         </Container>
     );
 };

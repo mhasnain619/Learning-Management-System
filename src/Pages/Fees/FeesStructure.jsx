@@ -20,7 +20,7 @@ const FeesStructureCard = () => {
             <Grid container spacing={3}>
                 {classesData.map((classItem, index) => (
                     <Grid item xs={12} sm={6} md={4} key={index}>
-                        <Card sx={{ minWidth: 250, p: 1, boxShadow: 4, borderRadius: 3 }}>
+                        <Card sx={{ minWidth: 250, p: 1, boxShadow: 3, borderRadius: 2 }}>
                             <CardContent>
                                 <Typography variant="h6" sx={{ fontWeight: "bold", color: "#1976d2" }}>
                                     {classItem.className}
