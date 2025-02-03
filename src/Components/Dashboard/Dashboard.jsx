@@ -110,6 +110,12 @@ function ResponsiveDrawer(props) {
 
             ]
         },
+        {
+            name: "Exam", icon: <FaHome />, children: [
+                { name: "Exam Schedule", route: "/exam/exam-schedule" },
+                { name: "Exam Result", route: "/exam/exam-result" },
+            ]
+        },
         { name: "Contact Us", icon: <MdContactPage />, route: "/contact" },
     ];
 

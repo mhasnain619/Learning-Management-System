@@ -31,30 +31,30 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 const rows = [
-    { id: 1, gender: 'male', lastName: 'Snow', firstName: 'Jon', age: 35, email: 'qwqr@gmail.com' },
-    { id: 2, gender: 'male', lastName: 'Lannister', firstName: 'Cersei', age: 42, email: 'qwqr@gmail.com' },
-    { id: 3, gender: 'male', lastName: 'Lannister', firstName: 'Jaime', age: 45, email: 'qwqr@gmail.com' },
-    { id: 4, gender: 'male', lastName: 'Stark', firstName: 'Arya', age: 16, email: 'qwqr@gmail.com' },
-    { id: 5, gender: 'male', lastName: 'Targaryen', firstName: 'Daenerys', age: null, email: 'qwqr@gmail.com' },
-    { id: 6, gender: 'male', lastName: 'Melisandre', firstName: null, age: 150, email: 'qwqr@gmail.com' },
-    { id: 7, gender: 'male', lastName: 'Clifford', firstName: 'Ferrara', age: 44, email: 'qwqr@gmail.com' },
-    { id: 8, gender: 'male', lastName: 'Frances', firstName: 'Rossini', age: 36, email: 'qwqr@gmail.com' },
-    { id: 9, gender: 'male', lastName: 'Roxie', firstName: 'Harvey', age: 65, email: 'qwqr@gmail.com' },
+    { id: 1, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Snow', firstName: 'Jon', gender: 'male', age: 35, email: 'qwqr@gmail.com' },
+    { id: 2, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Lannister', firstName: 'Cersei', gender: 'male', age: 42, email: 'qwqr@gmail.com' },
+    { id: 3, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Lannister', firstName: 'Jaime', gender: 'male', age: 45, email: 'qwqr@gmail.com' },
+    { id: 4, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Stark', firstName: 'Arya', gender: 'male', age: 16, email: 'qwqr@gmail.com' },
+    { id: 5, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Targaryen', firstName: 'Daenerys', gender: 'male', age: null, email: 'qwqr@gmail.com' },
+    { id: 6, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Melisandre', firstName: null, gender: 'male', age: 150, email: 'qwqr@gmail.com' },
+    { id: 7, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Clifford', firstName: 'Ferrara', gender: 'male', age: 44, email: 'qwqr@gmail.com' },
+    { id: 8, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Frances', firstName: 'Rossini', gender: 'male', age: 36, email: 'qwqr@gmail.com' },
+    { id: 9, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Roxie', firstName: 'Harvey', gender: 'male', age: 65, email: 'qwqr@gmail.com' },
 ];
-export default function UserTable() {
+export default function StudentList() {
     const navigate = useNavigate()
 
     const goToAddStudent = () => {
-        navigate('/student-registration')
+        navigate('/student/student-registration')
     }
     return (
         <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px !important' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                 <Typography variant='h4' sx={{ fontSize: '23px', fontWeight: '600', color: '#474749' }}>
-                    Student List
+                    Teacher List
                 </Typography>
                 <Button onClick={goToAddStudent} size='medium' variant='contained'>
-                    Add New Student
+                    Add New Teacher
                 </Button>
             </Box>
 
@@ -68,8 +68,8 @@ export default function UserTable() {
                             <StyledTableCell align="start">School Name</StyledTableCell>
                             <StyledTableCell align="start">Class</StyledTableCell>
                             <StyledTableCell align="start">Phone</StyledTableCell>
-                            <StyledTableCell align="start">E-mail</StyledTableCell>
                             <StyledTableCell align="start">Gender</StyledTableCell>
+                            <StyledTableCell align="start">E-mail</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -82,11 +82,11 @@ export default function UserTable() {
                                     {e.firstName}
                                 </StyledTableCell>
                                 <StyledTableCell align="start">{e.lastName}</StyledTableCell>
-                                <StyledTableCell align="start">{e.schoolname}</StyledTableCell>
+                                <StyledTableCell align="start">{e.schoolName}</StyledTableCell>
                                 <StyledTableCell align="start">{e.class}</StyledTableCell>
                                 <StyledTableCell align="start">{e.phone}</StyledTableCell>
-                                <StyledTableCell align="start">{e.email}</StyledTableCell>
                                 <StyledTableCell align="start">{e.gender}</StyledTableCell>
+                                <StyledTableCell align="start">{e.email}</StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>

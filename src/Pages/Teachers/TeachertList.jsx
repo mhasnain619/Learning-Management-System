@@ -31,15 +31,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', gender: 'male', age: 35, email: 'qwqr@gmail.com' },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', gender: 'male', age: 42, email: 'qwqr@gmail.com' },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', gender: 'male', age: 45, email: 'qwqr@gmail.com' },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', gender: 'male', age: 16, email: 'qwqr@gmail.com' },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', gender: 'male', age: null, email: 'qwqr@gmail.com' },
-    { id: 6, lastName: 'Melisandre', firstName: null, gender: 'male', age: 150, email: 'qwqr@gmail.com' },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', gender: 'male', age: 44, email: 'qwqr@gmail.com' },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', gender: 'male', age: 36, email: 'qwqr@gmail.com' },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', gender: 'male', age: 65, email: 'qwqr@gmail.com' },
+    { id: 1, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Snow', firstName: 'Jon', gender: 'male', age: 35, email: 'qwqr@gmail.com' },
+    { id: 2, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Lannister', firstName: 'Cersei', gender: 'male', age: 42, email: 'qwqr@gmail.com' },
+    { id: 3, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Lannister', firstName: 'Jaime', gender: 'male', age: 45, email: 'qwqr@gmail.com' },
+    { id: 4, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Stark', firstName: 'Arya', gender: 'male', age: 16, email: 'qwqr@gmail.com' },
+    { id: 5, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Targaryen', firstName: 'Daenerys', gender: 'male', age: null, email: 'qwqr@gmail.com' },
+    { id: 6, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Melisandre', firstName: null, gender: 'male', age: 150, email: 'qwqr@gmail.com' },
+    { id: 7, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Clifford', firstName: 'Ferrara', gender: 'male', age: 44, email: 'qwqr@gmail.com' },
+    { id: 8, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Frances', firstName: 'Rossini', gender: 'male', age: 36, email: 'qwqr@gmail.com' },
+    { id: 9, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Roxie', firstName: 'Harvey', gender: 'male', age: 65, email: 'qwqr@gmail.com' },
 ];
 export default function TeacherList() {
     const navigate = useNavigate()
@@ -63,8 +63,8 @@ export default function TeacherList() {
                     <TableHead>
                         <TableRow>
                             <StyledTableCell>Id</StyledTableCell>
-                            <StyledTableCell>First Name</StyledTableCell>
-                            <StyledTableCell align="start">Last Name</StyledTableCell>
+                            <StyledTableCell>T First Name</StyledTableCell>
+                            <StyledTableCell align="start">T Last Name</StyledTableCell>
                             <StyledTableCell align="start">School Name</StyledTableCell>
                             <StyledTableCell align="start">Class</StyledTableCell>
                             <StyledTableCell align="start">Phone</StyledTableCell>
@@ -82,9 +82,9 @@ export default function TeacherList() {
                                     {e.firstName}
                                 </StyledTableCell>
                                 <StyledTableCell align="start">{e.lastName}</StyledTableCell>
-                                <StyledTableCell align="start">{e.schoolname}</StyledTableCell>
+                                <StyledTableCell align="start">{e.schoolName}</StyledTableCell>
                                 <StyledTableCell align="start">{e.class}</StyledTableCell>
-                                <StyledTableCell align="start">{e.age}</StyledTableCell>
+                                <StyledTableCell align="start">{e.phone}</StyledTableCell>
                                 <StyledTableCell align="start">{e.gender}</StyledTableCell>
                                 <StyledTableCell align="start">{e.email}</StyledTableCell>
                             </StyledTableRow>
