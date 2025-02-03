@@ -62,38 +62,38 @@ function ResponsiveDrawer(props) {
 
         {
             name: "Students", icon: <FaHome />, children: [
-                { name: "Student Registration", route: "/student-registration" },
-                { name: "Student List", route: "/student-list" }
+                { name: "Student Registration", route: "/student/student-registration" },
+                { name: "Student List", route: "/student/student-list" }
             ]
         },
         {
             name: "Teachers", icon: <FaHome />, children: [
-                { name: "Teacher Registration", route: "/teacher-registration" },
-                { name: "Teacher List", route: "/teacher-list" }
+                { name: "Teacher Registration", route: "/teacher/teacher-registration" },
+                { name: "Teacher List", route: "/teacher/teacher-list" }
             ]
         },
         {
             name: "Subjects", icon: <FaHome />, children: [
-                { name: "Add Subject", route: "/add-subject" },
-                { name: "Subjects List", route: "/subject-list" }
+                { name: "Add Subject", route: "/subject/add-subject" },
+                { name: "Subjects List", route: "/subject/subject-list" }
             ]
         },
         {
             name: "Syllabus", icon: <FaHome />, children: [
-                { name: "Add Syllabus", route: "/add-syllabus" },
-                { name: "Syllabus List", route: "/syllabus-list" }
+                { name: "Add Syllabus", route: "/syllabus/add-syllabus" },
+                { name: "Syllabus List", route: "/syllabus/syllabus-list" }
             ]
         },
         {
             name: "School", icon: <FaHome />, children: [
-                { name: "Student Registration", route: "/school-student-registration" },
-                { name: "Teacher Registration", route: "/school-teacher-registration" }
+                { name: "Student Registration", route: "/school/school-student-registration" },
+                { name: "Teacher Registration", route: "/school/school-teacher-registration" }
             ]
         },
         {
             name: "Class", icon: <FaHome />, children: [
-                { name: "Class Form", route: "/class-form" },
-                { name: "Class List", route: "/class-list" }
+                { name: "Class Form", route: "/class/class-form" },
+                { name: "Class List", route: "/class/class-list" }
             ]
         },
         {
@@ -104,9 +104,9 @@ function ResponsiveDrawer(props) {
         },
         {
             name: "Fees", icon: <FaHome />, children: [
-                { name: "Fees Structure", route: "/fees-structure" },
-                { name: "Fees Voucher", route: "/fees-voucher" },
-                { name: "Fees Submission", route: "/fees-submission" },
+                { name: "Fees Structure", route: "/fees/fees-structure" },
+                { name: "Fees Voucher", route: "/fees/fees-voucher" },
+                { name: "Fees Submission", route: "/fees/fees-submission" },
 
             ]
         },

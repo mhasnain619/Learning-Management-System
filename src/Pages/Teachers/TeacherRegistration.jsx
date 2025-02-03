@@ -30,22 +30,29 @@ const TeacherRegistrationForm = () => {
                 </Typography>
                 <Input
                     type='text'
-                    label="First Name"
+                    label="Teacher First Name"
                     placeholder='Enter your first name'
                     value={userObj.userFirstName}
                     onChangeEvent={(e) => setUserObj({ ...userObj, userFirstName: e.target.value })}
                 />
                 <Input
                     type='text'
-                    label="Last Name"
+                    label="Teacher Last Name"
                     placeholder='Enter your last name'
                     value={userObj.userLastName}
                     onChangeEvent={(e) => setUserObj({ ...userObj, userLastName: e.target.value })}
                 />
                 <Input
                     type='text'
-                    label="Email"
+                    label="Teacher Email"
                     placeholder='Enter your email'
+                    value={userObj.userEmail}
+                    onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
+                />
+                <Input
+                    type='number'
+                    label="Teacher Number"
+                    placeholder='Enter your number'
                     value={userObj.userEmail}
                     onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
                 />

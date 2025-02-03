@@ -85,7 +85,7 @@ const LoginPage = () => {
             </Grid>
             <Grid item xs={12} md={6} className="rightPanel">
                 <Box>
-                    <Typography variant="h5" align="start" gutterBottom>
+                    <Typography variant="h5" gutterBottom>
                         LOGIN
                     </Typography>
                     <TextField onChange={(e) => setUserLoginData({ ...userLoginData, email: e.target.value })} fullWidth label="Email" variant="outlined" margin="normal" />

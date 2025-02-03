@@ -31,15 +31,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35, email: 'qwqr@gmail.com' },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42, email: 'qwqr@gmail.com' },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45, email: 'qwqr@gmail.com' },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16, email: 'qwqr@gmail.com' },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null, email: 'qwqr@gmail.com' },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150, email: 'qwqr@gmail.com' },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44, email: 'qwqr@gmail.com' },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36, email: 'qwqr@gmail.com' },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65, email: 'qwqr@gmail.com' },
+    { id: 1, gender: 'male', lastName: 'Snow', firstName: 'Jon', age: 35, email: 'qwqr@gmail.com' },
+    { id: 2, gender: 'male', lastName: 'Lannister', firstName: 'Cersei', age: 42, email: 'qwqr@gmail.com' },
+    { id: 3, gender: 'male', lastName: 'Lannister', firstName: 'Jaime', age: 45, email: 'qwqr@gmail.com' },
+    { id: 4, gender: 'male', lastName: 'Stark', firstName: 'Arya', age: 16, email: 'qwqr@gmail.com' },
+    { id: 5, gender: 'male', lastName: 'Targaryen', firstName: 'Daenerys', age: null, email: 'qwqr@gmail.com' },
+    { id: 6, gender: 'male', lastName: 'Melisandre', firstName: null, age: 150, email: 'qwqr@gmail.com' },
+    { id: 7, gender: 'male', lastName: 'Clifford', firstName: 'Ferrara', age: 44, email: 'qwqr@gmail.com' },
+    { id: 8, gender: 'male', lastName: 'Frances', firstName: 'Rossini', age: 36, email: 'qwqr@gmail.com' },
+    { id: 9, gender: 'male', lastName: 'Roxie', firstName: 'Harvey', age: 65, email: 'qwqr@gmail.com' },
 ];
 export default function UserTable() {
     const navigate = useNavigate()
@@ -63,10 +63,13 @@ export default function UserTable() {
                     <TableHead>
                         <TableRow>
                             <StyledTableCell>Id</StyledTableCell>
-                            <StyledTableCell>User Name</StyledTableCell>
-                            <StyledTableCell align="start">Name</StyledTableCell>
+                            <StyledTableCell>First Name</StyledTableCell>
+                            <StyledTableCell align="start">Last Name</StyledTableCell>
+                            <StyledTableCell align="start">School Name</StyledTableCell>
+                            <StyledTableCell align="start">Class</StyledTableCell>
                             <StyledTableCell align="start">Phone</StyledTableCell>
                             <StyledTableCell align="start">E-mail</StyledTableCell>
+                            <StyledTableCell align="start">Gender</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -79,8 +82,11 @@ export default function UserTable() {
                                     {e.firstName}
                                 </StyledTableCell>
                                 <StyledTableCell align="start">{e.lastName}</StyledTableCell>
-                                <StyledTableCell align="start">{e.age}</StyledTableCell>
+                                <StyledTableCell align="start">{e.schoolname}</StyledTableCell>
+                                <StyledTableCell align="start">{e.class}</StyledTableCell>
+                                <StyledTableCell align="start">{e.phone}</StyledTableCell>
                                 <StyledTableCell align="start">{e.email}</StyledTableCell>
+                                <StyledTableCell align="start">{e.gender}</StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>

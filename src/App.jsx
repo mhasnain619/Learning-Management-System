@@ -52,39 +52,37 @@ function App() {
 
 
           {/* student Routes */}
-          <Route path="student-registration" element={<StudentRegistrationForm />} />
-          <Route path="student-list" element={<DataTable />} />
+          <Route path="student/student-registration" element={<StudentRegistrationForm />} />
+          <Route path="student/student-list" element={<DataTable />} />
 
           {/* Teacher Routes */}
-          <Route path="teacher-registration" element={<TeacherRegistrationForm />} />
-          <Route path="teacher-list" element={<TeacherList />} />
+          <Route path="teacher/teacher-registration" element={<TeacherRegistrationForm />} />
+          <Route path="teacher/teacher-list" element={<TeacherList />} />
 
           {/* Subjects Routes */}
-          <Route path="add-subject" element={<SubjectRegistrationForm />} />
-          <Route path="subject-list" element={<AddSubject />} />
+          <Route path="subject/add-subject" element={<SubjectRegistrationForm />} />
+          <Route path="subject/subject-list" element={<AddSubject />} />
 
           {/* Syllabus Routes */}
-          <Route path="add-syllabus" element={<SyllabusForm />} />
-          <Route path="syllabus-list" element={<SyllabusList />} />
+          <Route path="syllabus/add-syllabus" element={<SyllabusForm />} />
+          <Route path="syllabus/syllabus-list" element={<SyllabusList />} />
 
           {/* School Routes */}
-          <Route path="school-student-registration" element={< SchoolStudentRegistration />} />
-          <Route path="school-teacher-registration" element={< SchoolTeacherRegistration />} />
+          <Route path="school/school-student-registration" element={< SchoolStudentRegistration />} />
+          <Route path="school/school-teacher-registration" element={< SchoolTeacherRegistration />} />
 
           {/* Class Routes */}
-          <Route path="class-form" element={<ClassForm />} />
-          <Route path="class-list" element={<ClassList />} />
+          <Route path="class/class-form" element={<ClassForm />} />
+          <Route path="class/class-list" element={<ClassList />} />
 
           {/*Routes Admission Form  */}
           <Route path="admission-form" element={<AdmissionForm />} />
 
 
           {/* Routes Fees */}
-          <Route path="fees-structure" element={<FeesStructureCard />} />
-          <Route path="fees-voucher" element={<FeeVoucher />} />
-          <Route path="fees-submission" element={<FeeSubmission />} />
-
-
+          <Route path="fees/fees-structure" element={<FeesStructureCard />} />
+          <Route path="fees/fees-voucher" element={<FeeVoucher />} />
+          <Route path="fees/fees-submission" element={<FeeSubmission />} />
 
           <Route path="home" element={<Home />} />
           <Route path="profile" element={<Profile />} />

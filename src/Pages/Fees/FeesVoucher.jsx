@@ -40,7 +40,7 @@ const FeeVoucher = () => {
                                 <Grid container spacing={2} sx={{ mt: 2 }}>
                                     <Grid item xs={12}>
                                         <Button
-                                            onClick={() => navigate('/fees-submission')}
+                                            onClick={() => navigate('/fees/fees-submission')}
                                             variant="contained"
                                             size="large"
                                             color="primary"

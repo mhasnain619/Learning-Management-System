@@ -9,11 +9,12 @@ import waveImg from '../../assets/wave.png'
 import { useNavigate } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import auth from "../../FirebaseConfiq";
 const SignupPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [credentials, setCredentials] = useState({
+        name: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -22,10 +23,33 @@ const SignupPage = () => {
     const navigate = useNavigate();
 
     const getCredentials = () => {
+        if (!credentials.email.includes("@")) {
+            console.log("Invalid email format");
+            return;
+        }
+
+        if (credentials.password.length < 6) {
+            console.log("Password should be at least 6 characters");
+            return;
+        }
+
+        if (credentials.password !== credentials.confirmPassword) {
+            console.log("Passwords do not match");
+            return;
+        }
         createUserWithEmailAndPassword(auth, credentials.email, credentials.password, credentials.confirmPassword)
             .then((userCredential) => {
-                setOpen(true)
-                console.log(userCredential)
+                const user = userCredential.user
+                updateProfile(user, { displayName: credentials.name }).then(() => {
+                    console.log(userCredential)
+                }).catch((error) => {
+                    console.log("Error updating profile:", error.message);
+                })
+                setOpen(true);
+                setTimeout(() => {
+                    navigate('/login')
+                }, 2000);
+
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -33,11 +57,6 @@ const SignupPage = () => {
                 console.log(errorMessage)
 
             });
-        setOpen(true);
-        setTimeout(() => {
-            navigate('/login')
-        }, 1000)
-        console.log(credentials);
     };
 
     const handleClose = (event, reason) => {
@@ -94,11 +113,20 @@ const SignupPage = () => {
                         Create Your Account
                     </Typography>
                     <TextField
+                        type="text"
+                        fullWidth
+                        onChange={(e) => setCredentials({ ...credentials, name: e.target.value })}
+                        label="Full Name"
+                        variant="outlined"
+                        margin="normal"
+                    />
+                    <TextField
                         fullWidth
                         onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
                         label="Email"
                         variant="outlined"
                         margin="normal"
+                        type="email"
                     />
                     <TextField
                         fullWidth

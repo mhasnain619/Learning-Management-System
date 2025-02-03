@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Card, CardContent, Typography, Avatar, Button, Grid, Box } from '@mui/material';
-import userImg from '../../assets/userimg.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import { FaLocationDot } from "react-icons/fa6";
 
@@ -12,124 +11,107 @@ import {
     LocationOn as LocationOnIcon,
     Language as LanguageIcon,
 } from '@mui/icons-material';
+
+import userImg from '../../assets/userimg.png';
 import './profile.css';
-import axios from 'axios';
 
 const UserProfile = () => {
-
-    const [userData, setUserData] = useState(null)
+    const [user, setUser] = useState(null);
+    const auth = getAuth();
 
     useEffect(() => {
-        getData();
-    }, []);
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+        });
 
-    const getData = async () => {
-        setUserData(null)
-        await axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
-            setUserData(res.data[0]);
-        })
-    };
+        return () => unsubscribe(); // Cleanup listener
+    }, [auth]);
 
     return (
         <Box sx={{ py: 8 }}>
-            {userData ?
+            {user ? (
                 <Card className="user-card">
                     <Grid container spacing={3}>
                         {/* User Avatar and Basic Info */}
                         <Grid item xs={12} md={3} display="flex" justifyContent="center" alignItems="center">
-                            <Avatar alt={userData.name} src={userImg} className="user-avatar" />
+                            <Avatar
+                                alt={user.displayName || "User"}
+                                src={user.photoURL || userImg}
+                                className="user-avatar"
+                            />
                         </Grid>
                         <Grid item xs={12} md={9}>
                             <Typography className='userName'>
-                                {userData.name}
+                                {user.displayName || "No Name Available"}
                             </Typography>
                             <Typography className='userNameSngCompany'>
-                                {userData.username} | {userData.company.name}
+                                {user.email}
                             </Typography>
-                            <Grid container spacing={2} marginTop={0} direction={{ xs: "column", sm: "row" }} >
+                            <Grid container spacing={2} marginTop={2}>
                                 <Grid item xs={12} sm="auto">
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        size="large"
-                                        className="public-profile-btn"
-                                        fullWidth
-                                    >
-                                        View Public Profile
+                                    <Button variant="contained" color="primary" size="large">
+                                        View Profile
                                     </Button>
                                 </Grid>
                                 <Grid item xs={12} sm="auto">
-                                    <Button
-                                        variant="contained"
-                                        color="secondary"
-                                        size="large"
-                                        className="send-message-btn"
-                                        fullWidth
-                                    >
-                                        Send Message
+                                    <Button variant="contained" color="secondary" size="large">
+                                        Log Out
                                     </Button>
                                 </Grid>
                             </Grid>
-
                         </Grid>
                     </Grid>
 
                     {/* Additional User Details */}
                     <CardContent className="card-content">
                         <Grid container spacing={1}>
-                            {/* Company Details */}
+                            {/* Company Placeholder (Firebase doesn't store it by default) */}
                             <Grid item xs={12} md={4}>
                                 <Box style={{ textAlign: 'start' }}>
                                     <p className='nameContAddre'>Company Details :</p>
                                     <span className='iconAndText'>
                                         <BusinessIcon className="section-icon" fontSize="small" />
-                                        <p>  {userData.company.name}</p>
+                                        <p>{user.displayName || "No Company"}</p>
                                     </span>
-                                    <p>{userData.company.catchPhrase}</p>
+                                    <p>Professional at something...</p>
                                 </Box>
                             </Grid>
 
                             {/* Contact Information */}
                             <Grid item xs={12} md={4}>
                                 <Box style={{ textAlign: 'start' }}>
-                                    <p className='nameContAddre'>
-                                        Contact Information :
-                                    </p>
+                                    <p className='nameContAddre'>Contact Information :</p>
                                     <span className='iconAndText'>
                                         <EmailIcon className="section-icon" fontSize="small" />
-                                        <p>  {userData.email}</p>
+                                        <p>{user.email}</p>
                                     </span>
                                     <span className='iconAndText'>
                                         <PhoneIcon className="section-icon" fontSize="small" />
-                                        <p>{userData.phone}</p>
+                                        <p>{user.phoneNumber || "No Phone"}</p>
                                     </span>
                                     <span className='iconAndText'>
                                         <LanguageIcon className="section-icon" fontSize="small" />
-                                        <p>  {userData.website}</p>
+                                        <p>{user.uid || "No Website"}</p>
                                     </span>
                                 </Box>
                             </Grid>
 
-                            {/* Address */}
+                            {/* Address Placeholder */}
                             <Grid item xs={12} md={4}>
                                 <Box style={{ textAlign: 'start' }}>
                                     <p className='nameContAddre'>Address :</p>
                                     <span className='Address'>
                                         <FaLocationDot className='locationIcon' />
-                                        <p>{`${userData.address.street}, ${userData.address.suite}, ${userData.address.city}, ${userData.address.zipcode}`}</p>
+                                        <p>{"No Address Available"}</p>
                                     </span>
                                 </Box>
                             </Grid>
                         </Grid>
                     </CardContent>
-                </Card> : userData == [] ?
-                    <Typography variant="h6">
-                        Data not found...!
-                    </Typography>
-                    :
-                    <CircularProgress />
-            }
-
+                </Card>
+            ) : (
+                <CircularProgress />
+            )}
         </Box>
     );
 };
