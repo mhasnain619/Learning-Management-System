@@ -19,10 +19,17 @@ import { useNavigate, Outlet, Link } from "react-router-dom";
 import jawan from '../../assets/jawan.png';
 import { FaCartShopping } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
-import { MdContactPage, MdExpandLess, MdExpandMore } from "react-icons/md";
+import { MdContactPage, MdExpandLess, MdExpandMore, MdFeed, MdOutlineAdminPanelSettings } from "react-icons/md";
 import { FaGithub } from "react-icons/fa6";
 import './Dashboard.css'
 import { Avatar, Button, Collapse, Menu, MenuItem, Tooltip } from '@mui/material';
+import { PiExamFill, PiStudentBold } from "react-icons/pi";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { MdOutlineSubject } from "react-icons/md";
+import { FaBook } from "react-icons/fa";
+import { BiSolidSchool } from "react-icons/bi";
+import { SiGoogleclassroom } from "react-icons/si";
+
 // import './Layout.css'
 const drawerWidth = 240;
 
@@ -61,49 +68,49 @@ function ResponsiveDrawer(props) {
         { name: "Home", icon: <FaHome />, route: "/home" },
 
         {
-            name: "Students", icon: <FaHome />, children: [
+            name: "Students", icon: <PiStudentBold />, children: [
                 { name: "Student Registration", route: "/student/student-registration" },
                 { name: "Student List", route: "/student/student-list" }
             ]
         },
         {
-            name: "Teachers", icon: <FaHome />, children: [
+            name: "Teachers", icon: <FaChalkboardTeacher />, children: [
                 { name: "Teacher Registration", route: "/teacher/teacher-registration" },
                 { name: "Teacher List", route: "/teacher/teacher-list" }
             ]
         },
         {
-            name: "Subjects", icon: <FaHome />, children: [
+            name: "Subjects", icon: <MdOutlineSubject />, children: [
                 { name: "Add Subject", route: "/subject/add-subject" },
                 { name: "Subjects List", route: "/subject/subject-list" }
             ]
         },
         {
-            name: "Syllabus", icon: <FaHome />, children: [
+            name: "Syllabus", icon: <FaBook />, children: [
                 { name: "Add Syllabus", route: "/syllabus/add-syllabus" },
                 { name: "Syllabus List", route: "/syllabus/syllabus-list" }
             ]
         },
         {
-            name: "School", icon: <FaHome />, children: [
+            name: "School", icon: <BiSolidSchool />, children: [
                 { name: "Student Registration", route: "/school/school-student-registration" },
                 { name: "Teacher Registration", route: "/school/school-teacher-registration" }
             ]
         },
         {
-            name: "Class", icon: <FaHome />, children: [
+            name: "Class", icon: <SiGoogleclassroom />, children: [
                 { name: "Class Form", route: "/class/class-form" },
                 { name: "Class List", route: "/class/class-list" }
             ]
         },
         {
-            name: "Admission", icon: <FaHome />, children: [
+            name: "Admission", icon: <MdOutlineAdminPanelSettings />, children: [
                 { name: "Admission Form", route: "/admission-form" },
 
             ]
         },
         {
-            name: "Fees", icon: <FaHome />, children: [
+            name: "Fees", icon: <MdFeed />, children: [
                 { name: "Fees Structure", route: "/fees/fees-structure" },
                 { name: "Fees Voucher", route: "/fees/fees-voucher" },
                 { name: "Fees Submission", route: "/fees/fees-submission" },
@@ -111,7 +118,7 @@ function ResponsiveDrawer(props) {
             ]
         },
         {
-            name: "Exam", icon: <FaHome />, children: [
+            name: "Exam", icon: <PiExamFill />, children: [
                 { name: "Exam Schedule", route: "/exam/exam-schedule" },
                 { name: "Exam Result", route: "/exam/exam-result" },
             ]
