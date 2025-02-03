@@ -42,10 +42,10 @@ const ExamResultCard = () => {
                                 </Typography>
                                 <Box sx={{ mt: 1 }}>
                                     <Typography variant="body2" sx={{ color: "#757575" }}>
-                                        🏆 Marks: {result.marks}/100
+                                        Marks: {result.marks}/100
                                     </Typography>
                                     <Typography variant="body2" sx={{ fontWeight: "bold", color: getGrade(result.marks) === "F" ? "red" : "#388e3c" }}>
-                                        🎓 Grade: {getGrade(result.marks)}
+                                        Grade: {getGrade(result.marks)}
                                     </Typography>
                                 </Box>
                             </CardContent>

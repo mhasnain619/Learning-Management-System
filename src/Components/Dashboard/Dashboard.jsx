@@ -17,10 +17,8 @@ import Typography from "@mui/material/Typography";
 import { FaHome } from "react-icons/fa";
 import { useNavigate, Outlet, Link } from "react-router-dom";
 import jawan from '../../assets/jawan.png';
-import { FaCartShopping } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
 import { MdContactPage, MdExpandLess, MdExpandMore, MdFeed, MdOutlineAdminPanelSettings } from "react-icons/md";
-import { FaGithub } from "react-icons/fa6";
 import './Dashboard.css'
 import { Avatar, Button, Collapse, Menu, MenuItem, Tooltip } from '@mui/material';
 import { PiExamFill, PiStudentBold } from "react-icons/pi";
@@ -31,7 +29,7 @@ import { BiSolidSchool } from "react-icons/bi";
 import { SiGoogleclassroom } from "react-icons/si";
 
 // import './Layout.css'
-const drawerWidth = 240;
+const drawerWidth = 230;
 
 function ResponsiveDrawer(props) {
     const { window } = props;
@@ -46,7 +44,6 @@ function ResponsiveDrawer(props) {
         setMobileOpen(false);
     };
 
-    // const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -105,7 +102,7 @@ function ResponsiveDrawer(props) {
         },
         {
             name: "Admission", icon: <MdOutlineAdminPanelSettings />, children: [
-                { name: "Admission Form", route: "/admission-form" },
+                { name: "Admission Form", route: "/admission/admission-form" },
 
             ]
         },

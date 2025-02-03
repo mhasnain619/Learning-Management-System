@@ -80,7 +80,7 @@ function App() {
           <Route path="class/class-list" element={<ClassList />} />
 
           {/*Routes Admission Form  */}
-          <Route path="admission-form" element={<AdmissionForm />} />
+          <Route path="admission/admission-form" element={<AdmissionForm />} />
 
 
           {/* Routes Fees */}

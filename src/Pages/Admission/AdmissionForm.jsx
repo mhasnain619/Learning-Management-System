@@ -4,23 +4,22 @@ import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio
 import { useNavigate } from "react-router-dom";
 import './AdmissionForm.css'
 const AdmissionForm = () => {
-    let [userObj, setUserObj] = useState({
-        userFirstName: '',
-        userLastName: '',
-        userEmail: '',
-        userClass: '',
+    let [admissionObj, setAdmissionObj] = useState({
+        admissionFirstName: '',
+        admissionLastName: '',
+        admissionEmail: '',
+        admissionPhoneNumber: '',
+        admissionDate: '',
+        admissionQualification: '',
         gender: ''
     });
 
-    let [userArray, setUserArray] = useState([]);
     const navigate = useNavigate()
 
     const handleSubmit = () => {
-        setUserArray([...userArray, userObj]);
-        console.log(userArray);
-        setUserObj({ userFirstName: '', userLastName: '', userEmail: '', userClass: '', gender: '' });
-        localStorage.setItem('studentData', JSON.stringify(userArray))
-        navigate('/student-list')
+        console.log('asmossion obj is ', admissionObj);
+        setAdmissionObj({ admissionFirstName: '', admissionLastName: '', admissionEmail: '', admissionPhoneNumber: '', admissionDate: '', admissionQualification: '', gender: '' });
+        navigate('/student/student-list')
     };
 
     return (
@@ -33,51 +32,51 @@ const AdmissionForm = () => {
                     type='text'
                     label="First Name"
                     placeholder='Enter your first name'
-                    value={userObj.userFirstName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userFirstName: e.target.value })}
+                    value={admissionObj.admissionFirstName}
+                    onChangeEvent={(e) => setAdmissionObj({ ...admissionObj, admissionFirstName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Last Name"
                     placeholder='Enter your last name'
-                    value={userObj.userLastName}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userLastName: e.target.value })}
+                    value={admissionObj.admissionLastName}
+                    onChangeEvent={(e) => setAdmissionObj({ ...admissionObj, admissionLastName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Email"
                     placeholder='Enter your email'
-                    value={userObj.userEmail}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userEmail: e.target.value })}
+                    value={admissionObj.admissionEmail}
+                    onChangeEvent={(e) => setAdmissionObj({ ...admissionObj, admissionEmail: e.target.value })}
                 />
                 <Input
                     type='number'
                     label="Phone Number"
                     placeholder='Enter your Phone Number'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                    value={admissionObj.admissionPhoneNumber}
+                    onChangeEvent={(e) => setAdmissionObj({ ...admissionObj, admissionPhoneNumber: e.target.value })}
                 />
                 <Input
                     type='date'
                     // label="Date of Birth"
                     // placeholder='Enter your date of birth'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                    value={admissionObj.admissionDate}
+                    onChangeEvent={(e) => setAdmissionObj({ ...admissionObj, admissionDate: e.target.value })}
                 />
                 <Input
-                    type='number'
+                    type='text'
                     label="Qualification"
-                    placeholder='Enter your last qyalification'
-                    value={userObj.userClass}
-                    onChangeEvent={(e) => setUserObj({ ...userObj, userClass: e.target.value })}
+                    placeholder='Enter your last qualification'
+                    value={admissionObj.admissionQualification}
+                    onChangeEvent={(e) => setAdmissionObj({ ...admissionObj, admissionQualification: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Gender</FormLabel>
                     <RadioGroup
                         row
                         name="gender"
-                        value={userObj.gender || ''}
-                        onChange={(e) => setUserObj({ ...userObj, gender: e.target.value })}
+                        value={admissionObj.gender || ''}
+                        onChange={(e) => setAdmissionObj({ ...admissionObj, gender: e.target.value })}
                     >
                         <FormControlLabel value="Male" control={<Radio />} label="Male" />
                         <FormControlLabel value="Female" control={<Radio />} label="Female" />

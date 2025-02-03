@@ -64,7 +64,7 @@ const ClassForm = () => {
                 <Input
                     type='text'
                     label="Qualification"
-                    placeholder='Enter your class'
+                    placeholder='Enter your qualification'
                     value={classObj.classUserQualification}
                     onChangeEvent={(e) => setClassObj({ ...classObj, classUserQualification: e.target.value })}
                 />
