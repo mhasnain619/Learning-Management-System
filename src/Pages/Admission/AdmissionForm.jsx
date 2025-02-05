@@ -87,7 +87,6 @@ const AdmissionForm = () => {
                     Register
                 </Button>
             </Box>
-            {/* <CustomizedTables data={userArray} /> */}
         </Container>
     );
 };

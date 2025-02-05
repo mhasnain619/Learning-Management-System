@@ -47,6 +47,9 @@ export default function TeacherList() {
     const goToAddTeacher = () => {
         navigate('/teacher/teacher-registration')
     }
+    const GotoUpdateTeacher = (id) => {
+        navigate(`/teacher/teacher-list/${id}`)
+    }
     return (
         <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px !important' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
@@ -70,6 +73,7 @@ export default function TeacherList() {
                             <StyledTableCell>Phone</StyledTableCell>
                             <StyledTableCell>Gender</StyledTableCell>
                             <StyledTableCell>E-mail</StyledTableCell>
+                            <StyledTableCell>Controls</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -87,6 +91,10 @@ export default function TeacherList() {
                                 <StyledTableCell>{e.phone}</StyledTableCell>
                                 <StyledTableCell>{e.gender}</StyledTableCell>
                                 <StyledTableCell>{e.email}</StyledTableCell>
+                                <Box className='controls'>
+                                    <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                    <Button onClick={() => GotoUpdateTeacher(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
+                                </Box>
                             </StyledTableRow>
                         ))}
                     </TableBody>

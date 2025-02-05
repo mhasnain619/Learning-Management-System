@@ -8,7 +8,20 @@
     font-weight: bold !important;
 }
 
+.controls {
+    display: flex;
+    justify-content: start;
+    margin-top: 6px;
+    align-items: center;
+}
+
+/* Adjust logo size for smaller screens */
+
 @media (max-width: 768px) {
+    .controls {
+        margin-top: 15px;
+    }
+
     .studentRegistrationName {
         font-size: 25px !important;
     }

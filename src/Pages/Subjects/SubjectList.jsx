@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import { Box, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './AddSubject.css'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -64,8 +65,9 @@ export default function SubjectList() {
                         <TableRow>
                             <StyledTableCell>Id</StyledTableCell>
                             <StyledTableCell>Subject Name</StyledTableCell>
-                            <StyledTableCell align="start">Class</StyledTableCell>
-                            <StyledTableCell align="start">Group</StyledTableCell>
+                            <StyledTableCell>Class</StyledTableCell>
+                            <StyledTableCell>Group</StyledTableCell>
+                            <StyledTableCell>Controls</StyledTableCell>
 
                         </TableRow>
                     </TableHead>
@@ -78,8 +80,12 @@ export default function SubjectList() {
                                 <StyledTableCell component="th" scope="row">
                                     {e.subjectName}
                                 </StyledTableCell>
-                                <StyledTableCell align="start">{e.subjectName}</StyledTableCell>
-                                <StyledTableCell align="start">{e.group}</StyledTableCell>
+                                <StyledTableCell>{e.subjectName}</StyledTableCell>
+                                <StyledTableCell>{e.group}</StyledTableCell>
+                                <Box className='controls'>
+                                    <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                    <Button onClick={() => GotoUpdateClass(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
+                                </Box>
                             </StyledTableRow>
                         ))}
                     </TableBody>

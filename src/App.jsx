@@ -30,6 +30,9 @@ import StudentList from './Pages/Students/StudentList';
 import SubjectList from './Pages/Subjects/SubjectList';
 import ExamScheduleCard from './Pages/Exam/ExamSchedule';
 import ExamResultCard from './Pages/Exam/ExamResult';
+import UpdateClass from './Pages/Class/UpdateClass';
+import UpdateStudent from './Pages/Students/UpdateStudent';
+import Updateteacher from './Pages/Teachers/UpdateTeacher';
 
 // Material UI Theme
 const theme = createTheme({
@@ -58,10 +61,12 @@ function App() {
           {/* student Routes */}
           <Route path="student/student-registration" element={<StudentRegistrationForm />} />
           <Route path="student/student-list" element={<StudentList />} />
+          <Route path="student/student-list/:id" element={<UpdateStudent />} />
 
           {/* Teacher Routes */}
           <Route path="teacher/teacher-registration" element={<TeacherRegistrationForm />} />
           <Route path="teacher/teacher-list" element={<TeacherList />} />
+          <Route path="teacher/teacher-list/:id" element={<Updateteacher />} />
 
           {/* Subjects Routes */}
           <Route path="subject/add-subject" element={<SubjectRegistrationForm />} />
@@ -78,6 +83,7 @@ function App() {
           {/* Class Routes */}
           <Route path="class/class-form" element={<ClassForm />} />
           <Route path="class/class-list" element={<ClassList />} />
+          <Route path='class/class-list/:id' element={<UpdateClass />} />
 
           {/*Routes Admission Form  */}
           <Route path="admission/admission-form" element={<AdmissionForm />} />

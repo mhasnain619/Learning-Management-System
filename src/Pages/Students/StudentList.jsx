@@ -47,6 +47,9 @@ export default function StudentList() {
     const goToAddStudent = () => {
         navigate('/student/student-registration')
     }
+    const GotoUpdateStudent = (id) => {
+        navigate(`/student/student-list/${id}`)
+    }
     return (
         <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px !important' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
@@ -70,6 +73,7 @@ export default function StudentList() {
                             <StyledTableCell>Phone</StyledTableCell>
                             <StyledTableCell>Gender</StyledTableCell>
                             <StyledTableCell>E-mail</StyledTableCell>
+                            <StyledTableCell>Controls</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -87,6 +91,10 @@ export default function StudentList() {
                                 <StyledTableCell>{e.phone}</StyledTableCell>
                                 <StyledTableCell>{e.gender}</StyledTableCell>
                                 <StyledTableCell>{e.email}</StyledTableCell>
+                                <Box className='controls'>
+                                    <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                    <Button onClick={() => GotoUpdateStudent(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
+                                </Box>
                             </StyledTableRow>
                         ))}
                     </TableBody>
