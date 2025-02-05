@@ -4,6 +4,7 @@ import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio
 import { useNavigate, useParams } from "react-router-dom";
 import '../../Pages/Class/ClassForm.css'
 import axios from "axios";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const UpdateStudent = () => {
 
@@ -36,7 +37,7 @@ const UpdateStudent = () => {
         axios.put(`http://localhost:3000/Clients/${id}`, studentUpdateObj)
             .then((res) => {
                 alert('User Updated Successfully.')
-                navigate('/')
+                navigate('/student/student-list')
                 // console.log("User updated:", res.data);
             })
             .catch((err) => {

@@ -10,7 +10,7 @@
 
 .controls {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     margin-top: 6px;
     align-items: center;
 }

@@ -265,7 +265,7 @@ function ResponsiveDrawer(props) {
                 component="main"
                 sx={{
                     display: 'flex',
-                    justifyContent: 'center',
+                    justifyContent: 'start',
                     alignItems: 'center',
                     flexGrow: 1,
                     p: 3,
@@ -273,8 +273,57 @@ function ResponsiveDrawer(props) {
                 }}
             >
 
-                {document.location.pathname === '/' && <Box sx={{ py: 5 }}>
-                    <p> Welcome to the LMS :</p>
+                {document.location.pathname === '/' && <Box sx={{ py: 6 }}>
+                    <h3>
+                        Welcome to the Learning Management System (LMS)
+                    </h3>
+
+                    <p>
+                        This platform is designed to streamline and enhance the management of educational institutions.
+                    </p>
+                    <h3>
+                        Key Features::
+                    </h3>
+                    <h3>
+                        Student Management:
+                    </h3>
+                    <p>
+                        Register students, maintain student lists, and manage their profiles efficiently.
+                    </p>
+
+                    <h3>
+                        Teacher Management:
+                    </h3>
+                    <p>
+                        Add new teachers, update information, and keep track of their assigned classes and subjects.
+                    </p>
+                    <h3>
+                        Subjects & Syllabus:
+                    </h3>
+                    <p>
+                        Organize subject details and syllabus structures to ensure a structured learning experience.
+                    </p>
+                    <h3>
+                        School & Classes:
+                    </h3>
+                    <p>
+                        Manage school information, class structures, and student-teacher assignments.
+                    </p>
+                    <h3>
+                        Admissions & Fees:
+                    </h3>
+                    <p>
+                        Handle student admissions, fee collection, and payment tracking.
+                    </p>
+                    <h3>
+                        Examinations:
+                    </h3>
+                    <p>
+                        Schedule and manage exams, results, and grading systems.
+                    </p>
+                    <p>
+                        This LMS ensures seamless administrative operations and improves overall academic management.
+                    </p>
 
                 </Box>}
 

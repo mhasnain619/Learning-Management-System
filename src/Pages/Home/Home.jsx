@@ -4,45 +4,29 @@ import React from 'react'
 const Home = () => {
     return (
         <Box sx={{ py: 6 }}>
-            <h3>
-                From <strong>ExploreEase</strong>
-            </h3>
+            <h3>Welcome to the Learning Management System (LMS)</h3>
+            <p>Our <strong>Learning Management System (LMS)</strong> is designed to simplify and enhance the management of educational institutions, making learning more accessible and administration more efficient.</p>
 
-            <p>
-                Discover a seamless experience tailored for tech enthusiasts, developers, and curious minds! Our platform offers:
-                Explore profiles of active community members or collaborators.
-            </p>
-            <h3>
-                Products:
-            </h3>
-            <p>
-                Browse innovative tools and solutions designed to supercharge your workflow.
+            <h2>Why Choose Our LMS?</h2>
+            <ul>
+                <li><strong>✅ Student & Teacher Management</strong> – Easily register, track, and manage students and teachers.</li>
+                <li><strong>✅ Subjects & Syllabus Organization</strong> – Keep subjects and syllabi well-structured for a better learning experience.</li>
+                <li><strong>✅ Admissions & Fees Tracking</strong> – Streamline the admission process and manage fee collections effortlessly.</li>
+                <li><strong>✅ Class & School Administration</strong> – Organize classes, timetables, and institutional details in one place.</li>
+                <li><strong>✅ Exam Management</strong> – Conduct, evaluate, and store exam results efficiently.</li>
+            </ul>
 
-            </p>
-            <h3>
-                GitHub User Finder:
-            </h3>
-            <p>
-                Instantly search GitHub profiles, view repositories, and connect with developers worldwide.
-            </p>
+            <h2>Key Features</h2>
+            <ol>
+                <li><strong>📌 User-Friendly Dashboard</strong> – Access all features with an intuitive interface.</li>
+                <li><strong>📌 Secure & Reliable</strong> – Data security is our priority to ensure a safe experience.</li>
+                <li><strong>📌 Efficient Workflow</strong> – Save time and effort with an all-in-one educational management system.</li>
+            </ol>
 
-            <h3>
-                Contact:
-            </h3>
-            <p>
-                Reach out for support, partnerships, or feedback—we’d love to hear from you!
-            </p>
-            <h3>
-                About Us:
-            </h3>
-            <p>
-                Learn about our mission, team, and the passion driving our platform.
-            </p>
-            <p>
-                Whether you’re here to network, build, or explore, <strong>ExploreEase</strong> is your gateway to smarter tech interactions. Start your journey now!
+            <h2>Get Started Today!</h2>
+            <p>Navigate through the menu to explore the full functionality of our LMS and experience seamless educational management. 🚀</p>
 
-            </p>
-        </Box>
+        </Box >
     )
 }
 

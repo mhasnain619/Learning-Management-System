@@ -12,9 +12,10 @@
     align-items: center;
 }
 
+/* Adjust logo size for smaller screens */
+
 @media (max-width: 768px) {
     .controls {
-
         margin-top: 15px;
     }
 

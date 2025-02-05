@@ -48,6 +48,9 @@ export default function SubjectList() {
     const goToAddSubject = () => {
         navigate('/subject/add-subject')
     }
+    const GotoUpdateSubject = (id) => {
+        navigate(`/subject/subject-list/${id}`)
+    }
     return (
         <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px !important' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
@@ -84,7 +87,7 @@ export default function SubjectList() {
                                 <StyledTableCell>{e.group}</StyledTableCell>
                                 <Box className='controls'>
                                     <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
-                                    <Button onClick={() => GotoUpdateClass(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
+                                    <Button onClick={() => GotoUpdateSubject(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
                                 </Box>
                             </StyledTableRow>
                         ))}

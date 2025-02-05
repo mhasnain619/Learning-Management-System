@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import './StudentRegistration.css'
+import './StudentRegistration.css';
+import CircularProgress from '@mui/material/CircularProgress';
+import { collection, addDoc } from "firebase/firestore";
+import { db } from '../../FirebaseConfiq';
+
 const StudentRegistrationForm = () => {
+    let [openLoader, setOpenLoader] = useState(false)
     let [studentObj, setStudentObj] = useState({
         userFirstName: '',
         userLastName: '',
@@ -12,12 +17,25 @@ const StudentRegistrationForm = () => {
         gender: ''
     });
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const handleSubmit = () => {
-        console.log('Student object is : ', studentObj);
-        setStudentObj({ userFirstName: '', userLastName: '', userEmail: '', userClass: '', gender: '' });
-        navigate('/student/student-list')
+    const handleSubmit = async () => {
+        setOpenLoader(true)
+        if (studentObj.userFirstName == '' || studentObj.userLastName == '' || studentObj.userEmail == '' || studentObj.userClass == '' || studentObj.gender == '') {
+            setOpenLoader(false)
+            alert('Please fill all the fields')
+            return;
+        }
+        try {
+            console.log("Firestore instance: ", db); // Debugging Firestore instance
+            const docRef = await addDoc(collection(db, "students"), studentObj);
+            console.log("Document written with ID: ", docRef.id);
+            setStudentObj({ userFirstName: '', userLastName: '', userEmail: '', userClass: '', gender: '' });
+            navigate('/student/student-list');
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+        setOpenLoader(false)
     };
 
     return (
@@ -68,10 +86,10 @@ const StudentRegistrationForm = () => {
                     </RadioGroup>
                 </FormControl>
                 <Button onClick={handleSubmit} size="large" variant="contained" color="primary" fullWidth>
-                    Register
+                    {openLoader ? <CircularProgress size={24} sx={{ color: 'white' }} /> : "Register"}
                 </Button>
+
             </Box>
-            {/* <CustomizedTables data={userArray} /> */}
         </Container>
     );
 };

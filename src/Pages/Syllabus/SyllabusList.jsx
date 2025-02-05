@@ -45,7 +45,10 @@ export default function SyllabusList() {
     const navigate = useNavigate()
 
     const goToAddSubject = () => {
-        navigate('/subject/add-subject')
+        navigate('/syllabus/syllabus-list')
+    }
+    const GotoUpdateSyllabus = (id) => {
+        navigate(`/syllabus/syllabus-list/${id}`)
     }
     return (
         <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px !important' }}>
@@ -66,6 +69,7 @@ export default function SyllabusList() {
                             <StyledTableCell>Subject Name</StyledTableCell>
                             <StyledTableCell align="start">Class</StyledTableCell>
                             <StyledTableCell align="start">File</StyledTableCell>
+                            <StyledTableCell align="start">Controls</StyledTableCell>
 
                         </TableRow>
                     </TableHead>
@@ -80,6 +84,10 @@ export default function SyllabusList() {
                                 </StyledTableCell>
                                 <StyledTableCell align="start">{e.subjectName}</StyledTableCell>
                                 <StyledTableCell align="start">{e.group}</StyledTableCell>
+                                <Box className='controls'>
+                                    <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                    <Button onClick={() => GotoUpdateSyllabus(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
+                                </Box>
                             </StyledTableRow>
                         ))}
                     </TableBody>

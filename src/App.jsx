@@ -33,6 +33,8 @@ import ExamResultCard from './Pages/Exam/ExamResult';
 import UpdateClass from './Pages/Class/UpdateClass';
 import UpdateStudent from './Pages/Students/UpdateStudent';
 import Updateteacher from './Pages/Teachers/UpdateTeacher';
+import UpdateSubject from './Pages/Subjects/UpdateSubject';
+import UpdateSyllabus from './Pages/Syllabus/UpdateSyllabus';
 
 // Material UI Theme
 const theme = createTheme({
@@ -71,10 +73,12 @@ function App() {
           {/* Subjects Routes */}
           <Route path="subject/add-subject" element={<SubjectRegistrationForm />} />
           <Route path="subject/subject-list" element={<SubjectList />} />
+          <Route path="subject/subject-list/:id" element={<UpdateSubject />} />
 
           {/* Syllabus Routes */}
           <Route path="syllabus/add-syllabus" element={<SyllabusForm />} />
           <Route path="syllabus/syllabus-list" element={<SyllabusList />} />
+          <Route path="syllabus/syllabus-list/:id" element={<UpdateSyllabus />} />
 
           {/* School Routes */}
           <Route path="school/school-student-registration" element={< SchoolStudentRegistration />} />

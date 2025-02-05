@@ -3,22 +3,30 @@ import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import './StudentRegistration.css'
+import { collection, addDoc } from "firebase/firestore";
+import { db } from '../../FirebaseConfiq';
 const SchoolStudentRegistration = () => {
     let [schoolStudentObj, setSchoolStudentObj] = useState({
-        SchoolStuFirstName: '',
-        schoolStuLastName: '',
-        schoolStuEmail: '',
-        schoolStuClass: '',
+        userFirstName: '',
+        userLastName: '',
+        userEmail: '',
+        userClass: '',
         schoolStuSchoolName: '',
         gender: ''
     });
 
     const navigate = useNavigate()
 
-    const handleSubmit = () => {
-        console.log('school student object is ', schoolStudentObj);
-        setSchoolStudentObj({ SchoolStuFirstName: '', schoolStuLastName: '', schoolStuEmail: '', schoolStuClass: '', schoolStuSchoolName: '', gender: '' });
-        navigate('/student/student-list')
+    const handleSubmit = async () => {
+        try {
+            console.log("Firestore instance: ", db); // Debugging Firestore instance
+            const docRef = await addDoc(collection(db, "students"), schoolStudentObj);
+            console.log("Document written with ID: ", docRef.id);
+            setSchoolStudentObj({ userFirstName: '', userLastName: '', userEmail: '', userClass: '', schoolStuSchoolName: '', gender: '' });
+            navigate('/student/student-list');
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
     };
 
     return (
@@ -31,22 +39,22 @@ const SchoolStudentRegistration = () => {
                     type='text'
                     label="First Name"
                     placeholder='Enter your first name'
-                    value={schoolStudentObj.SchoolStuFirstName}
-                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, SchoolStuFirstName: e.target.value })}
+                    value={schoolStudentObj.userFirstName}
+                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, userFirstName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Last Name"
                     placeholder='Enter your last name'
-                    value={schoolStudentObj.schoolStuLastName}
-                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, schoolStuLastName: e.target.value })}
+                    value={schoolStudentObj.userLastName}
+                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, userLastName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Email"
                     placeholder='Enter your email'
-                    value={schoolStudentObj.schoolStuEmail}
-                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, schoolStuEmail: e.target.value })}
+                    value={schoolStudentObj.userEmail}
+                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, userEmail: e.target.value })}
                 />
                 <Input
                     type='text'
@@ -59,8 +67,8 @@ const SchoolStudentRegistration = () => {
                     type='number'
                     label="Class"
                     placeholder='Enter your class'
-                    value={schoolStudentObj.schoolStuClass}
-                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, schoolStuClass: e.target.value })}
+                    value={schoolStudentObj.userClass}
+                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, userClass: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Gender</FormLabel>

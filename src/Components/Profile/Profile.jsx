@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { AuthCredential, getAuth, onAuthStateChanged } from 'firebase/auth';
 import { Card, CardContent, Typography, Avatar, Button, Grid, Box } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { FaLocationDot } from "react-icons/fa6";
@@ -14,11 +14,12 @@ import {
 
 import userImg from '../../assets/userimg.png';
 import './profile.css';
+import { useNavigate } from 'react-router-dom';
 
 const UserProfile = () => {
     const [user, setUser] = useState(null);
     const auth = getAuth();
-
+    const navigate = useNavigate()
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
@@ -26,12 +27,15 @@ const UserProfile = () => {
 
         return () => unsubscribe(); // Cleanup listener
     }, [auth]);
-
+    const logout = () => {
+        // Auth.signOut();
+        navigate('/signup')
+    }
     return (
         <Box sx={{ py: 8 }}>
             {user ? (
                 <Card className="user-card">
-                    <Grid container spacing={3}>
+                    <Grid container spacing={2}>
                         {/* User Avatar and Basic Info */}
                         <Grid item xs={12} md={3} display="flex" justifyContent="center" alignItems="center">
                             <Avatar
@@ -47,14 +51,9 @@ const UserProfile = () => {
                             <Typography className='userNameSngCompany'>
                                 {user.email}
                             </Typography>
-                            <Grid container spacing={2} marginTop={2}>
+                            <Grid container spacing={2} marginTop={1}>
                                 <Grid item xs={12} sm="auto">
-                                    <Button variant="contained" color="primary" size="large">
-                                        View Profile
-                                    </Button>
-                                </Grid>
-                                <Grid item xs={12} sm="auto">
-                                    <Button variant="contained" color="secondary" size="large">
+                                    <Button onClick={logout} variant="contained" color="secondary" size="large">
                                         Log Out
                                     </Button>
                                 </Grid>

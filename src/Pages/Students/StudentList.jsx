@@ -7,10 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { collection, getDocs } from "firebase/firestore";
 
+import { db } from '../../FirebaseConfiq';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -30,26 +32,35 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 0,
     },
 }));
-const rows = [
-    { id: 1, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Snow', firstName: 'Jon', gender: 'male', age: 35, email: 'qwqr@gmail.com' },
-    { id: 2, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Lannister', firstName: 'Cersei', gender: 'male', age: 42, email: 'qwqr@gmail.com' },
-    { id: 3, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Lannister', firstName: 'Jaime', gender: 'male', age: 45, email: 'qwqr@gmail.com' },
-    { id: 4, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Stark', firstName: 'Arya', gender: 'male', age: 16, email: 'qwqr@gmail.com' },
-    { id: 5, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Targaryen', firstName: 'Daenerys', gender: 'male', age: null, email: 'qwqr@gmail.com' },
-    { id: 6, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Melisandre', firstName: null, gender: 'male', age: 150, email: 'qwqr@gmail.com' },
-    { id: 7, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Clifford', firstName: 'Ferrara', gender: 'male', age: 44, email: 'qwqr@gmail.com' },
-    { id: 8, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Frances', firstName: 'Rossini', gender: 'male', age: 36, email: 'qwqr@gmail.com' },
-    { id: 9, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Roxie', firstName: 'Harvey', gender: 'male', age: 65, email: 'qwqr@gmail.com' },
-];
-export default function StudentList() {
-    const navigate = useNavigate()
 
+export default function StudentList() {
+    let [openLoader, setOpenLoader] = React.useState(false)
+    const navigate = useNavigate()
+    const [students, setStudents] = React.useState([])
+    React.useEffect(() => {
+        const fetchStudents = async () => {
+            setOpenLoader(true)
+            try {
+                const querySnapshot = await getDocs(collection(db, "students"));
+                const studentData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setStudents(studentData)
+            } catch (error) {
+                console.error("Error fetching students:", error);
+            }
+            setOpenLoader(false)
+        }
+        fetchStudents()
+    }, [])
     const goToAddStudent = () => {
         navigate('/student/student-registration')
     }
     const GotoUpdateStudent = (id) => {
         navigate(`/student/student-list/${id}`)
     }
+
     return (
         <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px !important' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
@@ -70,33 +81,41 @@ export default function StudentList() {
                             <StyledTableCell>Last Name</StyledTableCell>
                             <StyledTableCell>School Name</StyledTableCell>
                             <StyledTableCell>Class</StyledTableCell>
-                            <StyledTableCell>Phone</StyledTableCell>
                             <StyledTableCell>Gender</StyledTableCell>
                             <StyledTableCell>E-mail</StyledTableCell>
                             <StyledTableCell>Controls</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((e, i) => (
-                            <StyledTableRow key={i}>
-                                <StyledTableCell component="th" scope="row">
-                                    {e.id}
-                                </StyledTableCell>
-                                <StyledTableCell component="th" scope="row">
-                                    {e.firstName}
-                                </StyledTableCell>
-                                <StyledTableCell>{e.lastName}</StyledTableCell>
-                                <StyledTableCell>{e.schoolName}</StyledTableCell>
-                                <StyledTableCell>{e.class}</StyledTableCell>
-                                <StyledTableCell>{e.phone}</StyledTableCell>
-                                <StyledTableCell>{e.gender}</StyledTableCell>
-                                <StyledTableCell>{e.email}</StyledTableCell>
-                                <Box className='controls'>
-                                    <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
-                                    <Button onClick={() => GotoUpdateStudent(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
-                                </Box>
-                            </StyledTableRow>
-                        ))}
+                        {openLoader ? (
+                            <TableRow>
+                                <TableCell colSpan={8} align="center">
+                                    <CircularProgress />
+                                </TableCell>
+                            </TableRow>
+                        ) : students.length > 0 ? (
+                            students.map((e, i) => (
+                                <StyledTableRow key={i}>
+                                    <StyledTableCell>{e.id}</StyledTableCell>
+                                    <StyledTableCell>{e.userFirstName}</StyledTableCell>
+                                    <StyledTableCell>{e.userLastName}</StyledTableCell>
+                                    <StyledTableCell>{e.schoolStuSchoolName || 'Not Available'}</StyledTableCell>
+                                    <StyledTableCell>{e.userClass}</StyledTableCell>
+                                    <StyledTableCell>{e.gender}</StyledTableCell>
+                                    <StyledTableCell>{e.userEmail}</StyledTableCell>
+                                    <Box className='controls'>
+                                        <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                        <Button onClick={() => GotoUpdateStudent(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
+                                    </Box>
+                                </StyledTableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={8} align="center">
+                                    No Data Available
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>

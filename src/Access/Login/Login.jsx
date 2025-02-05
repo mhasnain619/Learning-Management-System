@@ -7,7 +7,7 @@ import loginImage from '../../assets/signupBgRemove.png'
 import Logo from '../../assets/logoRemoveBg.png'
 import waveImg from '../../assets/wave.png'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import auth from "../../FirebaseConfiq";
+import { auth } from "../../FirebaseConfiq";
 import { useNavigate } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
 
