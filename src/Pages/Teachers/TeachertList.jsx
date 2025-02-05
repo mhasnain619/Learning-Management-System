@@ -7,9 +7,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Typography, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../FirebaseConfiq';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -25,31 +26,42 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
         backgroundColor: theme.palette.action.hover,
     },
-    // hide last border
     '&:last-child td, &:last-child th': {
         border: 0,
     },
 }));
-const rows = [
-    { id: 1, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Snow', firstName: 'Jon', gender: 'male', age: 35, email: 'qwqr@gmail.com' },
-    { id: 2, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Lannister', firstName: 'Cersei', gender: 'male', age: 42, email: 'qwqr@gmail.com' },
-    { id: 3, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Lannister', firstName: 'Jaime', gender: 'male', age: 45, email: 'qwqr@gmail.com' },
-    { id: 4, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Stark', firstName: 'Arya', gender: 'male', age: 16, email: 'qwqr@gmail.com' },
-    { id: 5, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Targaryen', firstName: 'Daenerys', gender: 'male', age: null, email: 'qwqr@gmail.com' },
-    { id: 6, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Melisandre', firstName: null, gender: 'male', age: 150, email: 'qwqr@gmail.com' },
-    { id: 7, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Clifford', firstName: 'Ferrara', gender: 'male', age: 44, email: 'qwqr@gmail.com' },
-    { id: 8, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Frances', firstName: 'Rossini', gender: 'male', age: 36, email: 'qwqr@gmail.com' },
-    { id: 9, schoolName: 'Khaplu Public School And College', class: '12', phone: '0312-232442535', lastName: 'Roxie', firstName: 'Harvey', gender: 'male', age: 65, email: 'qwqr@gmail.com' },
-];
+
 export default function TeacherList() {
-    const navigate = useNavigate()
+    const [teachers, setTeachers] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+    const navigate = useNavigate();
+
+    React.useEffect(() => {
+        const fetchTeachers = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "teachers"));
+                const teacherData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setTeachers(teacherData);
+            } catch (error) {
+                console.error("Error fetching teachers:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchTeachers();
+    }, []);
 
     const goToAddTeacher = () => {
-        navigate('/teacher/teacher-registration')
-    }
-    const GotoUpdateTeacher = (id) => {
-        navigate(`/teacher/teacher-list/${id}`)
-    }
+        navigate('/teacher/teacher-registration');
+    };
+
+    const goToUpdateTeacher = (id) => {
+        navigate(`/teacher/teacher-list/${id}`);
+    };
+
     return (
         <Box sx={{ display: 'inline-block', width: '100%', marginTop: '50px !important' }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
@@ -66,37 +78,43 @@ export default function TeacherList() {
                     <TableHead>
                         <TableRow>
                             <StyledTableCell>Id</StyledTableCell>
-                            <StyledTableCell>T-First Name</StyledTableCell>
-                            <StyledTableCell>T-Last Name</StyledTableCell>
+                            <StyledTableCell>Teacher Name</StyledTableCell>
                             <StyledTableCell>School Name</StyledTableCell>
                             <StyledTableCell>Class</StyledTableCell>
-                            <StyledTableCell>Phone</StyledTableCell>
                             <StyledTableCell>Gender</StyledTableCell>
-                            <StyledTableCell>E-mail</StyledTableCell>
+                            <StyledTableCell>Email</StyledTableCell>
                             <StyledTableCell>Controls</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((e, i) => (
-                            <StyledTableRow key={i}>
-                                <StyledTableCell component="th" scope="row">
-                                    {e.id}
-                                </StyledTableCell>
-                                <StyledTableCell component="th" scope="row">
-                                    {e.firstName}
-                                </StyledTableCell>
-                                <StyledTableCell>{e.lastName}</StyledTableCell>
-                                <StyledTableCell>{e.schoolName}</StyledTableCell>
-                                <StyledTableCell>{e.class}</StyledTableCell>
-                                <StyledTableCell>{e.phone}</StyledTableCell>
-                                <StyledTableCell>{e.gender}</StyledTableCell>
-                                <StyledTableCell>{e.email}</StyledTableCell>
-                                <Box className='controls'>
-                                    <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
-                                    <Button onClick={() => GotoUpdateTeacher(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
-                                </Box>
-                            </StyledTableRow>
-                        ))}
+                        {loading ? (
+                            <TableRow>
+                                <TableCell colSpan={9} align="center">
+                                    <CircularProgress />
+                                </TableCell>
+                            </TableRow>
+                        ) : teachers.length > 0 ? (
+                            teachers.map((teacher) => (
+                                <StyledTableRow key={teacher.id}>
+                                    <StyledTableCell>{teacher.id}</StyledTableCell>
+                                    <StyledTableCell>{teacher.teacherName || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{teacher.teacherSchool || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{teacher.teacherClass || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{teacher.gender || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{teacher.teacherEmail || 'N/A'}</StyledTableCell>
+                                    <Box className='controls'>
+                                        <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                        <Button onClick={() => goToUpdateTeacher(teacher.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
+                                    </Box>
+                                </StyledTableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={9} align="center">
+                                    No Data Available
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>

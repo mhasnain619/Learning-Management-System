@@ -77,8 +77,7 @@ export default function StudentList() {
                     <TableHead>
                         <TableRow>
                             <StyledTableCell>Id</StyledTableCell>
-                            <StyledTableCell>First Name</StyledTableCell>
-                            <StyledTableCell>Last Name</StyledTableCell>
+                            <StyledTableCell>Student Name</StyledTableCell>
                             <StyledTableCell>School Name</StyledTableCell>
                             <StyledTableCell>Class</StyledTableCell>
                             <StyledTableCell>Gender</StyledTableCell>
@@ -97,8 +96,7 @@ export default function StudentList() {
                             students.map((e, i) => (
                                 <StyledTableRow key={i}>
                                     <StyledTableCell>{e.id}</StyledTableCell>
-                                    <StyledTableCell>{e.userFirstName}</StyledTableCell>
-                                    <StyledTableCell>{e.userLastName}</StyledTableCell>
+                                    <StyledTableCell>{e.userName}</StyledTableCell>
                                     <StyledTableCell>{e.schoolStuSchoolName || 'Not Available'}</StyledTableCell>
                                     <StyledTableCell>{e.userClass}</StyledTableCell>
                                     <StyledTableCell>{e.gender}</StyledTableCell>

@@ -10,8 +10,7 @@ import { db } from '../../FirebaseConfiq';
 const StudentRegistrationForm = () => {
     let [openLoader, setOpenLoader] = useState(false)
     let [studentObj, setStudentObj] = useState({
-        userFirstName: '',
-        userLastName: '',
+        userName: '',
         userEmail: '',
         userClass: '',
         gender: ''
@@ -21,7 +20,7 @@ const StudentRegistrationForm = () => {
 
     const handleSubmit = async () => {
         setOpenLoader(true)
-        if (studentObj.userFirstName == '' || studentObj.userLastName == '' || studentObj.userEmail == '' || studentObj.userClass == '' || studentObj.gender == '') {
+        if (studentObj.userName == '' || studentObj.userEmail == '' || studentObj.userClass == '' || studentObj.gender == '') {
             setOpenLoader(false)
             alert('Please fill all the fields')
             return;
@@ -30,7 +29,7 @@ const StudentRegistrationForm = () => {
             console.log("Firestore instance: ", db); // Debugging Firestore instance
             const docRef = await addDoc(collection(db, "students"), studentObj);
             console.log("Document written with ID: ", docRef.id);
-            setStudentObj({ userFirstName: '', userLastName: '', userEmail: '', userClass: '', gender: '' });
+            setStudentObj({ userName: '', userEmail: '', userClass: '', gender: '' });
             navigate('/student/student-list');
         } catch (error) {
             console.error("Error adding document: ", error);
@@ -46,18 +45,12 @@ const StudentRegistrationForm = () => {
                 </Typography>
                 <Input
                     type='text'
-                    label="First Name"
-                    placeholder='Enter your first name'
-                    value={studentObj.userFirstName}
-                    onChangeEvent={(e) => setStudentObj({ ...studentObj, userFirstName: e.target.value })}
+                    label="Student Name"
+                    placeholder='Enter your full name'
+                    value={studentObj.userName}
+                    onChangeEvent={(e) => setStudentObj({ ...studentObj, userName: e.target.value })}
                 />
-                <Input
-                    type='text'
-                    label="Last Name"
-                    placeholder='Enter your last name'
-                    value={studentObj.userLastName}
-                    onChangeEvent={(e) => setStudentObj({ ...studentObj, userLastName: e.target.value })}
-                />
+
                 <Input
                     type='text'
                     label="Email"
@@ -66,7 +59,7 @@ const StudentRegistrationForm = () => {
                     onChangeEvent={(e) => setStudentObj({ ...studentObj, userEmail: e.target.value })}
                 />
                 <Input
-                    type='number'
+                    type='text'
                     label="Class"
                     placeholder='Enter your class'
                     value={studentObj.userClass}

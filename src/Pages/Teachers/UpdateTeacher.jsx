@@ -3,52 +3,53 @@ import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import '../../Pages/Class/ClassForm.css'
-import axios from "axios";
-
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../FirebaseConfiq';
 const Updateteacher = () => {
-
+    const [loading, setLoading] = React.useState(true);
+    const [data, setData] = React.useState([]);
     let [teacherUpdateObj, setTeacherUpdateObj] = useState({
-        teacherUpdateFirstName: '',
-        teacherUpdateLastName: '',
-        teacherUpdateSchoolName: '',
-        teacherUpdateClass: '',
-        teacherUpdatePhone: '',
+        teacherName: '',
+        teacherSchool: '',
+        teacherClass: '',
         gender: '',
-        teacherUpdateEmail: '',
+        teacherEmail: '',
     });
 
     //  getting user object with id
     const { id } = useParams()
-    console.log(id);
-    useEffect(() => {
-        axios.get(`http://localhost:3000/Clients/${id}`)
-            .then((res) => {
-                setObj(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [id]);
-    const navigate = useNavigate()
+    // console.log(id);
+    React.useEffect(() => {
+        const fetchTeachers = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "teachers"));
+                const teacherData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setData(teacherData)
+                // console.log(filterData);
+            } catch (error) {
+                console.error("Error fetching teachers:", error);
+                setLoading(false);
+            }
+        };
+        fetchTeachers();
+    }, []);
+    React.useEffect(() => {
+        let filterData = data?.filter((e) => e.id === id);
+        if (filterData.length > 0) {
+            setTeacherUpdateObj(filterData[0]);
+        }
+    }, [data]);
 
-    // updating class object
+
+
     const updateteacher = () => {
-        axios.put(`http://localhost:3000/Clients/${id}`, teacherUpdateObj)
-            .then((res) => {
-                alert('User Updated Successfully.')
-                navigate('/')
-                // console.log("User updated:", res.data);
-            })
-            .catch((err) => {
-                console.log("Update failed:", err);
-            });
+        console.log('class object is ', teacherUpdateObj);
+        setTeacherUpdateObj({ teacherName: '', teacherEmail: '', gender: '', teacherClass: '', teacherSchool: '' });
+        navigate('/class/class-list')
     };
-
-    // const handleSubmit = () => {
-    //     console.log('class object is ', teacherUpdateObj);
-    //     setTeacherUpdateObj({ teacherUpdateFirstName: '', teacherUpdateLastName: '', teacherUpdateEmail: '', teacherUpdatePhone: '', gender: '' });
-    //     navigate('/class/class-list')
-    // };
 
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
@@ -58,45 +59,31 @@ const Updateteacher = () => {
                 </Typography>
                 <Input
                     type='text'
-                    label="First Name"
-                    placeholder='Enter your first name'
-                    value={teacherUpdateObj.teacherUpdateFirstName}
-                    onChangeEvent={(e) => setTeacherUpdateObj({ ...teacherUpdateObj, teacherUpdateFirstName: e.target.value })}
-                />
-                <Input
-                    type='text'
-                    label="Last Name"
-                    placeholder='Enter your last name'
-                    value={teacherUpdateObj.teacherUpdateLastName}
-                    onChangeEvent={(e) => setTeacherUpdateObj({ ...teacherUpdateObj, teacherUpdateLastName: e.target.value })}
+                    label="Name"
+                    placeholder='Enter your full name'
+                    value={teacherUpdateObj.teacherName}
+                    onChangeEvent={(e) => setTeacherUpdateObj({ ...teacherUpdateObj, teacherName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="School Name"
                     placeholder='Enter your last name'
-                    value={teacherUpdateObj.SchoolUpdateLastName}
-                    onChangeEvent={(e) => setTeacherUpdateObj({ ...teacherUpdateObj, SchoolUpdateLastName: e.target.value })}
+                    value={teacherUpdateObj.teacherSchool}
+                    onChangeEvent={(e) => setTeacherUpdateObj({ ...teacherUpdateObj, teacherSchool: e.target.value })}
                 />
                 <Input
-                    type='number'
+                    type='text'
                     label="Class"
                     placeholder='Enter your Class'
-                    value={teacherUpdateObj.SchoolUpdateClass}
-                    onChangeEvent={(e) => setTeacherUpdateObj({ ...teacherUpdateObj, SchoolUpdateClass: e.target.value })}
+                    value={teacherUpdateObj.teacherClass}
+                    onChangeEvent={(e) => setTeacherUpdateObj({ ...teacherUpdateObj, teacherClass: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Email"
                     placeholder='Enter your email'
-                    value={teacherUpdateObj.teacherUpdateEmail}
-                    onChangeEvent={(e) => setTeacherUpdateObj({ ...teacherUpdateObj, teacherUpdateEmail: e.target.value })}
-                />
-                <Input
-                    type='number'
-                    label="Phone Number"
-                    placeholder='Enter your Phone Number'
-                    value={teacherUpdateObj.teacherUpdatePhone}
-                    onChangeEvent={(e) => setTeacherUpdateObj({ ...teacherUpdateObj, teacherUpdatePhone: e.target.value })}
+                    value={teacherUpdateObj.teacherEmail}
+                    onChangeEvent={(e) => setTeacherUpdateObj({ ...teacherUpdateObj, teacherEmail: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Gender</FormLabel>

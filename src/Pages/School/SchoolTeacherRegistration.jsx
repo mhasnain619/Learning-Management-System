@@ -5,8 +5,7 @@ import { useNavigate } from "react-router-dom";
 import './StudentRegistration.css'
 const SchoolTeacherRegistration = () => {
     let [schoolTeacherObj, setSchoolTeacherObj] = useState({
-        schoolTeacherFirstName: '',
-        schoolTeacherLastname: '',
+        schoolTeacherName: '',
         schoolTeacherEmail: '',
         teacherSchoolName: '',
         teacherClass: '',
@@ -17,7 +16,7 @@ const SchoolTeacherRegistration = () => {
 
     const handleSubmit = () => {
         console.log('Teacher object is ', schoolTeacherObj);
-        setSchoolTeacherObj({ schoolTeacherFirstName: '', schoolTeacherLastname: '', schoolTeacherEmail: '', teacherSchoolName: '', teacherClass: '', gender: '' });
+        setSchoolTeacherObj({ schoolTeacherName: '', schoolTeacherEmail: '', teacherSchoolName: '', teacherClass: '', gender: '' });
         navigate('/teacher/teacher-list')
     };
 
@@ -29,17 +28,10 @@ const SchoolTeacherRegistration = () => {
                 </Typography>
                 <Input
                     type='text'
-                    label="First Name"
-                    placeholder='Enter your first name'
-                    value={schoolTeacherObj.schoolTeacherFirstName}
-                    onChangeEvent={(e) => setSchoolTeacherObj({ ...schoolTeacherObj, schoolTeacherFirstName: e.target.value })}
-                />
-                <Input
-                    type='text'
-                    label="Last Name"
-                    placeholder='Enter your last name'
-                    value={schoolTeacherObj.schoolTeacherLastname}
-                    onChangeEvent={(e) => setSchoolTeacherObj({ ...schoolTeacherObj, schoolTeacherLastname: e.target.value })}
+                    label="Name"
+                    placeholder='Enter your full name'
+                    value={schoolTeacherObj.schoolTeacherName}
+                    onChangeEvent={(e) => setSchoolTeacherObj({ ...schoolTeacherObj, schoolTeacherName: e.target.value })}
                 />
                 <Input
                     type='text'
@@ -56,7 +48,7 @@ const SchoolTeacherRegistration = () => {
                     onChangeEvent={(e) => setSchoolTeacherObj({ ...schoolTeacherObj, teacherSchoolName: e.target.value })}
                 />
                 <Input
-                    type='number'
+                    type='text'
                     label="Class"
                     placeholder='Enter your class'
                     value={schoolTeacherObj.teacherClass}
@@ -79,7 +71,6 @@ const SchoolTeacherRegistration = () => {
                     Register
                 </Button>
             </Box>
-            {/* <CustomizedTables data={userArray} /> */}
         </Container>
     );
 };

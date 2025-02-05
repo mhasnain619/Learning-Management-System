@@ -7,10 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './AddSubject.css'
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../FirebaseConfiq';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -31,20 +33,28 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 0,
     },
 }));
-const rows = [
-    { id: 1, subjectName: 'English', class: '12', group: 'male', },
-    { id: 2, subjectName: 'English', class: '12', group: 'male', },
-    { id: 3, subjectName: 'English', class: '12', group: 'male', },
-    { id: 4, subjectName: 'English', class: '12', group: 'male', },
-    { id: 5, subjectName: 'English', class: '12', group: 'male', },
-    { id: 6, subjectName: 'English', class: '12', group: 'male', },
-    { id: 7, subjectName: 'English', class: '12', group: 'male', },
-    { id: 8, subjectName: 'English', class: '12', group: 'male', },
-    { id: 9, subjectName: 'English', class: '12', group: 'male', },
-];
-export default function SubjectList() {
-    const navigate = useNavigate()
 
+export default function SubjectList() {
+    let [openLoader, setOpenLoader] = React.useState(false)
+    const [subjects, setSubjects] = React.useState([])
+    const navigate = useNavigate()
+    React.useEffect(() => {
+        const fetchSubjects = async () => {
+            setOpenLoader(true)
+            try {
+                const querySnapshot = await getDocs(collection(db, "subjects"));
+                const subjectData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setSubjects(subjectData)
+            } catch (error) {
+                console.error("Error fetching students:", error);
+            }
+            setOpenLoader(false)
+        }
+        fetchSubjects()
+    }, [])
     const goToAddSubject = () => {
         navigate('/subject/add-subject')
     }
@@ -75,22 +85,39 @@ export default function SubjectList() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((e, i) => (
-                            <StyledTableRow key={i}>
-                                <StyledTableCell component="th" scope="row">
-                                    {e.id}
-                                </StyledTableCell>
-                                <StyledTableCell component="th" scope="row">
-                                    {e.subjectName}
-                                </StyledTableCell>
-                                <StyledTableCell>{e.subjectName}</StyledTableCell>
-                                <StyledTableCell>{e.group}</StyledTableCell>
-                                <Box className='controls'>
-                                    <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
-                                    <Button onClick={() => GotoUpdateSubject(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
-                                </Box>
-                            </StyledTableRow>
-                        ))}
+                        {
+                            openLoader ? (
+                                <TableRow>
+                                    <TableCell colSpan={8} align="center">
+                                        <CircularProgress />
+                                    </TableCell>
+                                </TableRow>
+                            ) : subjects.length > 0 ? (
+                                subjects.map((e, i) => (
+                                    <StyledTableRow key={i}>
+                                        <StyledTableCell component="th" scope="row">
+                                            {e.id}
+                                        </StyledTableCell>
+                                        <StyledTableCell component="th" scope="row">
+                                            {e.subjectName}
+                                        </StyledTableCell>
+                                        <StyledTableCell>{e.subjectClass}</StyledTableCell>
+                                        <StyledTableCell>{e.selectGroup}</StyledTableCell>
+                                        <Box className='controls'>
+                                            <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                            <Button onClick={() => GotoUpdateSubject(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
+                                        </Box>
+                                    </StyledTableRow>
+                                ))
+                            ) : (
+                                <TableRow>
+                                    <TableCell colSpan={8} align="center">
+                                        No Data Available
+                                    </TableCell>
+                                </TableRow>
+                            )
+                        }
+
                     </TableBody>
                 </Table>
             </TableContainer>

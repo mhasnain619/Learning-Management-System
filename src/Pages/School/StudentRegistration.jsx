@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import Input from "../../Components/Input/Input";
-import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import './StudentRegistration.css'
 import { collection, addDoc } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
 const SchoolStudentRegistration = () => {
+    let [openLoader, setOpenLoader] = useState(false)
+
     let [schoolStudentObj, setSchoolStudentObj] = useState({
-        userFirstName: '',
-        userLastName: '',
+        userName: '',
         userEmail: '',
         userClass: '',
         schoolStuSchoolName: '',
@@ -18,11 +19,15 @@ const SchoolStudentRegistration = () => {
     const navigate = useNavigate()
 
     const handleSubmit = async () => {
+        setOpenLoader(true)
+        if (schoolStudentObj.userName == '' || schoolStudentObj.userEmail == '' || schoolStudentObj.userClass == '' || schoolStudentObj.schoolStuSchoolName == '' || schoolStudentObj.gender == '') {
+            setOpenLoader(false)
+            alert('Please fill all the fields')
+            return;
+        }
         try {
-            console.log("Firestore instance: ", db); // Debugging Firestore instance
             const docRef = await addDoc(collection(db, "students"), schoolStudentObj);
-            console.log("Document written with ID: ", docRef.id);
-            setSchoolStudentObj({ userFirstName: '', userLastName: '', userEmail: '', userClass: '', schoolStuSchoolName: '', gender: '' });
+            setSchoolStudentObj({ userName: '', userEmail: '', userClass: '', schoolStuSchoolName: '', gender: '' });
             navigate('/student/student-list');
         } catch (error) {
             console.error("Error adding document: ", error);
@@ -37,17 +42,10 @@ const SchoolStudentRegistration = () => {
                 </Typography>
                 <Input
                     type='text'
-                    label="First Name"
-                    placeholder='Enter your first name'
-                    value={schoolStudentObj.userFirstName}
-                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, userFirstName: e.target.value })}
-                />
-                <Input
-                    type='text'
-                    label="Last Name"
-                    placeholder='Enter your last name'
-                    value={schoolStudentObj.userLastName}
-                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, userLastName: e.target.value })}
+                    label="Full Name"
+                    placeholder='Enter your full name'
+                    value={schoolStudentObj.userName}
+                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, userName: e.target.value })}
                 />
                 <Input
                     type='text'
@@ -64,7 +62,7 @@ const SchoolStudentRegistration = () => {
                     onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, schoolStuSchoolName: e.target.value })}
                 />
                 <Input
-                    type='number'
+                    type='text'
                     label="Class"
                     placeholder='Enter your class'
                     value={schoolStudentObj.userClass}
@@ -84,7 +82,7 @@ const SchoolStudentRegistration = () => {
                     </RadioGroup>
                 </FormControl>
                 <Button onClick={handleSubmit} size="large" variant="contained" color="primary" fullWidth>
-                    Register
+                    {openLoader ? <CircularProgress size={24} sx={{ color: 'white' }} /> : "Register"}
                 </Button>
             </Box>
         </Container>

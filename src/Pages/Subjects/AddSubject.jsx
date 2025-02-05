@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import Input from "../../Components/Input/Input";
-import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import './AddSubject.css'
+import { collection, addDoc } from "firebase/firestore";
+import { db } from '../../FirebaseConfiq';
+
 const SubjectRegistrationForm = () => {
+    let [openLoader, setOpenLoader] = useState(false)
     let [subjectObj, setSubjectObj] = useState({
         subjectName: '',
         subjectClass: '',
@@ -12,12 +16,24 @@ const SubjectRegistrationForm = () => {
 
     const navigate = useNavigate()
 
-    const handleSubmit = () => {
-        console.log('subject obj is: ', subjectObj);
-        setSubjectObj({ subjectName: '', subjectClass: '', selectGroup: '' });
-        navigate('/subject/subject-list')
+    const handleSubmit = async () => {
+        setOpenLoader(true)
+        if (subjectObj.subjectName == '' || subjectObj.subjectClass == '' || subjectObj.selectGroup == '') {
+            setOpenLoader(false)
+            alert('Please fill all the fields')
+            return;
+        }
+        try {
+            console.log("Firestore instance: ", db);
+            const docRef = await addDoc(collection(db, "subjects"), subjectObj);
+            console.log("Document written with ID: ", docRef.id);
+            setSubjectObj({ subjectName: '', subjectClass: '', selectGroup: '' });
+            navigate('/subject/subject-list');
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+        setOpenLoader(false)
     };
-
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
             <Box className='formBox'>
@@ -33,7 +49,7 @@ const SubjectRegistrationForm = () => {
                 />
 
                 <Input
-                    type='number'
+                    type='text'
                     label="Class"
                     placeholder='Enter your class'
                     value={subjectObj.subjectClass}
@@ -53,7 +69,7 @@ const SubjectRegistrationForm = () => {
                     </RadioGroup>
                 </FormControl>
                 <Button onClick={handleSubmit} size="large" variant="contained" color="primary" fullWidth>
-                    Add
+                    {openLoader ? <CircularProgress size={24} sx={{ color: 'white' }} /> : "Register"}
                 </Button>
             </Box>
         </Container>

@@ -1,23 +1,39 @@
 import React, { useState } from "react";
 import Input from "../../Components/Input/Input";
-import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import './TeacherRegistration.css'
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../FirebaseConfiq";
 const TeacherRegistrationForm = () => {
+    let [openLoader, setOpenLoader] = useState(false)
     let [teacherObj, setTeacherObj] = useState({
-        teacherFirstName: '',
-        teacherLastName: '',
+        teacherName: '',
         teacherEmail: '',
-        teacherNumber: '',
+        teacherSchool: '',
+        teacherClass: '',
         gender: ''
     });
 
     const navigate = useNavigate()
 
-    const handleSubmit = () => {
-        console.log('Teacher obj : ', teacherObj);
-        setTeacherObj({ teacherFirstName: '', teacherLastName: '', teacherNumber: '', teacherEmail: '', gender: '' });
-        navigate('/teacher/teacher-list')
+    const handleSubmit = async () => {
+        setOpenLoader(true)
+        if (teacherObj.teacherName == '' || teacherObj.gender == '' || teacherObj.teacherEmail == '' || teacherObj.teacherClass == '') {
+            setOpenLoader(false)
+            alert('Please fill all the fields')
+            return;
+        }
+        try {
+            const docRef = await addDoc(collection(db, "teachers"), teacherObj);
+            setTeacherObj({ teacherName: '', gender: '', teacherEmail: '', teacherClass: '', teacherSchool: '', })
+            setOpenLoader(false)
+            navigate('/teacher/teacher-list')
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+
     };
 
     return (
@@ -28,17 +44,10 @@ const TeacherRegistrationForm = () => {
                 </Typography>
                 <Input
                     type='text'
-                    label="Teacher First Name"
-                    placeholder='Enter your first name'
-                    value={teacherObj.teacherFirstName}
-                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherFirstName: e.target.value })}
-                />
-                <Input
-                    type='text'
-                    label="Teacher Last Name"
-                    placeholder='Enter your last name'
-                    value={teacherObj.teacherLastName}
-                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherLastName: e.target.value })}
+                    label="Teacher Name"
+                    placeholder='Enter your full name'
+                    value={teacherObj.teacherName}
+                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherName: e.target.value })}
                 />
                 <Input
                     type='email'
@@ -48,11 +57,18 @@ const TeacherRegistrationForm = () => {
                     onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherEmail: e.target.value })}
                 />
                 <Input
-                    type='number'
-                    label="Teacher Number"
-                    placeholder='Enter your number'
-                    value={teacherObj.teacherNumber}
-                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherNumber: e.target.value })}
+                    type='text'
+                    label="School Name"
+                    placeholder='Enter your school namae'
+                    value={teacherObj.teacherSchool}
+                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherSchool: e.target.value })}
+                />
+                <Input
+                    type='text'
+                    label="Class"
+                    placeholder='Enter your class'
+                    value={teacherObj.teacherClass}
+                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherClass: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Gender</FormLabel>
@@ -68,10 +84,10 @@ const TeacherRegistrationForm = () => {
                     </RadioGroup>
                 </FormControl>
                 <Button onClick={handleSubmit} size="large" variant="contained" color="primary" fullWidth>
-                    Register
+                    {openLoader ? <CircularProgress size={24} sx={{ color: 'white' }} /> : "Register"}
                 </Button>
             </Box>
-            {/* <CustomizedTables data={userArray} /> */}
+
         </Container>
     );
 };

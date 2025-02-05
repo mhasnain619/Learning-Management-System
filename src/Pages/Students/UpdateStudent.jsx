@@ -5,51 +5,50 @@ import { useNavigate, useParams } from "react-router-dom";
 import '../../Pages/Class/ClassForm.css'
 import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../FirebaseConfiq';
 const UpdateStudent = () => {
-
+    const [data, setData] = React.useState([]);
     let [studentUpdateObj, setStudentUpdateObj] = useState({
-        studentUpdateFirstName: '',
-        studentUpdateLastName: '',
-        studentUpdateSchoolName: '',
-        studentUpdateClass: '',
-        studentUpdatePhone: '',
+        userName: '',
+        schoolStuSchoolName: '',
+        userClass: '',
         gender: '',
-        studentUpdateEmail: '',
+        userEmail: '',
     });
 
     //  getting user object with id
     const { id } = useParams()
-    console.log(id);
-    useEffect(() => {
-        axios.get(`http://localhost:3000/Clients/${id}`)
-            .then((res) => {
-                setObj(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [id]);
-    const navigate = useNavigate()
+    // console.log(id);
+    React.useEffect(() => {
+        const fetchTeachers = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "students"));
+                const teacherData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setData(teacherData)
+                // console.log(filterData);
+            } catch (error) {
+                console.error("Error fetching teachers:", error);
+                setLoading(false);
+            }
+        };
+        fetchTeachers();
+    }, []);
+    React.useEffect(() => {
+        let filterData = data?.filter((e) => e.id === id);
+        if (filterData.length > 0) {
+            setStudentUpdateObj(filterData[0]);
+        }
+    }, [data]);
 
-    // updating class object
     const updateStudent = () => {
-        axios.put(`http://localhost:3000/Clients/${id}`, studentUpdateObj)
-            .then((res) => {
-                alert('User Updated Successfully.')
-                navigate('/student/student-list')
-                // console.log("User updated:", res.data);
-            })
-            .catch((err) => {
-                console.log("Update failed:", err);
-            });
+        console.log('class object is ', studentUpdateObj);
+        setStudentUpdateObj({ userName: '', userEmail: '', userClass: '', schoolStuSchoolName: '', gender: '' });
+        navigate('/class/class-list')
     };
-
-    // const handleSubmit = () => {
-    //     console.log('class object is ', studentUpdateObj);
-    //     setStudentUpdateObj({ studentUpdateFirstName: '', studentUpdateLastName: '', studentUpdateEmail: '', studentUpdatePhone: '', gender: '' });
-    //     navigate('/class/class-list')
-    // };
 
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
@@ -59,45 +58,31 @@ const UpdateStudent = () => {
                 </Typography>
                 <Input
                     type='text'
-                    label="First Name"
-                    placeholder='Enter your first name'
-                    value={studentUpdateObj.studentUpdateFirstName}
-                    onChangeEvent={(e) => setStudentUpdateObj({ ...studentUpdateObj, studentUpdateFirstName: e.target.value })}
-                />
-                <Input
-                    type='text'
-                    label="Last Name"
-                    placeholder='Enter your last name'
-                    value={studentUpdateObj.studentUpdateLastName}
-                    onChangeEvent={(e) => setStudentUpdateObj({ ...studentUpdateObj, studentUpdateLastName: e.target.value })}
+                    label="Student Name"
+                    placeholder='Enter your full name'
+                    value={studentUpdateObj.userName}
+                    onChangeEvent={(e) => setStudentUpdateObj({ ...studentUpdateObj, userName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="School Name"
                     placeholder='Enter your last name'
-                    value={studentUpdateObj.SchoolUpdateLastName}
-                    onChangeEvent={(e) => setStudentUpdateObj({ ...studentUpdateObj, SchoolUpdateLastName: e.target.value })}
+                    value={studentUpdateObj.schoolStuSchoolName}
+                    onChangeEvent={(e) => setStudentUpdateObj({ ...studentUpdateObj, schoolStuSchoolName: e.target.value })}
                 />
                 <Input
-                    type='number'
+                    type='text'
                     label="Class"
                     placeholder='Enter your Class'
-                    value={studentUpdateObj.SchoolUpdateClass}
-                    onChangeEvent={(e) => setStudentUpdateObj({ ...studentUpdateObj, SchoolUpdateClass: e.target.value })}
+                    value={studentUpdateObj.userClass}
+                    onChangeEvent={(e) => setStudentUpdateObj({ ...studentUpdateObj, userClass: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Email"
                     placeholder='Enter your email'
-                    value={studentUpdateObj.studentUpdateEmail}
-                    onChangeEvent={(e) => setStudentUpdateObj({ ...studentUpdateObj, studentUpdateEmail: e.target.value })}
-                />
-                <Input
-                    type='number'
-                    label="Phone Number"
-                    placeholder='Enter your Phone Number'
-                    value={studentUpdateObj.studentUpdatePhone}
-                    onChangeEvent={(e) => setStudentUpdateObj({ ...studentUpdateObj, studentUpdatePhone: e.target.value })}
+                    value={studentUpdateObj.userEmail}
+                    onChangeEvent={(e) => setStudentUpdateObj({ ...studentUpdateObj, userEmail: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Gender</FormLabel>
