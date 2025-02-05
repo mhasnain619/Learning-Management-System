@@ -21,7 +21,7 @@ const UpdateStudent = () => {
     const { id } = useParams()
     // console.log(id);
     React.useEffect(() => {
-        const fetchTeachers = async () => {
+        const fetchStudents = async () => {
             try {
                 const querySnapshot = await getDocs(collection(db, "students"));
                 const teacherData = querySnapshot.docs.map(doc => ({
@@ -35,7 +35,7 @@ const UpdateStudent = () => {
                 setLoading(false);
             }
         };
-        fetchTeachers();
+        fetchStudents();
     }, []);
     React.useEffect(() => {
         let filterData = data?.filter((e) => e.id === id);

@@ -4,47 +4,46 @@ import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio
 import { useNavigate, useParams } from "react-router-dom";
 import './AddSubject.css'
 import axios from "axios";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../FirebaseConfiq";
 
 const UpdateSubject = () => {
-
+    const [data, setData] = React.useState([]);
     let [subjectUpdateObj, setSubjectUpdateObj] = useState({
-        updateSubjectame: '',
-        updateSubjecClass: '',
-        updateGroup: ''
+        subjectName: '',
+        subjectClass: '',
+        selectGroup: ''
     });
 
     //  getting user object with id
     const { id } = useParams()
-    console.log(id);
-    useEffect(() => {
-        axios.get(`http://localhost:3000/Clients/${id}`)
-            .then((res) => {
-                setObj(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [id]);
-    const navigate = useNavigate()
-
-    // updating class object
+    React.useEffect(() => {
+        const fetchSubjects = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "subjects"));
+                const subjectData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setData(subjectData)
+            } catch (error) {
+                console.error("Error fetching teachers:", error);
+                setLoading(false);
+            }
+        };
+        fetchSubjects();
+    }, []);
+    React.useEffect(() => {
+        let filterData = data?.filter((e) => e.id === id);
+        if (filterData.length > 0) {
+            setSubjectUpdateObj(filterData[0]);
+        }
+    }, [data]);
     const updateNewSubject = () => {
-        axios.put(`http://localhost:3000/Clients/${id}`, subjectUpdateObj)
-            .then((res) => {
-                alert('User Updated Successfully.')
-                navigate('/subject/subject-list')
-                // console.log("User updated:", res.data);
-            })
-            .catch((err) => {
-                console.log("Update failed:", err);
-            });
+        console.log('class object is ', subjectUpdateObj);
+        setSubjectUpdateObj({ subjectName: '', classUpdateLastName: '', classUpdateEmail: '', classUpdatePhone: '', classUpdateDate: '', classUpdateQualification: '', gender: '' });
+        navigate('/class/class-list')
     };
-
-    // const handleSubmit = () => {
-    //     console.log('class object is ', subjectUpdateObj);
-    //     setSubjectUpdateObj({ classUpdateFirstName: '', classUpdateLastName: '', classUpdateEmail: '', classUpdatePhone: '', classUpdateDate: '', classUpdateQualification: '', gender: '' });
-    //     navigate('/class/class-list')
-    // };
 
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
@@ -56,23 +55,23 @@ const UpdateSubject = () => {
                     type='text'
                     label="Subject Name"
                     placeholder='Enter your first name'
-                    value={subjectUpdateObj.updateSubjectame}
-                    onChangeEvent={(e) => setSubjectUpdateObj({ ...subjectUpdateObj, updateSubjectame: e.target.value })}
+                    value={subjectUpdateObj.subjectName}
+                    onChangeEvent={(e) => setSubjectUpdateObj({ ...subjectUpdateObj, subjectName: e.target.value })}
                 />
                 <Input
-                    type='number'
+                    type='text'
                     label="Class"
                     placeholder='Enter your class'
-                    value={subjectUpdateObj.updateSubjecClass}
-                    onChangeEvent={(e) => setSubjectUpdateObj({ ...subjectUpdateObj, updateSubjecClass: e.target.value })}
+                    value={subjectUpdateObj.subjectClass}
+                    onChangeEvent={(e) => setSubjectUpdateObj({ ...subjectUpdateObj, subjectClass: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
-                    <FormLabel>Gender</FormLabel>
+                    <FormLabel>Group</FormLabel>
                     <RadioGroup
                         row
-                        name="gender"
-                        value={subjectUpdateObj.updateGroup || ''}
-                        onChange={(e) => setSubjectUpdateObj({ ...subjectUpdateObj, updateGroup: e.target.value })}
+                        name="Group"
+                        value={subjectUpdateObj.selectGroup || ''}
+                        onChange={(e) => setSubjectUpdateObj({ ...subjectUpdateObj, selectGroup: e.target.value })}
                     >
                         <FormControlLabel value="General-Science" control={<Radio />} label="General-Science" />
                         <FormControlLabel value="Pre-Engineering" control={<Radio />} label="Pre-Engineering" />
