@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import Input from "../../Components/Input/Input";
-import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import './ClassForm.css'
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../FirebaseConfiq";
 const ClassForm = () => {
+    let [openLoader, setOpenLoader] = useState(false)
+
     let [classObj, setClassObj] = useState({
-        classUserFirstName: '',
-        classUserLastName: '',
+        classUserFullName: '',
         classUserEmail: '',
         classUserPhone: '',
         classUserDate: '',
@@ -16,10 +19,23 @@ const ClassForm = () => {
 
     const navigate = useNavigate()
 
-    const handleSubmit = () => {
-        console.log('class object is ', classObj);
-        setClassObj({ classUserFirstName: '', classUserLastName: '', classUserEmail: '', classUserPhone: '', classUserDate: '', classUserQualification: '', gender: '' });
-        navigate('/class/class-list')
+    const handleSubmit = async () => {
+        setOpenLoader(true)
+        if (classObj.classUserFullName == '' || classObj.classUserEmail == '' || classObj.classUserPhone == '' || classObj.classUserDate == '' || classObj.classUserQualification == '' || classObj.gender == '') {
+            setOpenLoader(false)
+            alert('Please fill all the fields')
+            return;
+        }
+        try {
+            const docRef = await addDoc(collection(db, "class"), classObj);
+            setClassObj({ classUserFullName: '', classUserEmail: '', classUserPhone: '', classUserDate: '', classUserQualification: '', gender: '', })
+            setOpenLoader(false)
+            navigate('/class/class-list')
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+
     };
 
     return (
@@ -30,17 +46,10 @@ const ClassForm = () => {
                 </Typography>
                 <Input
                     type='text'
-                    label="First Name"
-                    placeholder='Enter your first name'
-                    value={classObj.classUserFirstName}
-                    onChangeEvent={(e) => setClassObj({ ...classObj, classUserFirstName: e.target.value })}
-                />
-                <Input
-                    type='text'
-                    label="Last Name"
-                    placeholder='Enter your last name'
-                    value={classObj.classUserLastName}
-                    onChangeEvent={(e) => setClassObj({ ...classObj, classUserLastName: e.target.value })}
+                    label="Name"
+                    placeholder='Enter your full name'
+                    value={classObj.classUserFullName}
+                    onChangeEvent={(e) => setClassObj({ ...classObj, classUserFullName: e.target.value })}
                 />
                 <Input
                     type='text'
@@ -64,7 +73,7 @@ const ClassForm = () => {
                 <Input
                     type='text'
                     label="Qualification"
-                    placeholder='Enter your qualification'
+                    placeholder='Enter your last qualification'
                     value={classObj.classUserQualification}
                     onChangeEvent={(e) => setClassObj({ ...classObj, classUserQualification: e.target.value })}
                 />
@@ -82,7 +91,7 @@ const ClassForm = () => {
                     </RadioGroup>
                 </FormControl>
                 <Button onClick={handleSubmit} size="large" variant="contained" color="primary" fullWidth>
-                    Register
+                    {openLoader ? <CircularProgress size={24} sx={{ color: 'white' }} /> : "Register"}
                 </Button>
             </Box>
             {/* <CustomizedTables data={userArray} /> */}

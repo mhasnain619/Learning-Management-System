@@ -70,7 +70,7 @@ const UserProfile = () => {
                                     <p className='nameContAddre'>Company Details :</p>
                                     <span className='iconAndText'>
                                         <BusinessIcon className="section-icon" fontSize="small" />
-                                        <p>{user.displayName || "No Company"}</p>
+                                        <p>{user.companyDetail || "No company details here"}</p>
                                     </span>
                                     <p>Professional at something...</p>
                                 </Box>

@@ -9,7 +9,8 @@ import {
     CardContent,
 } from "@mui/material";
 import { Payment } from "@mui/icons-material";
-
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../FirebaseConfiq';
 const students = [
     { name: "Ali Khan", className: "Class 1" },
     { name: "Ayesha Ahmed", className: "Class 2" },
@@ -24,12 +25,32 @@ const students = [
 ];
 
 const FeeSubmission = () => {
+    let [openLoader, setOpenLoader] = React.useState(false)
+
     const [formData, setFormData] = useState({
         studentName: "",
         className: "",
         amount: "",
         paymentMethod: "",
     });
+    const [students, setStudents] = React.useState([])
+    React.useEffect(() => {
+        const fetchStudents = async () => {
+            setOpenLoader(true)
+            try {
+                const querySnapshot = await getDocs(collection(db, "students"));
+                const studentData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setStudents(studentData)
+            } catch (error) {
+                console.error("Error fetching students:", error);
+            }
+            setOpenLoader(false)
+        }
+        fetchStudents()
+    }, [])
 
     const paymentMethods = ["Cash", "Bank Transfer", "Credit Card"];
 
@@ -66,8 +87,8 @@ const FeeSubmission = () => {
                             required
                         >
                             {students.map((student, index) => (
-                                <MenuItem key={index} value={student.name}>
-                                    {student.name} ({student.className})
+                                <MenuItem key={index} value={student.userName}>
+                                    {student.userName} ({student.userClass})
                                 </MenuItem>
                             ))}
                         </TextField>

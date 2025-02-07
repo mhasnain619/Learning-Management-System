@@ -63,6 +63,12 @@ function ResponsiveDrawer(props) {
 
     const pages = [
         { name: "Home", icon: <FaHome />, route: "/home" },
+        {
+            name: "Admission", icon: <MdOutlineAdminPanelSettings />, children: [
+                { name: "Admission Form", route: "/admission/admission-form" },
+
+            ]
+        },
 
         {
             name: "Students", icon: <PiStudentBold />, children: [
@@ -100,12 +106,7 @@ function ResponsiveDrawer(props) {
                 { name: "Class List", route: "/class/class-list" }
             ]
         },
-        {
-            name: "Admission", icon: <MdOutlineAdminPanelSettings />, children: [
-                { name: "Admission Form", route: "/admission/admission-form" },
 
-            ]
-        },
         {
             name: "Fees", icon: <MdFeed />, children: [
                 { name: "Fees Structure", route: "/fees/fees-structure" },

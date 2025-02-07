@@ -9,9 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Button, Typography, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { collection, getDocs } from "firebase/firestore";
-
 import { db } from '../../FirebaseConfiq';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -95,12 +93,12 @@ export default function StudentList() {
                         ) : students.length > 0 ? (
                             students.map((e, i) => (
                                 <StyledTableRow key={i}>
-                                    <StyledTableCell>{e.id}</StyledTableCell>
-                                    <StyledTableCell>{e.userName}</StyledTableCell>
-                                    <StyledTableCell>{e.schoolStuSchoolName || 'Not Available'}</StyledTableCell>
-                                    <StyledTableCell>{e.userClass}</StyledTableCell>
-                                    <StyledTableCell>{e.gender}</StyledTableCell>
-                                    <StyledTableCell>{e.userEmail}</StyledTableCell>
+                                    <StyledTableCell>{e.id || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{e.userName || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{e.schoolStuSchoolName || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{e.userClass || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{e.gender || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{e.userEmail || 'N/A'}</StyledTableCell>
                                     <Box className='controls'>
                                         <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
                                         <Button onClick={() => GotoUpdateStudent(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>

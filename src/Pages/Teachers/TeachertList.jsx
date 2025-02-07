@@ -96,7 +96,7 @@ export default function TeacherList() {
                         ) : teachers.length > 0 ? (
                             teachers.map((teacher) => (
                                 <StyledTableRow key={teacher.id}>
-                                    <StyledTableCell>{teacher.id}</StyledTableCell>
+                                    <StyledTableCell>{teacher.id || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{teacher.teacherName || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{teacher.teacherSchool || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{teacher.teacherClass || 'N/A'}</StyledTableCell>

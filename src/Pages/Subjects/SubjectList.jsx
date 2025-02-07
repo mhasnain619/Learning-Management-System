@@ -96,13 +96,13 @@ export default function SubjectList() {
                                 subjects.map((e, i) => (
                                     <StyledTableRow key={i}>
                                         <StyledTableCell component="th" scope="row">
-                                            {e.id}
+                                            {e.id || 'N/A'}
                                         </StyledTableCell>
                                         <StyledTableCell component="th" scope="row">
-                                            {e.subjectName}
+                                            {e.subjectName || 'N/A'}
                                         </StyledTableCell>
-                                        <StyledTableCell>{e.subjectClass}</StyledTableCell>
-                                        <StyledTableCell>{e.selectGroup}</StyledTableCell>
+                                        <StyledTableCell>{e.subjectClass || 'N/A'}</StyledTableCell>
+                                        <StyledTableCell>{e.selectGroup || 'N/A'}</StyledTableCell>
                                         <Box className='controls'>
                                             <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
                                             <Button onClick={() => GotoUpdateSubject(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>

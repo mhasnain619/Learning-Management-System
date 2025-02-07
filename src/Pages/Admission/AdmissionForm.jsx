@@ -30,17 +30,10 @@ const AdmissionForm = () => {
                 </Typography>
                 <Input
                     type='text'
-                    label="First Name"
-                    placeholder='Enter your first name'
+                    label="Name"
+                    placeholder='Enter your full name'
                     value={admissionObj.admissionFirstName}
                     onChangeEvent={(e) => setAdmissionObj({ ...admissionObj, admissionFirstName: e.target.value })}
-                />
-                <Input
-                    type='text'
-                    label="Last Name"
-                    placeholder='Enter your last name'
-                    value={admissionObj.admissionLastName}
-                    onChangeEvent={(e) => setAdmissionObj({ ...admissionObj, admissionLastName: e.target.value })}
                 />
                 <Input
                     type='text'

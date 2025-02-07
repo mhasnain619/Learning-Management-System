@@ -95,13 +95,13 @@ export default function SyllabusList() {
                             syllabus.map((e, i) => (
                                 <StyledTableRow key={i}>
                                     <StyledTableCell component="th" scope="row">
-                                        {e.id}
+                                        {e.id || 'N/A'}
                                     </StyledTableCell>
                                     <StyledTableCell component="th" scope="row">
-                                        {e.syllabusName}
+                                        {e.syllabusName || 'N/A'}
                                     </StyledTableCell>
-                                    <StyledTableCell align="start">{e.syllabusClass}</StyledTableCell>
-                                    <StyledTableCell align="start">{e.syllabusFile}</StyledTableCell>
+                                    <StyledTableCell>{e.syllabusClass || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{e.syllabusFile || 'N/A'}</StyledTableCell>
                                     <Box className='controls'>
                                         <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
                                         <Button onClick={() => GotoUpdateSyllabus(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
