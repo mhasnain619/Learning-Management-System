@@ -3,7 +3,6 @@ import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import './AddSubject.css'
-import axios from "axios";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../FirebaseConfiq";
 

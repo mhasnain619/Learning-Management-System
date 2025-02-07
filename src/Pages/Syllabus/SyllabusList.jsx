@@ -7,9 +7,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../FirebaseConfiq';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -30,22 +32,31 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 0,
     },
 }));
-const rows = [
-    { id: 1, subjectName: 'English', class: '12', group: 'male', },
-    { id: 2, subjectName: 'English', class: '12', group: 'male', },
-    { id: 3, subjectName: 'English', class: '12', group: 'male', },
-    { id: 4, subjectName: 'English', class: '12', group: 'male', },
-    { id: 5, subjectName: 'English', class: '12', group: 'male', },
-    { id: 6, subjectName: 'English', class: '12', group: 'male', },
-    { id: 7, subjectName: 'English', class: '12', group: 'male', },
-    { id: 8, subjectName: 'English', class: '12', group: 'male', },
-    { id: 9, subjectName: 'English', class: '12', group: 'male', },
-];
+
 export default function SyllabusList() {
+    let [openLoader, setOpenLoader] = React.useState(false)
+    const [syllabus, setSyllabus] = React.useState([])
+    React.useEffect(() => {
+        const fetchSyllabus = async () => {
+            setOpenLoader(true)
+            try {
+                const querySnapshot = await getDocs(collection(db, "syllabus"));
+                const subjectData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
+                setSyllabus(subjectData)
+            } catch (error) {
+                console.error("Error fetching students:", error);
+            }
+            setOpenLoader(false)
+        }
+        fetchSyllabus()
+    }, [])
     const navigate = useNavigate()
 
-    const goToAddSubject = () => {
-        navigate('/syllabus/syllabus-list')
+    const goToAddSyllabus = () => {
+        navigate('/syllabus/add-syllabus')
     }
     const GotoUpdateSyllabus = (id) => {
         navigate(`/syllabus/syllabus-list/${id}`)
@@ -56,7 +67,7 @@ export default function SyllabusList() {
                 <Typography variant='h4' sx={{ fontSize: '23px', fontWeight: '600', color: '#474749' }}>
                     Syllabus List
                 </Typography>
-                <Button onClick={goToAddSubject} size='medium' variant='contained'>
+                <Button onClick={goToAddSyllabus} size='medium' variant='contained'>
                     Add New Syllabus
                 </Button>
             </Box>
@@ -67,29 +78,43 @@ export default function SyllabusList() {
                         <TableRow>
                             <StyledTableCell>Id</StyledTableCell>
                             <StyledTableCell>Subject Name</StyledTableCell>
-                            <StyledTableCell align="start">Class</StyledTableCell>
-                            <StyledTableCell align="start">File</StyledTableCell>
-                            <StyledTableCell align="start">Controls</StyledTableCell>
+                            <StyledTableCell>Class</StyledTableCell>
+                            <StyledTableCell>File</StyledTableCell>
+                            <StyledTableCell>Controls</StyledTableCell>
 
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((e, i) => (
-                            <StyledTableRow key={i}>
-                                <StyledTableCell component="th" scope="row">
-                                    {e.id}
-                                </StyledTableCell>
-                                <StyledTableCell component="th" scope="row">
-                                    {e.subjectName}
-                                </StyledTableCell>
-                                <StyledTableCell align="start">{e.subjectName}</StyledTableCell>
-                                <StyledTableCell align="start">{e.group}</StyledTableCell>
-                                <Box className='controls'>
-                                    <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
-                                    <Button onClick={() => GotoUpdateSyllabus(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
-                                </Box>
-                            </StyledTableRow>
-                        ))}
+                        {openLoader ? (
+                            <TableRow>
+                                <TableCell colSpan={8} align="center">
+                                    <CircularProgress />
+                                </TableCell>
+                            </TableRow>
+                        ) : syllabus.length > 0 ? (
+                            syllabus.map((e, i) => (
+                                <StyledTableRow key={i}>
+                                    <StyledTableCell component="th" scope="row">
+                                        {e.id}
+                                    </StyledTableCell>
+                                    <StyledTableCell component="th" scope="row">
+                                        {e.syllabusName}
+                                    </StyledTableCell>
+                                    <StyledTableCell align="start">{e.syllabusClass}</StyledTableCell>
+                                    <StyledTableCell align="start">{e.syllabusFile}</StyledTableCell>
+                                    <Box className='controls'>
+                                        <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                        <Button onClick={() => GotoUpdateSyllabus(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
+                                    </Box>
+                                </StyledTableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={8} align="center">
+                                    No Data Available
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>

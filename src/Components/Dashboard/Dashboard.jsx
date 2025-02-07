@@ -214,7 +214,6 @@ function ResponsiveDrawer(props) {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-
                             <MenuItem onClick={handleCloseUserMenu}>
                                 <Button onClick={() => navigate('/profile')} sx={{ textAlign: 'center' }}>Profile</Button>
                             </MenuItem>

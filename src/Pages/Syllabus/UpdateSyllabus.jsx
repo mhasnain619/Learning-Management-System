@@ -3,48 +3,47 @@ import Input from "../../Components/Input/Input";
 import { Box, Button, Container, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import './SyllabusForm.css'
-import axios from "axios";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../FirebaseConfiq";
+
 
 const UpdateSyllabus = () => {
-
     let [UpdateSyllabusObj, setUpdateSyllabusObj] = useState({
-        updateSyllabusName: '',
-        updateSyllabusClass: '',
-        updateFile: ''
+        syllabusName: '',
+        syllabusClass: '',
+        syllabusFile: ''
     });
 
     //  getting user object with id
     const { id } = useParams()
-    console.log(id);
-    useEffect(() => {
-        axios.get(`http://localhost:3000/Clients/${id}`)
-            .then((res) => {
-                setObj(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [id]);
-    const navigate = useNavigate()
+    React.useEffect(() => {
+        const fetchSyllabus = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "syllabus"));
+                const syllabusData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                const filteredData = syllabusData.find((e) => e.id === id);
+                if (filteredData) {
+                    setUpdateSyllabusObj(filteredData);
+                }
+                console.log(filteredData);
 
-    // updating class object
+            } catch (error) {
+                console.error("Error fetching teachers:", error);
+                setLoading(false);
+            }
+        };
+        fetchSyllabus();
+    }, []);
+
+
     const updateNewSyllabus = () => {
-        axios.put(`http://localhost:3000/Clients/${id}`, UpdateSyllabusObj)
-            .then((res) => {
-                alert('User Updated Successfully.')
-                navigate('/syllabus/syllabus-list')
-                // console.log("User updated:", res.data);
-            })
-            .catch((err) => {
-                console.log("Update failed:", err);
-            });
+        console.log('class object is ', UpdateSyllabusObj);
+        setUpdateSyllabusObj({ syllabusFile: '', syllabusClass: '', syllabusName: '' });
+        navigate('/syllabus/syllabus-list')
     };
-
-    // const handleSubmit = () => {
-    //     console.log('class object is ', UpdateSyllabusObj);
-    //     setUpdateSyllabusObj({ classUpdateFirstName: '', classUpdateLastName: '', classUpdateEmail: '', classUpdatePhone: '', classUpdateDate: '', classUpdateQualification: '', gender: '' });
-    //     navigate('/class/class-list')
-    // };
 
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
@@ -56,20 +55,22 @@ const UpdateSyllabus = () => {
                     type='text'
                     label="Subject Name"
                     placeholder='Enter your first name'
-                    value={UpdateSyllabusObj.updateSyllabusName}
-                    onChangeEvent={(e) => setUpdateSyllabusObj({ ...UpdateSyllabusObj, updateSyllabusName: e.target.value })}
+                    value={UpdateSyllabusObj.syllabusName}
+                    onChangeEvent={(e) => setUpdateSyllabusObj({ ...UpdateSyllabusObj, syllabusName: e.target.value })}
                 />
                 <Input
-                    type='number'
+                    type='text'
                     label="Class"
                     placeholder='Enter your class'
-                    value={UpdateSyllabusObj.updateSyllabusClass}
-                    onChangeEvent={(e) => setUpdateSyllabusObj({ ...UpdateSyllabusObj, updateSyllabusClass: e.target.value })}
+                    value={UpdateSyllabusObj.syllabusClass}
+                    onChangeEvent={(e) => setUpdateSyllabusObj({ ...UpdateSyllabusObj, syllabusClass: e.target.value })}
                 />
                 <Input
-                    type='file'
-                    value={UpdateSyllabusObj.updateFile}
-                    onChangeEvent={(e) => setUpdateSyllabusObj({ ...UpdateSyllabusObj, updateFile: e.target.value })}
+                    type="file"
+                    onChangeEvent={(e) => setUpdateSyllabusObj({
+                        ...updateSyllabusObj,
+                        syllabusFile: e.target.files[0]
+                    })}
                 />
 
                 <Button onClick={updateNewSyllabus} size="large" variant="contained" color="primary" fullWidth>
