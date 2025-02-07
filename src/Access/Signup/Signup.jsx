@@ -12,6 +12,7 @@ import Alert from '@mui/material/Alert';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../FirebaseConfiq";
 const SignupPage = () => {
+    const [isChecked, setIsChecked] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
     const [credentials, setCredentials] = useState({
         name: "",
@@ -158,8 +159,8 @@ const SignupPage = () => {
                             ),
                         }}
                     />
-                    <FormControlLabel control={<Checkbox />} label="Remember me" />
-                    <Button onClick={getCredentials} fullWidth className="loginButton" size="large" variant="contained">
+                    <FormControlLabel control={<Checkbox checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />} label="Remember me" />
+                    <Button disabled={!isChecked} onClick={getCredentials} fullWidth className="loginButton" size="large" variant="contained">
                         Signup
                     </Button>
                 </Box>

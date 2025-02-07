@@ -12,7 +12,8 @@ import { useNavigate } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
 
 const LoginPage = () => {
-    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+    const [rememberMe, setRememberMe] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
     const [userLoginData, setUserLoginData] = useState({
         email: "",
         password: "",
@@ -50,7 +51,7 @@ const LoginPage = () => {
     };
 
     return (
-        <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
             <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
                     Login Successful!
@@ -112,9 +113,9 @@ const LoginPage = () => {
                             ),
                         }}
                     />
-                    <FormControlLabel control={<Checkbox />} label="Remember me" />
+                    <FormControlLabel control={<Checkbox onChange={(e) => setRememberMe(e.target.checked)} />} label="Remember me" />
 
-                    <Button onClick={userLogedIn} fullWidth className="loginButton" size="large" variant="contained">
+                    <Button disabled={!rememberMe} onClick={userLogedIn} fullWidth className="loginButton" size="large" variant="contained">
                         Login
                     </Button>
                 </Box>
