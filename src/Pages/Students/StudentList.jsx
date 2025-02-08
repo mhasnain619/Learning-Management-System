@@ -11,6 +11,7 @@ import { Box, Button, Typography, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
+import { doc, deleteDoc } from "firebase/firestore";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
@@ -32,6 +33,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function StudentList() {
+    let [refresh, setRefresh] = React.useState(false)
     let [openLoader, setOpenLoader] = React.useState(false)
     const navigate = useNavigate()
     const [students, setStudents] = React.useState([])
@@ -52,6 +54,10 @@ export default function StudentList() {
         }
         fetchStudents()
     }, [])
+    const deleteStudent = async (id) => {
+        await deleteDoc(doc(db, "students", id));
+        setRefresh(!refresh)
+    }
     const goToAddStudent = () => {
         navigate('/student/student-registration')
     }
@@ -100,7 +106,7 @@ export default function StudentList() {
                                     <StyledTableCell>{e.gender || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.userEmail || 'N/A'}</StyledTableCell>
                                     <Box className='controls'>
-                                        <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                        <Button onClick={() => deleteStudent(e.id)} sx={{ mx: 1 }} variant='contained'>Delete</Button>
                                         <Button onClick={() => GotoUpdateStudent(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
                                     </Box>
                                 </StyledTableRow>

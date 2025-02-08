@@ -49,7 +49,7 @@ export default function SubjectList() {
                 }));
                 setSubjects(subjectData)
             } catch (error) {
-                console.error("Error fetching students:", error);
+                console.error("Error fetching subjects:", error);
             }
             setOpenLoader(false)
         }

@@ -7,6 +7,7 @@ import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
+import { doc, updateDoc } from "firebase/firestore";
 const UpdateStudent = () => {
     const [data, setData] = React.useState([]);
     let [studentUpdateObj, setStudentUpdateObj] = useState({
@@ -16,7 +17,7 @@ const UpdateStudent = () => {
         gender: '',
         userEmail: '',
     });
-
+    const navigate = useNavigate()
     //  getting user object with id
     const { id } = useParams()
     // console.log(id);
@@ -45,16 +46,17 @@ const UpdateStudent = () => {
     }, [data]);
 
     const updateStudent = () => {
-        console.log('class object is ', studentUpdateObj);
+        const update = updateDoc(doc(db, 'students', id), studentUpdateObj)
+        console.log('class object is ', update);
         setStudentUpdateObj({ userName: '', userEmail: '', userClass: '', schoolStuSchoolName: '', gender: '' });
-        navigate('/class/class-list')
+        navigate('/student/student-list')
     };
 
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
             <Box className='formBox'>
                 <Typography sx={{ fontWeight: 'bold' }} variant="h4" gutterBottom>
-                    Update Student Registration Form
+                    Update Student
                 </Typography>
                 <Input
                     type='text'

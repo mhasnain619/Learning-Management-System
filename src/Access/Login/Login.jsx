@@ -6,11 +6,11 @@ import "./Login.css";
 import loginImage from '../../assets/signupBgRemove.png'
 import Logo from '../../assets/logoRemoveBg.png'
 import waveImg from '../../assets/wave.png'
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from "../../FirebaseConfiq";
 import { useNavigate } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
-
+import { GoogleAuthProvider } from "firebase/auth";
 const LoginPage = () => {
     const [rememberMe, setRememberMe] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
@@ -37,6 +37,33 @@ const LoginPage = () => {
 
             });
 
+    }
+    const loginWithGoogle = () => {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                navigate('/')
+                console.log(user);
+
+                // IdP data available using getAdditionalUserInfo(result)
+                // ...
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                console.log(errorMessage);
+
+                // ...
+            });
     }
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') return;
@@ -124,6 +151,9 @@ const LoginPage = () => {
                 </Typography>
                 <Typography onClick={() => navigate('/signup')} variant="body2" align="center" color="primary" className="clickable">
                     Sign up
+                </Typography>
+                <Typography onClick={loginWithGoogle} variant="body2" align="center" color="primary" className="clickable">
+                    sign in with google
                 </Typography>
             </Grid>
         </Grid>

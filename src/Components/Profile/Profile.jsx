@@ -4,6 +4,7 @@ import { Card, CardContent, Typography, Avatar, Button, Grid, Box } from '@mui/m
 import CircularProgress from '@mui/material/CircularProgress';
 import { FaLocationDot } from "react-icons/fa6";
 
+
 import {
     Business as BusinessIcon,
     Email as EmailIcon,
@@ -40,7 +41,7 @@ const UserProfile = () => {
                         <Grid item xs={12} md={3} display="flex" justifyContent="center" alignItems="center">
                             <Avatar
                                 alt={user.displayName || "User"}
-                                src={user.photoURL || userImg}
+                                src={userImg} //user.photoURL || 
                                 className="user-avatar"
                             />
                         </Grid>

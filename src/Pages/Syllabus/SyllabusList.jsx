@@ -47,7 +47,7 @@ export default function SyllabusList() {
                 }));
                 setSyllabus(subjectData)
             } catch (error) {
-                console.error("Error fetching students:", error);
+                console.error("Error fetching syllabus:", error);
             }
             setOpenLoader(false)
         }

@@ -26,9 +26,7 @@ const StudentRegistrationForm = () => {
             return;
         }
         try {
-            console.log("Firestore instance: ", db); // Debugging Firestore instance
             const docRef = await addDoc(collection(db, "students"), studentObj);
-            console.log("Document written with ID: ", docRef.id);
             setStudentObj({ userName: '', userEmail: '', userClass: '', gender: '' });
             navigate('/student/student-list');
         } catch (error) {
@@ -70,7 +68,7 @@ const StudentRegistrationForm = () => {
                     <RadioGroup
                         row
                         name="gender"
-                        value={studentObj.gender || ''}
+                        value={studentObj.gender || 'N/A'}
                         onChange={(e) => setStudentObj({ ...studentObj, gender: e.target.value })}
                     >
                         <FormControlLabel value="Male" control={<Radio />} label="Male" />
