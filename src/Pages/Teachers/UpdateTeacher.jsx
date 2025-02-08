@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import '../../Pages/Class/ClassForm.css'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
+import { doc, updateDoc } from "firebase/firestore";
 const Updateteacher = () => {
     const [loading, setLoading] = React.useState(true);
     const [data, setData] = React.useState([]);
@@ -15,7 +16,7 @@ const Updateteacher = () => {
         gender: '',
         teacherEmail: '',
     });
-
+    let navigate = useNavigate()
     //  getting user object with id
     const { id } = useParams()
     // console.log(id);
@@ -46,9 +47,10 @@ const Updateteacher = () => {
 
 
     const updateteacher = () => {
+        const update = updateDoc(doc(db, 'teachers', id), teacherUpdateObj)
         console.log('class object is ', teacherUpdateObj);
         setTeacherUpdateObj({ teacherName: '', teacherEmail: '', gender: '', teacherClass: '', teacherSchool: '' });
-        navigate('/class/class-list')
+        navigate('/teacher/teacher-list')
     };
 
     return (

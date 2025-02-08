@@ -5,15 +5,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import './SyllabusForm.css'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../FirebaseConfiq";
+import { doc, updateDoc } from "firebase/firestore";
 
 
 const UpdateSyllabus = () => {
+    const [loading, setLoading] = React.useState(true);
     let [UpdateSyllabusObj, setUpdateSyllabusObj] = useState({
         syllabusName: '',
         syllabusClass: '',
         syllabusFile: ''
     });
-
+    let navigate = useNavigate()
     //  getting user object with id
     const { id } = useParams()
     React.useEffect(() => {
@@ -31,7 +33,7 @@ const UpdateSyllabus = () => {
                 console.log(filteredData);
 
             } catch (error) {
-                console.error("Error fetching teachers:", error);
+                console.error("Error fetching syllabus:", error);
                 setLoading(false);
             }
         };
@@ -40,7 +42,8 @@ const UpdateSyllabus = () => {
 
 
     const updateNewSyllabus = () => {
-        console.log('class object is ', UpdateSyllabusObj);
+        const update = updateDoc(doc(db, 'syllabus', id), UpdateSyllabusObj)
+        console.log('class object is ', update);
         setUpdateSyllabusObj({ syllabusFile: '', syllabusClass: '', syllabusName: '' });
         navigate('/syllabus/syllabus-list')
     };
@@ -68,7 +71,7 @@ const UpdateSyllabus = () => {
                 <Input
                     type="file"
                     onChangeEvent={(e) => setUpdateSyllabusObj({
-                        ...updateSyllabusObj,
+                        UpdateSyllabusObj,
                         syllabusFile: e.target.files[0]
                     })}
                 />

@@ -3,12 +3,12 @@ import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import '../../Pages/Class/ClassForm.css'
-import axios from "axios";
 import CircularProgress from '@mui/material/CircularProgress';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
 import { doc, updateDoc } from "firebase/firestore";
 const UpdateStudent = () => {
+    let [openLoader, setOpenLoader] = React.useState(false)
     const [data, setData] = React.useState([]);
     let [studentUpdateObj, setStudentUpdateObj] = useState({
         userName: '',
@@ -33,7 +33,7 @@ const UpdateStudent = () => {
                 // console.log(filterData);
             } catch (error) {
                 console.error("Error fetching teachers:", error);
-                setLoading(false);
+                setOpenLoader(false);
             }
         };
         fetchStudents();
@@ -100,7 +100,7 @@ const UpdateStudent = () => {
                     </RadioGroup>
                 </FormControl>
                 <Button onClick={updateStudent} size="large" variant="contained" color="primary" fullWidth>
-                    Update
+                    {openLoader ? <CircularProgress size={24} sx={{ color: 'white' }} /> : "Update"}
                 </Button>
             </Box>
         </Container>

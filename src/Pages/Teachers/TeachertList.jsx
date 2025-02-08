@@ -11,6 +11,7 @@ import { Box, Button, Typography, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
+import { doc, deleteDoc } from "firebase/firestore";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -32,12 +33,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function TeacherList() {
+    let [refresh, setRefresh] = React.useState(false)
     const [teachers, setTeachers] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const navigate = useNavigate();
 
     React.useEffect(() => {
         const fetchTeachers = async () => {
+            setLoading(true)
             try {
                 const querySnapshot = await getDocs(collection(db, "teachers"));
                 const teacherData = querySnapshot.docs.map(doc => ({
@@ -52,8 +55,11 @@ export default function TeacherList() {
             }
         };
         fetchTeachers();
-    }, []);
-
+    }, [refresh]);
+    const deleteStudent = async (id) => {
+        await deleteDoc(doc(db, "teachers", id));
+        setRefresh(!refresh)
+    }
     const goToAddTeacher = () => {
         navigate('/teacher/teacher-registration');
     };
@@ -103,7 +109,7 @@ export default function TeacherList() {
                                     <StyledTableCell>{teacher.gender || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{teacher.teacherEmail || 'N/A'}</StyledTableCell>
                                     <Box className='controls'>
-                                        <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                        <Button onClick={() => deleteStudent(teacher.id)} sx={{ mx: 1 }} variant='contained'>Delete</Button>
                                         <Button onClick={() => goToUpdateTeacher(teacher.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
                                     </Box>
                                 </StyledTableRow>

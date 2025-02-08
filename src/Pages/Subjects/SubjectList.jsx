@@ -13,6 +13,7 @@ import axios from 'axios';
 import './AddSubject.css'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
+import { doc, deleteDoc } from "firebase/firestore";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -35,6 +36,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function SubjectList() {
+    let [refresh, setRefresh] = React.useState(false)
     let [openLoader, setOpenLoader] = React.useState(false)
     const [subjects, setSubjects] = React.useState([])
     const navigate = useNavigate()
@@ -54,7 +56,11 @@ export default function SubjectList() {
             setOpenLoader(false)
         }
         fetchSubjects()
-    }, [])
+    }, [refresh])
+    const deleteSubject = async (id) => {
+        await deleteDoc(doc(db, "subjects", id));
+        setRefresh(!refresh)
+    }
     const goToAddSubject = () => {
         navigate('/subject/add-subject')
     }
@@ -104,7 +110,7 @@ export default function SubjectList() {
                                         <StyledTableCell>{e.subjectClass || 'N/A'}</StyledTableCell>
                                         <StyledTableCell>{e.selectGroup || 'N/A'}</StyledTableCell>
                                         <Box className='controls'>
-                                            <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                            <Button onClick={() => deleteSubject(e.id)} sx={{ mx: 1 }} variant='contained'>Delete</Button>
                                             <Button onClick={() => GotoUpdateSubject(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
                                         </Box>
                                     </StyledTableRow>

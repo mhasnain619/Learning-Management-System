@@ -5,15 +5,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import './AddSubject.css'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../FirebaseConfiq";
+import { doc, updateDoc } from "firebase/firestore";
 
 const UpdateSubject = () => {
+    const [loading, setLoading] = React.useState(true);
     const [data, setData] = React.useState([]);
     let [subjectUpdateObj, setSubjectUpdateObj] = useState({
         subjectName: '',
         subjectClass: '',
         selectGroup: ''
     });
-
+    let navigate = useNavigate()
     //  getting user object with id
     const { id } = useParams()
     React.useEffect(() => {
@@ -39,9 +41,10 @@ const UpdateSubject = () => {
         }
     }, [data]);
     const updateNewSubject = () => {
-        console.log('class object is ', subjectUpdateObj);
-        setSubjectUpdateObj({ subjectName: '', classUpdateLastName: '', classUpdateEmail: '', classUpdatePhone: '', classUpdateDate: '', classUpdateQualification: '', gender: '' });
-        navigate('/class/class-list')
+        const update = updateDoc(doc(db, 'subjects', id), subjectUpdateObj)
+        console.log('class object is ', update);
+        setSubjectUpdateObj({ subjectName: '', subjectClass: '', selectGroup: '' });
+        navigate('/subject/subject-list')
     };
 
     return (

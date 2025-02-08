@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
+import { doc, deleteDoc } from "firebase/firestore";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -34,6 +35,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function SyllabusList() {
+    let [refresh, setRefresh] = React.useState(false)
     let [openLoader, setOpenLoader] = React.useState(false)
     const [syllabus, setSyllabus] = React.useState([])
     React.useEffect(() => {
@@ -52,9 +54,12 @@ export default function SyllabusList() {
             setOpenLoader(false)
         }
         fetchSyllabus()
-    }, [])
+    }, [refresh])
     const navigate = useNavigate()
-
+    const deleteSyllabus = async (id) => {
+        await deleteDoc(doc(db, "syllabus", id));
+        setRefresh(!refresh)
+    }
     const goToAddSyllabus = () => {
         navigate('/syllabus/add-syllabus')
     }
@@ -103,7 +108,7 @@ export default function SyllabusList() {
                                     <StyledTableCell>{e.syllabusClass || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.syllabusFile || 'N/A'}</StyledTableCell>
                                     <Box className='controls'>
-                                        <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                        <Button onClick={() => deleteSyllabus(e.id)} sx={{ mx: 1 }} variant='contained'>Delete</Button>
                                         <Button onClick={() => GotoUpdateSyllabus(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
                                     </Box>
                                 </StyledTableRow>

@@ -35,8 +35,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export default function StudentList() {
     let [refresh, setRefresh] = React.useState(false)
     let [openLoader, setOpenLoader] = React.useState(false)
-    const navigate = useNavigate()
     const [students, setStudents] = React.useState([])
+    const navigate = useNavigate()
     React.useEffect(() => {
         const fetchStudents = async () => {
             setOpenLoader(true)
@@ -53,7 +53,7 @@ export default function StudentList() {
             setOpenLoader(false)
         }
         fetchStudents()
-    }, [])
+    }, [refresh])
     const deleteStudent = async (id) => {
         await deleteDoc(doc(db, "students", id));
         setRefresh(!refresh)
