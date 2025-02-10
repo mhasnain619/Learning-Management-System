@@ -35,6 +35,8 @@ import UpdateStudent from './Pages/Students/UpdateStudent';
 import Updateteacher from './Pages/Teachers/UpdateTeacher';
 import UpdateSubject from './Pages/Subjects/UpdateSubject';
 import UpdateSyllabus from './Pages/Syllabus/UpdateSyllabus';
+import AuthRoute from './Components/ProtectedRoutes/AuthRoute';
+import ProtectedRoute from './Components/ProtectedRoutes/ProtectedRoute';
 
 // Material UI Theme
 const theme = createTheme({
@@ -49,62 +51,68 @@ function App() {
       <Routes>
         {/* Access */}
 
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
+        <Route element={<AuthRoute />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+        </Route>
 
-        {/* dashboard */}
+        {/* Protected Route */}
 
-        <Route path="/*" element={<ResponsiveDrawer />}>
+        <Route element={<ProtectedRoute />}>
 
-          {/* profile */}
-          <Route path="profile" element={<UserProfile />} />
+          {/* dashboard */}
+          <Route path="/*" element={<ResponsiveDrawer />}>
 
-
-          {/* student Routes */}
-          <Route path="student/student-registration" element={<StudentRegistrationForm />} />
-          <Route path="student/student-list" element={<StudentList />} />
-          <Route path="student/student-list/:id" element={<UpdateStudent />} />
-
-          {/* Teacher Routes */}
-          <Route path="teacher/teacher-registration" element={<TeacherRegistrationForm />} />
-          <Route path="teacher/teacher-list" element={<TeacherList />} />
-          <Route path="teacher/teacher-list/:id" element={<Updateteacher />} />
-
-          {/* Subjects Routes */}
-          <Route path="subject/add-subject" element={<SubjectRegistrationForm />} />
-          <Route path="subject/subject-list" element={<SubjectList />} />
-          <Route path="subject/subject-list/:id" element={<UpdateSubject />} />
-
-          {/* Syllabus Routes */}
-          <Route path="syllabus/add-syllabus" element={<SyllabusForm />} />
-          <Route path="syllabus/syllabus-list" element={<SyllabusList />} />
-          <Route path="syllabus/syllabus-list/:id" element={<UpdateSyllabus />} />
-
-          {/* School Routes */}
-          <Route path="school/school-student-registration" element={< SchoolStudentRegistration />} />
-          <Route path="school/school-teacher-registration" element={< SchoolTeacherRegistration />} />
-
-          {/* Class Routes */}
-          <Route path="class/class-form" element={<ClassForm />} />
-          <Route path="class/class-list" element={<ClassList />} />
-          <Route path='class/class-list/:id' element={<UpdateClass />} />
-
-          {/*Routes Admission Form  */}
-          <Route path="admission/admission-form" element={<AdmissionForm />} />
+            {/* profile */}
+            <Route path="profile" element={<UserProfile />} />
 
 
-          {/* Routes Fees */}
-          <Route path="fees/fees-structure" element={<FeesStructureCard />} />
-          <Route path="fees/fees-voucher" element={<FeeVoucher />} />
-          <Route path="fees/fees-submission" element={<FeeSubmission />} />
+            {/* student Routes */}
+            <Route path="student/student-registration" element={<StudentRegistrationForm />} />
+            <Route path="student/student-list" element={<StudentList />} />
+            <Route path="student/student-list/:id" element={<UpdateStudent />} />
 
-          {/* Routes for Exams */}
-          <Route path="exam/exam-schedule" element={<ExamScheduleCard />} />
-          <Route path="exam/exam-result" element={<ExamResultCard />} />
+            {/* Teacher Routes */}
+            <Route path="teacher/teacher-registration" element={<TeacherRegistrationForm />} />
+            <Route path="teacher/teacher-list" element={<TeacherList />} />
+            <Route path="teacher/teacher-list/:id" element={<Updateteacher />} />
 
-          <Route path="home" element={<Home />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="contact" element={<ContactPage />} />
+            {/* Subjects Routes */}
+            <Route path="subject/add-subject" element={<SubjectRegistrationForm />} />
+            <Route path="subject/subject-list" element={<SubjectList />} />
+            <Route path="subject/subject-list/:id" element={<UpdateSubject />} />
+
+            {/* Syllabus Routes */}
+            <Route path="syllabus/add-syllabus" element={<SyllabusForm />} />
+            <Route path="syllabus/syllabus-list" element={<SyllabusList />} />
+            <Route path="syllabus/syllabus-list/:id" element={<UpdateSyllabus />} />
+
+            {/* School Routes */}
+            <Route path="school/school-student-registration" element={< SchoolStudentRegistration />} />
+            <Route path="school/school-teacher-registration" element={< SchoolTeacherRegistration />} />
+
+            {/* Class Routes */}
+            <Route path="class/class-form" element={<ClassForm />} />
+            <Route path="class/class-list" element={<ClassList />} />
+            <Route path='class/class-list/:id' element={<UpdateClass />} />
+
+            {/*Routes Admission Form  */}
+            <Route path="admission/admission-form" element={<AdmissionForm />} />
+
+
+            {/* Routes Fees */}
+            <Route path="fees/fees-structure" element={<FeesStructureCard />} />
+            <Route path="fees/fees-voucher" element={<FeeVoucher />} />
+            <Route path="fees/fees-submission" element={<FeeSubmission />} />
+
+            {/* Routes for Exams */}
+            <Route path="exam/exam-schedule" element={<ExamScheduleCard />} />
+            <Route path="exam/exam-result" element={<ExamResultCard />} />
+
+            <Route path="home" element={<Home />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="contact" element={<ContactPage />} />
+          </Route>
         </Route>
       </Routes>
     </ThemeProvider>

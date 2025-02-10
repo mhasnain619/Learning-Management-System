@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "../../FirebaseConfiq";
+import { setDoc, doc } from "firebase/firestore";
+import { auth, db } from "../../FirebaseConfiq";
 const SignupPage = () => {
     const [isChecked, setIsChecked] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
@@ -41,11 +42,23 @@ const SignupPage = () => {
         createUserWithEmailAndPassword(auth, credentials.email, credentials.password, credentials.confirmPassword)
             .then((userCredential) => {
                 const user = userCredential.user
+                console.log("User UID:", user.uid);
+                localStorage.setItem('uid', user.uid)
                 updateProfile(user, { displayName: credentials.name }).then(() => {
                     console.log(userCredential)
                 }).catch((error) => {
                     console.log("Error updating profile:", error.message);
                 })
+                // Save user data to Firestore
+                const userObj = {
+                    name: credentials.name,
+                    email: credentials.email,
+                    uid: user.uid, // Store UID for reference
+                };
+
+                setDoc(doc(db, 'users', user.uid), userObj)
+                    .then(() => console.log("User data saved to Firestore"))
+                    .catch((error) => console.log("Error saving user to Firestore:", error.message));
                 setOpen(true);
                 setTimeout(() => {
                     navigate('/login')

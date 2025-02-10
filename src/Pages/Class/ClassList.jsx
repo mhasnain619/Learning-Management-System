@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -31,6 +31,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 export default function ClassList() {
+    let [refresh, setRefresh] = React.useState(false)
     const [classes, setClasses] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const navigate = useNavigate()
@@ -50,13 +51,17 @@ export default function ClassList() {
             }
         };
         fetchClassess();
-    }, []);
+    }, [refresh]);
 
-
+    const deleteClass = async (id) => {
+        await deleteDoc(doc(db, "class", id));
+        setLoading(true);
+        setRefresh(!refresh)
+    }
     const goToAddClassList = () => {
         navigate('/class/class-form')
     }
-    const GotoUpdateClass = (id) => {
+    const goToUpdateClass = (id) => {
         navigate(`/class/class-list/${id}`)
     }
     return (
@@ -100,8 +105,8 @@ export default function ClassList() {
                                     <StyledTableCell>{clas.gender || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{clas.classUserEmail || 'N/A'}</StyledTableCell>
                                     <Box className='controls'>
-                                        <Button sx={{ mx: 1 }} variant='contained'>Delete</Button>
-                                        <Button onClick={() => goToUpdateTeacher(teacher.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
+                                        <Button onClick={() => deleteClass(clas.id)} sx={{ mx: 1 }} variant='contained'>Delete</Button>
+                                        <Button onClick={() => goToUpdateClass(clas.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>
                                     </Box>
                                 </StyledTableRow>
                             ))

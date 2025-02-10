@@ -3,53 +3,58 @@ import Input from "../../Components/Input/Input";
 import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import './ClassForm.css'
-import axios from "axios";
+import CircularProgress from '@mui/material/CircularProgress';
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../../FirebaseConfiq';
+import { doc, updateDoc } from "firebase/firestore";
 
 const UpdateClass = () => {
-
+    const [data, setData] = React.useState([]);
     let [classUpdateObj, setClassUpdateObj] = useState({
-        classUpdateFirstName: '',
-        classUpdateLastName: '',
-        classUpdateEmail: '',
-        classUpdatePhone: '',
-        classUpdateDate: '',
-        classUpdateQualification: '',
+        classUserFullName: '',
+        classUserEmail: '',
+        classUserPhone: '',
+        classUserDate: '',
+        classUserQualification: '',
         gender: ''
     });
 
     //  getting user object with id
     const { id } = useParams()
-    console.log(id);
-    useEffect(() => {
-        axios.get(`http://localhost:3000/Clients/${id}`)
-            .then((res) => {
-                setObj(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [id]);
+    // console.log(id);
+
     const navigate = useNavigate()
 
-    // updating class object
+    React.useEffect(() => {
+        const fetchClass = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, "class"));
+                const classData = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setData(classData)
+                // console.log(filterData);
+            } catch (error) {
+                console.error("Error fetching class:", error);
+                setOpenLoader(false);
+            }
+        };
+        fetchClass();
+    }, []);
+    React.useEffect(() => {
+        let filterData = data?.filter((e) => e.id === id);
+        if (filterData.length > 0) {
+            setClassUpdateObj(filterData[0]);
+        }
+    }, [data]);
+
     const updateClass = () => {
-        axios.put(`http://localhost:3000/Clients/${id}`, classUpdateObj)
-            .then((res) => {
-                alert('User Updated Successfully.')
-                navigate('/')
-                // console.log("User updated:", res.data);
-            })
-            .catch((err) => {
-                console.log("Update failed:", err);
-            });
+        const update = updateDoc(doc(db, 'class', id), classUpdateObj)
+        console.log('class object is ', update);
+        setClassUpdateObj({ classUserFullName: '', classUserEmail: '', classUserPhone: '', classUserQualification: '', classUserDate: '', gender: '' });
+        navigate('/class/class-list')
     };
-
-    // const handleSubmit = () => {
-    //     console.log('class object is ', classUpdateObj);
-    //     setClassUpdateObj({ classUpdateFirstName: '', classUpdateLastName: '', classUpdateEmail: '', classUpdatePhone: '', classUpdateDate: '', classUpdateQualification: '', gender: '' });
-    //     navigate('/class/class-list')
-    // };
-
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
             <Box className='formBox'>
@@ -58,43 +63,36 @@ const UpdateClass = () => {
                 </Typography>
                 <Input
                     type='text'
-                    label="First Name"
-                    placeholder='Enter your first name'
-                    value={classUpdateObj.classUpdateFirstName}
-                    onChangeEvent={(e) => setClassUpdateObj({ ...classUpdateObj, classUpdateFirstName: e.target.value })}
-                />
-                <Input
-                    type='text'
-                    label="Last Name"
-                    placeholder='Enter your last name'
-                    value={classUpdateObj.classUpdateLastName}
-                    onChangeEvent={(e) => setClassUpdateObj({ ...classUpdateObj, classUpdateLastName: e.target.value })}
+                    label="Full Name"
+                    placeholder='Enter your full name'
+                    value={classUpdateObj.classUserFullName}
+                    onChangeEvent={(e) => setClassUpdateObj({ ...classUpdateObj, classUserFullName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Email"
                     placeholder='Enter your email'
-                    value={classUpdateObj.classUpdateEmail}
-                    onChangeEvent={(e) => setClassUpdateObj({ ...classUpdateObj, classUpdateEmail: e.target.value })}
+                    value={classUpdateObj.classUserEmail}
+                    onChangeEvent={(e) => setClassUpdateObj({ ...classUpdateObj, classUserEmail: e.target.value })}
                 />
                 <Input
                     type='number'
                     label="Phone Number"
                     placeholder='Enter your Phone Number'
-                    value={classUpdateObj.classUpdatePhone}
-                    onChangeEvent={(e) => setClassUpdateObj({ ...classUpdateObj, classUpdatePhone: e.target.value })}
+                    value={classUpdateObj.classUserPhone}
+                    onChangeEvent={(e) => setClassUpdateObj({ ...classUpdateObj, classUserPhone: e.target.value })}
                 />
                 <Input
                     type='date'
-                    value={classUpdateObj.classUpdateDate}
-                    onChangeEvent={(e) => setClassUpdateObj({ ...classUpdateObj, classUpdateDate: e.target.value })}
+                    value={classUpdateObj.classUserDate}
+                    onChangeEvent={(e) => setClassUpdateObj({ ...classUpdateObj, classUserDate: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Qualification"
                     placeholder='Enter your qualification'
-                    value={classUpdateObj.classUpdateQualification}
-                    onChangeEvent={(e) => setClassUpdateObj({ ...classUpdateObj, classUpdateQualification: e.target.value })}
+                    value={classUpdateObj.classUserQualification}
+                    onChangeEvent={(e) => setClassUpdateObj({ ...classUpdateObj, classUserQualification: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Gender</FormLabel>
