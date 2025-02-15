@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
 import { doc, deleteDoc } from "firebase/firestore";
+import './TeacherRegistration.css'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -87,8 +88,9 @@ export default function TeacherList() {
                             <StyledTableCell>Teacher Name</StyledTableCell>
                             <StyledTableCell>School Name</StyledTableCell>
                             <StyledTableCell>Class</StyledTableCell>
-                            <StyledTableCell>Gender</StyledTableCell>
                             <StyledTableCell>Email</StyledTableCell>
+                            <StyledTableCell>Number</StyledTableCell>
+                            <StyledTableCell>Gender</StyledTableCell>
                             <StyledTableCell>Controls</StyledTableCell>
                         </TableRow>
                     </TableHead>
@@ -106,8 +108,9 @@ export default function TeacherList() {
                                     <StyledTableCell>{teacher.teacherName || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{teacher.teacherSchool || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{teacher.teacherClass || 'N/A'}</StyledTableCell>
-                                    <StyledTableCell>{teacher.gender || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{teacher.teacherEmail || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{teacher.teacherNumber || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{teacher.gender || 'N/A'}</StyledTableCell>
                                     <Box className='controls'>
                                         <Button onClick={() => deleteStudent(teacher.id)} sx={{ mx: 1 }} variant='contained'>Delete</Button>
                                         <Button onClick={() => goToUpdateTeacher(teacher.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>

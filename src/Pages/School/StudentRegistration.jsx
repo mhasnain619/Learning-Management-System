@@ -12,7 +12,7 @@ const SchoolStudentRegistration = () => {
         userName: '',
         userEmail: '',
         userClass: '',
-        schoolStuSchoolName: '',
+        userSchoolName: '',
         gender: ''
     });
 
@@ -20,14 +20,14 @@ const SchoolStudentRegistration = () => {
 
     const handleSubmit = async () => {
         setOpenLoader(true)
-        if (schoolStudentObj.userName == '' || schoolStudentObj.userEmail == '' || schoolStudentObj.userClass == '' || schoolStudentObj.schoolStuSchoolName == '' || schoolStudentObj.gender == '') {
+        if (schoolStudentObj.userName == '' || schoolStudentObj.userEmail == '' || schoolStudentObj.userClass == '' || schoolStudentObj.userSchoolName == '' || schoolStudentObj.gender == '') {
             setOpenLoader(false)
             alert('Please fill all the fields')
             return;
         }
         try {
             const docRef = await addDoc(collection(db, "students"), schoolStudentObj);
-            setSchoolStudentObj({ userName: '', userEmail: '', userClass: '', schoolStuSchoolName: '', gender: '' });
+            setSchoolStudentObj({ userName: '', userEmail: '', userClass: '', userSchoolName: '', gender: '' });
             navigate('/student/student-list');
         } catch (error) {
             console.error("Error adding document: ", error);
@@ -58,8 +58,8 @@ const SchoolStudentRegistration = () => {
                     type='text'
                     label="School Name"
                     placeholder='Enter your school name'
-                    value={schoolStudentObj.schoolStuSchoolName}
-                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, schoolStuSchoolName: e.target.value })}
+                    value={schoolStudentObj.userSchoolName}
+                    onChangeEvent={(e) => setSchoolStudentObj({ ...schoolStudentObj, userSchoolName: e.target.value })}
                 />
                 <Input
                     type='text'

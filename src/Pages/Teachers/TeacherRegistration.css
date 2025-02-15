@@ -9,6 +9,13 @@
     font-weight: bold !important;
 }
 
+.controls {
+    display: flex;
+    justify-content: center;
+    height: 65px;
+    align-items: center;
+}
+
 @media (max-width: 768px) {
     .teacherRegistrationName {
         font-size: 25px !important;

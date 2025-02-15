@@ -21,6 +21,7 @@ const SignupPage = () => {
         password: "",
         confirmPassword: "",
     });
+    const [error, setError] = useState("");
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -47,7 +48,7 @@ const SignupPage = () => {
                 updateProfile(user, { displayName: credentials.name }).then(() => {
                     console.log(userCredential)
                 }).catch((error) => {
-                    console.log("Error updating profile:", error.message);
+                    setError(error.message)
                 })
                 // Save user data to Firestore
                 const userObj = {
@@ -66,16 +67,14 @@ const SignupPage = () => {
 
             })
             .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorMessage)
-
+                setError(error.message)
             });
     };
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') return;
         setOpen(false);
+        setError('')
     };
 
     const handleClickShowPassword = () => {
@@ -100,12 +99,17 @@ const SignupPage = () => {
                     height: '100vh',
                     width: '100%',
                 }} className="leftPanel">
-                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={3000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
                         Signup Successful!
                     </Alert>
                 </Snackbar>
-
+                {/* Error Snackbar */}
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={!!error} autoHideDuration={3000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="error" variant="filled">
+                        {error}
+                    </Alert>
+                </Snackbar>
                 <Box className='welComeTo'>
                     <Typography sx={{ color: 'white', fontSize: '25px', fontWeight: 'bold' }} gutterBottom>
                         WELCOME TO Jawan Pakistan

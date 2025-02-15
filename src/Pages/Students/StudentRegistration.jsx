@@ -12,6 +12,7 @@ const StudentRegistrationForm = () => {
     let [studentObj, setStudentObj] = useState({
         userName: '',
         userEmail: '',
+        userNumber: '',
         userClass: '',
         gender: ''
     });
@@ -20,7 +21,7 @@ const StudentRegistrationForm = () => {
 
     const handleSubmit = async () => {
         setOpenLoader(true)
-        if (studentObj.userName == '' || studentObj.userEmail == '' || studentObj.userClass == '' || studentObj.gender == '') {
+        if (studentObj.userName == '' || studentObj.userEmail == '' || studentObj.userClass == '' || studentObj.gender == '' || studentObj.userNumber == '') {
             setOpenLoader(false)
             alert('Please fill all the fields')
             return;
@@ -55,6 +56,13 @@ const StudentRegistrationForm = () => {
                     placeholder='Enter your email'
                     value={studentObj.userEmail}
                     onChangeEvent={(e) => setStudentObj({ ...studentObj, userEmail: e.target.value })}
+                />
+                <Input
+                    type='number'
+                    label="Number"
+                    placeholder='Enter your phone number'
+                    value={studentObj.userNumber}
+                    onChangeEvent={(e) => setStudentObj({ ...studentObj, userNumber: e.target.value })}
                 />
                 <Input
                     type='text'

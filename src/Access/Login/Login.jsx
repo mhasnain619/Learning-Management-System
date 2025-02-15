@@ -18,23 +18,21 @@ const LoginPage = () => {
         email: "",
         password: "",
     })
+    const [error, setError] = useState("");
     const [open, setOpen] = useState(false);
 
     const navigate = useNavigate()
     const userLogedIn = () => {
         signInWithEmailAndPassword(auth, userLoginData.email, userLoginData.password)
             .then((userCredential) => {
-                setOpen(true)
+                setOpen(true);
+                navigate('/');
                 console.log('User Loged in successfully.');
                 navigate('/')
 
             })
             .catch((error) => {
-                alert('Invalid Credentials')
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorMessage);
-
+                setError(error.message);
             });
 
     }
@@ -42,32 +40,22 @@ const LoginPage = () => {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                const credential = GoogleAuthProvider.credentialFromResult(result);
-                const token = credential.accessToken;
-                // The signed-in user info.
                 const user = result.user;
-                navigate('/')
-                console.log(user);
 
-                // IdP data available using getAdditionalUserInfo(result)
-                // ...
-            }).catch((error) => {
-                // Handle Errors here.
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                // The email of the user's account used.
-                const email = error.customData.email;
-                // The AuthCredential type that was used.
-                const credential = GoogleAuthProvider.credentialFromError(error);
-                console.log(errorMessage);
+                // Store UID in localStorage
+                localStorage.setItem("uid", user.uid);
 
-                // ...
+                console.log("Google Login Success:", user);
+                navigate('/dashboard'); // Redirect after login
+            })
+            .catch((error) => {
+                setError(error.message);
             });
-    }
+    };
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') return;
         setOpen(false);
+        setError("");
     };
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -82,6 +70,12 @@ const LoginPage = () => {
             <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
                     Login Successful!
+                </Alert>
+            </Snackbar>
+            {/* Error Snackbar */}
+            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={!!error} autoHideDuration={3000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error" variant="filled">
+                    {error}
                 </Alert>
             </Snackbar>
             <Grid item xs={12} md={6}

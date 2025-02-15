@@ -84,8 +84,9 @@ export default function StudentList() {
                             <StyledTableCell>Student Name</StyledTableCell>
                             <StyledTableCell>School Name</StyledTableCell>
                             <StyledTableCell>Class</StyledTableCell>
-                            <StyledTableCell>Gender</StyledTableCell>
                             <StyledTableCell>E-mail</StyledTableCell>
+                            <StyledTableCell>Number</StyledTableCell>
+                            <StyledTableCell>Gender</StyledTableCell>
                             <StyledTableCell>Controls</StyledTableCell>
                         </TableRow>
                     </TableHead>
@@ -101,10 +102,11 @@ export default function StudentList() {
                                 <StyledTableRow key={i}>
                                     <StyledTableCell>{e.id || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.userName || 'N/A'}</StyledTableCell>
-                                    <StyledTableCell>{e.schoolStuSchoolName || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{e.userSchoolName || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.userClass || 'N/A'}</StyledTableCell>
-                                    <StyledTableCell>{e.gender || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.userEmail || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{e.userNumber || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{e.gender || 'N/A'}</StyledTableCell>
                                     <Box className='controls'>
                                         <Button onClick={() => deleteStudent(e.id)} sx={{ mx: 1 }} variant='contained'>Delete</Button>
                                         <Button onClick={() => GotoUpdateStudent(e.id)} sx={{ mx: 1 }} variant='contained'>Update</Button>

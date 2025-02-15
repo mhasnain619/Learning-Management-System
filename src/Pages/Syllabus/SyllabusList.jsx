@@ -9,10 +9,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
 import { doc, deleteDoc } from "firebase/firestore";
+import './SyllabusForm.css'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {

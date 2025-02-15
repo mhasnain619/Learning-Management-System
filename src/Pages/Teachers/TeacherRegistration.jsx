@@ -9,9 +9,10 @@ const TeacherRegistrationForm = () => {
     let [openLoader, setOpenLoader] = useState(false)
     let [teacherObj, setTeacherObj] = useState({
         teacherName: '',
-        teacherEmail: '',
         teacherSchool: '',
         teacherClass: '',
+        teacherNumber: '',
+        teacherEmail: '',
         gender: ''
     });
 
@@ -19,7 +20,7 @@ const TeacherRegistrationForm = () => {
 
     const handleSubmit = async () => {
         setOpenLoader(true)
-        if (teacherObj.teacherName == '' || teacherObj.gender == '' || teacherObj.teacherEmail == '' || teacherObj.teacherClass == '') {
+        if (teacherObj.teacherName == '' || teacherObj.gender == '' || teacherObj.teacherEmail == '' || teacherObj.teacherClass == '' || teacherObj.teacherNumber == '') {
             setOpenLoader(false)
             alert('Please fill all the fields')
             return;
@@ -50,13 +51,6 @@ const TeacherRegistrationForm = () => {
                     onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherName: e.target.value })}
                 />
                 <Input
-                    type='email'
-                    label="Teacher Email"
-                    placeholder='Enter your email'
-                    value={teacherObj.teacherEmail}
-                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherEmail: e.target.value })}
-                />
-                <Input
                     type='text'
                     label="School Name"
                     placeholder='Enter your school namae'
@@ -69,6 +63,20 @@ const TeacherRegistrationForm = () => {
                     placeholder='Enter your class'
                     value={teacherObj.teacherClass}
                     onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherClass: e.target.value })}
+                />
+                <Input
+                    type='number'
+                    label="Number"
+                    placeholder='Enter your phone number'
+                    value={teacherObj.teacherNumber}
+                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherNumber: e.target.value })}
+                />
+                <Input
+                    type='email'
+                    label="Teacher Email"
+                    placeholder='Enter your email'
+                    value={teacherObj.teacherEmail}
+                    onChangeEvent={(e) => setTeacherObj({ ...teacherObj, teacherEmail: e.target.value })}
                 />
                 <FormControl component="fieldset" margin="normal" required>
                     <FormLabel>Gender</FormLabel>

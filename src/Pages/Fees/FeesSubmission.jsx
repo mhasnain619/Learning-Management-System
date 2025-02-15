@@ -11,18 +11,6 @@ import {
 import { Payment } from "@mui/icons-material";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../../FirebaseConfiq';
-const students = [
-    { name: "Ali Khan", className: "Class 1" },
-    { name: "Ayesha Ahmed", className: "Class 2" },
-    { name: "Ahmed Raza", className: "Class 3" },
-    { name: "Fatima Noor", className: "Class 4" },
-    { name: "Bilal Hussain", className: "Class 5" },
-    { name: "Sara Malik", className: "Class 6" },
-    { name: "Hamza Tariq", className: "Class 7" },
-    { name: "Zainab Iqbal", className: "Class 8" },
-    { name: "Usman Javed", className: "Class 9" },
-    { name: "Hina Sheikh", className: "Class 10" },
-];
 
 const FeeSubmission = () => {
     let [openLoader, setOpenLoader] = React.useState(false)
@@ -86,11 +74,16 @@ const FeeSubmission = () => {
                             }}
                             required
                         >
-                            {students.map((student, index) => (
-                                <MenuItem key={index} value={student.userName}>
-                                    {student.userName} ({student.userClass})
-                                </MenuItem>
-                            ))}
+                            {students.length > 0 ? (
+                                students.map((student, index) => (
+                                    <MenuItem key={index} value={student.userName}>
+                                        {`${student.userName} (${student.userClass})`}
+                                    </MenuItem>
+                                ))
+                            ) : (
+                                <MenuItem disabled>No Student Added</MenuItem>
+                            )}
+
                         </TextField>
 
                         <TextField
