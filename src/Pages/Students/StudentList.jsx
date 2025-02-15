@@ -100,7 +100,7 @@ export default function StudentList() {
                         ) : students.length > 0 ? (
                             students.map((e, i) => (
                                 <StyledTableRow key={i}>
-                                    <StyledTableCell>{e.id || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{e.id ? e.id.slice(0, 5) : 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.userName || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.schoolStuSchoolName || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.userClass || 'N/A'}</StyledTableCell>

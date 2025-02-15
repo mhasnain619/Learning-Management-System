@@ -100,7 +100,7 @@ export default function SyllabusList() {
                             syllabus.map((e, i) => (
                                 <StyledTableRow key={i}>
                                     <StyledTableCell component="th" scope="row">
-                                        {e.id || 'N/A'}
+                                        {e.id ? e.id.slice(0, 5) : 'N/A'}
                                     </StyledTableCell>
                                     <StyledTableCell component="th" scope="row">
                                         {e.syllabusName || 'N/A'}

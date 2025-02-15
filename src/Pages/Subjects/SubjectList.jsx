@@ -102,7 +102,7 @@ export default function SubjectList() {
                                 subjects.map((e, i) => (
                                     <StyledTableRow key={i}>
                                         <StyledTableCell component="th" scope="row">
-                                            {e.id || 'N/A'}
+                                            {e.id ? e.id.slice(0, 5) : 'N/A'}
                                         </StyledTableCell>
                                         <StyledTableCell component="th" scope="row">
                                             {e.subjectName || 'N/A'}

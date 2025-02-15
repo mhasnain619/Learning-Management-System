@@ -1,25 +1,38 @@
 import React, { useState } from "react";
 import Input from "../../Components/Input/Input";
-import { Box, Button, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, Container, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import './StudentRegistration.css'
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../../FirebaseConfiq";
 const SchoolTeacherRegistration = () => {
+    let [openLoader, setOpenLoader] = useState(false)
+
     let [schoolTeacherObj, setSchoolTeacherObj] = useState({
-        schoolTeacherName: '',
-        schoolTeacherEmail: '',
-        teacherSchoolName: '',
+        teacherName: '',
+        teacherEmail: '',
+        teacherSchool: '',
         teacherClass: '',
         gender: ''
     });
 
     const navigate = useNavigate()
 
-    const handleSubmit = () => {
-        console.log('Teacher object is ', schoolTeacherObj);
-        setSchoolTeacherObj({ schoolTeacherName: '', schoolTeacherEmail: '', teacherSchoolName: '', teacherClass: '', gender: '' });
-        navigate('/teacher/teacher-list')
+    const handleSubmit = async () => {
+        setOpenLoader(true)
+        if (schoolTeacherObj.teacherName == '' || schoolTeacherObj.teacherEmail == '' || schoolTeacherObj.teacherClass == '' || schoolTeacherObj.teacherSchool == '' || schoolTeacherObj.gender == '') {
+            setOpenLoader(false)
+            alert('Please fill all the fields')
+            return;
+        }
+        try {
+            const docRef = await addDoc(collection(db, "teachers"), schoolTeacherObj);
+            setSchoolTeacherObj({ teacherName: '', teacherEmail: '', teacherClass: '', teacherSchool: '', gender: '' });
+            navigate('/teacher/teacher-list');
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
     };
-
     return (
         <Container sx={{ py: 8 }} maxWidth="sm">
             <Box className='formBox'>
@@ -30,22 +43,22 @@ const SchoolTeacherRegistration = () => {
                     type='text'
                     label="Name"
                     placeholder='Enter your full name'
-                    value={schoolTeacherObj.schoolTeacherName}
-                    onChangeEvent={(e) => setSchoolTeacherObj({ ...schoolTeacherObj, schoolTeacherName: e.target.value })}
+                    value={schoolTeacherObj.teacherName}
+                    onChangeEvent={(e) => setSchoolTeacherObj({ ...schoolTeacherObj, teacherName: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="Email"
                     placeholder='Enter your email'
-                    value={schoolTeacherObj.schoolTeacherEmail}
-                    onChangeEvent={(e) => setSchoolTeacherObj({ ...schoolTeacherObj, schoolTeacherEmail: e.target.value })}
+                    value={schoolTeacherObj.teacherEmail}
+                    onChangeEvent={(e) => setSchoolTeacherObj({ ...schoolTeacherObj, teacherEmail: e.target.value })}
                 />
                 <Input
                     type='text'
                     label="School Name"
                     placeholder='Enter your school name'
-                    value={schoolTeacherObj.teacherSchoolName}
-                    onChangeEvent={(e) => setSchoolTeacherObj({ ...schoolTeacherObj, teacherSchoolName: e.target.value })}
+                    value={schoolTeacherObj.teacherSchool}
+                    onChangeEvent={(e) => setSchoolTeacherObj({ ...schoolTeacherObj, teacherSchool: e.target.value })}
                 />
                 <Input
                     type='text'
@@ -68,7 +81,7 @@ const SchoolTeacherRegistration = () => {
                     </RadioGroup>
                 </FormControl>
                 <Button onClick={handleSubmit} size="large" variant="contained" color="primary" fullWidth>
-                    Register
+                    {openLoader ? <CircularProgress size={24} sx={{ color: 'white' }} /> : "Register"}
                 </Button>
             </Box>
         </Container>

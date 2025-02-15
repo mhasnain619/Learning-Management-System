@@ -284,41 +284,41 @@ function ResponsiveDrawer(props) {
                         This platform is designed to streamline and enhance the management of educational institutions.
                     </p>
                     <h3>
-                        Key Features::
+                        Key Features :
                     </h3>
                     <h3>
-                        Student Management:
+                        Student Management :
                     </h3>
                     <p>
                         Register students, maintain student lists, and manage their profiles efficiently.
                     </p>
 
                     <h3>
-                        Teacher Management:
+                        Teacher Management :
                     </h3>
                     <p>
                         Add new teachers, update information, and keep track of their assigned classes and subjects.
                     </p>
                     <h3>
-                        Subjects & Syllabus:
+                        Subjects & Syllabus :
                     </h3>
                     <p>
                         Organize subject details and syllabus structures to ensure a structured learning experience.
                     </p>
                     <h3>
-                        School & Classes:
+                        School & Classes :
                     </h3>
                     <p>
                         Manage school information, class structures, and student-teacher assignments.
                     </p>
                     <h3>
-                        Admissions & Fees:
+                        Admissions & Fees :
                     </h3>
                     <p>
                         Handle student admissions, fee collection, and payment tracking.
                     </p>
                     <h3>
-                        Examinations:
+                        Examinations :
                     </h3>
                     <p>
                         Schedule and manage exams, results, and grading systems.

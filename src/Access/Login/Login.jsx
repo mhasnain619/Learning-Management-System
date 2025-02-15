@@ -94,8 +94,11 @@ const LoginPage = () => {
                 </Snackbar>
 
                 <Box className='welComeTo'>
-                    <Typography sx={{ color: '#FDFDFD', fontSize: '20px', }} gutterBottom>
-                        Access your learning journey with ease! Sign up to create your account and explore interactive courses. Already registered? Log in to continue your progress and enhance your skills with Jawan Pakistan LMS.
+                    <Typography variant="h4" fontWeight='600' sx={{ color: '#FDFDFD', }} gutterBottom>
+                        Welcome Back
+                    </Typography>
+                    <Typography variant="h6" fontWeight='400' sx={{ color: '#FDFDFD', }} gutterBottom>
+                        To stay connected with us please login with your personal info
                     </Typography>
                 </Box>
                 <Box sx={{ height: '250px', width: '350px' }}>
@@ -137,14 +140,19 @@ const LoginPage = () => {
                         Login
                     </Button>
                 </Box>
-                <Typography variant="body2" align="center" className="orText">
-                    Or
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
+                    <Typography variant="body2" align="center" className="orText">
+                        Don't have an account ?
+                    </Typography>
+                    <Typography onClick={() => navigate('/signup')} variant="body2" align="center" color="primary" className="clickable">
+                        Sign up
+                    </Typography>
+                </Box>
+                <Typography variant="body2" align="center" color="primary" >
+                    or
                 </Typography>
-                <Typography onClick={() => navigate('/signup')} variant="body2" align="center" color="primary" className="clickable">
-                    Sign up
-                </Typography>
-                <Typography onClick={loginWithGoogle} variant="body2" align="center" color="primary" className="clickable">
-                    sign in with google
+                <Typography sx={{ mt: '5px' }} onClick={loginWithGoogle} variant="body2" align="center" color="primary" className="clickable">
+                    Sign in with google
                 </Typography>
             </Grid>
         </Grid>

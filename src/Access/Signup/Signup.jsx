@@ -13,7 +13,6 @@ import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase
 import { setDoc, doc } from "firebase/firestore";
 import { auth, db } from "../../FirebaseConfiq";
 const SignupPage = () => {
-    const [isChecked, setIsChecked] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
     const [credentials, setCredentials] = useState({
         name: "",
@@ -111,15 +110,15 @@ const SignupPage = () => {
                     </Alert>
                 </Snackbar>
                 <Box className='welComeTo'>
-                    <Typography sx={{ color: 'white', fontSize: '25px', fontWeight: 'bold' }} gutterBottom>
-                        WELCOME TO Jawan Pakistan
+                    <Typography variant="h4" fontWeight='600' sx={{ color: 'white' }} gutterBottom>
+                        WELCOME TO Jawan Pakistan  Learning Management System
                     </Typography>
-                    <Typography sx={{ color: 'white', fontSize: '25px', fontWeight: 'bold' }} gutterBottom>
-                        Learning Management System
-                    </Typography>
-                    <Typography sx={{ color: '#FDFDFD', fontSize: '20px', }} gutterBottom>
+                    {/* <Typography variant="h4" fontWeight='600' sx={{ color: 'white' }} gutterBottom>
+
+                    </Typography> */}
+                    {/* <Typography variant="h6" fontWeight='400' sx={{ color: '#FDFDFD' }} gutterBottom>
                         With a user-friendly interface and accessible resources, Jawan Pakistan LMS is committed to building a skilled and knowledgeable workforce for a brighter future.
-                    </Typography>
+                    </Typography> */}
                 </Box>
                 <Box sx={{ height: '250px', width: '350px' }}>
                     <img height='100%' width='100%' src={loginImage} alt="Learning System" className="image" />
@@ -176,8 +175,7 @@ const SignupPage = () => {
                             ),
                         }}
                     />
-                    <FormControlLabel control={<Checkbox checked={isChecked} onChange={(e) => setIsChecked(e.target.checked)} />} label="Remember me" />
-                    <Button disabled={!isChecked} onClick={getCredentials} fullWidth className="loginButton" size="large" variant="contained">
+                    <Button onClick={getCredentials} fullWidth className="loginButton" size="large" variant="contained">
                         Signup
                     </Button>
                 </Box>

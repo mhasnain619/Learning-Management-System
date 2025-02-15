@@ -36,15 +36,10 @@
     padding: 0px 50px;
 }
 
-/* .loginButton {
-    background-color: #d4ffd4 !important;
-    color: black !important;
-    margin-top: 10px !important;
+.loginButton {
+    margin-top: 15px !important;
 }
 
-.loginButton:hover {
-    background-color: #baffba !important;
-} */
 
 .clickable {
     cursor: pointer;

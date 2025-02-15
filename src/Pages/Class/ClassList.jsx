@@ -97,7 +97,7 @@ export default function ClassList() {
                         </TableRow>) : classes.length > 0 ? (
                             classes.map((clas) => (
                                 <StyledTableRow key={clas.id}>
-                                    <StyledTableCell>{clas.id || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{clas.id ? clas.id.slice(0, 5) : 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{clas.classUserFullName || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{clas.classUserQualification || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{clas.classUserPhone || 'N/A'}</StyledTableCell>
