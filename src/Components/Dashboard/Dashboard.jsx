@@ -15,7 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { FaHome } from "react-icons/fa";
-import { useNavigate, Outlet, Link } from "react-router-dom";
+import { useNavigate, Outlet, Link, useLocation } from "react-router-dom";
 import jawan from '../../assets/jawan.png';
 import { FaUser } from "react-icons/fa";
 import { MdContactPage, MdExpandLess, MdExpandMore, MdFeed, MdOutlineAdminPanelSettings } from "react-icons/md";
@@ -32,13 +32,14 @@ import { SiGoogleclassroom } from "react-icons/si";
 const drawerWidth = 230;
 
 function ResponsiveDrawer(props) {
+    const navigate = useNavigate();
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const navigate = useNavigate();
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [isClosing, setIsClosing] = React.useState(false);
     const [openMenus, setOpenMenus] = React.useState({});
-
+    let location = useLocation()
+    const currentPath = location.pathname
     const handleDrawerClose = () => {
         setIsClosing(true);
         setMobileOpen(false);
@@ -59,7 +60,10 @@ function ResponsiveDrawer(props) {
             [name]: !prev[name],
         }));
     };
-
+    const handleLogout = () => {
+        localStorage.removeItem('uid')
+        navigate('/login')
+    }
 
     const pages = [
         { name: "Home", icon: <FaHome />, route: "/home" },
@@ -140,7 +144,7 @@ function ResponsiveDrawer(props) {
             <List>
                 {pages.map((obj, index) => (
                     <div key={index}>
-                        <ListItem disablePadding>
+                        <ListItem sx={{ background: obj.route === currentPath ? "#E1E1E2" : '' }} disablePadding>
                             <ListItemButton onClick={() => obj.children ? handleToggle(obj.name) : navigate(obj.route)}>
                                 <ListItemIcon sx={{ minWidth: "35px", fontSize: "20px" }}>{obj.icon}</ListItemIcon>
                                 <ListItemText primary={obj.name} />
@@ -152,8 +156,10 @@ function ResponsiveDrawer(props) {
                             <Collapse in={openMenus[obj.name]} timeout="auto" unmountOnExit>
                                 <List component="div" disablePadding>
                                     {obj.children.map((child, idx) => (
-                                        <ListItem key={idx} disablePadding>
-                                            <ListItemButton sx={{ pl: 4 }} onClick={() => navigate(child.route)}>
+                                        <ListItem sx={{ background: child.route === currentPath ? "#E1E1E2" : '' }} key={idx} disablePadding>
+                                            <ListItemButton sx={{ pl: 4 }} onClick={() => {
+                                                navigate(child.route)
+                                            }}>
                                                 <ListItemText primary={child.name} />
                                             </ListItemButton>
                                         </ListItem>
@@ -222,7 +228,7 @@ function ResponsiveDrawer(props) {
                                 <Button onClick={() => navigate('/')} sx={{ textAlign: 'center' }}>Dashboard</Button>
                             </MenuItem>
                             <MenuItem onClick={handleCloseUserMenu}>
-                                <Button sx={{ textAlign: 'center' }}>Logout</Button>
+                                <Button onClick={handleLogout} sx={{ textAlign: 'center' }}>Logout</Button>
                             </MenuItem>
 
                         </Menu>

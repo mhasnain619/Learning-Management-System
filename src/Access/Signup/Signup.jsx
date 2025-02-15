@@ -62,7 +62,7 @@ const SignupPage = () => {
                     .catch((error) => console.log("Error saving user to Firestore:", error.message));
                 setOpen(true);
                 setTimeout(() => {
-                    navigate('/login')
+                    navigate('/')
                 }, 2000);
 
             })

@@ -26,7 +26,7 @@ const SyllabusForm = () => {
         try {
             console.log("Firestore instance: ", db);
             const docRef = await addDoc(collection(db, "syllabus"), syllabusObj);
-            console.log("Document written with ID: ", docRef.id);
+            console.log("Document written with ID: ", syllabusObj);
             setSyllabusObj({ syllabusName: '', syllabusClass: '', syllabusFile: '' });
             navigate('/syllabus/syllabus-list');
         } catch (error) {

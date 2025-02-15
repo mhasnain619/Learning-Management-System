@@ -30,7 +30,7 @@ const UserProfile = () => {
     }, [auth]);
     const logout = () => {
         localStorage.removeItem('uid')
-        navigate('/signup')
+        navigate('/login')
     }
     return (
         <Box sx={{ py: 8 }}>

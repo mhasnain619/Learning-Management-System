@@ -25,6 +25,8 @@ const LoginPage = () => {
     const userLogedIn = () => {
         signInWithEmailAndPassword(auth, userLoginData.email, userLoginData.password)
             .then((userCredential) => {
+                console.log(userCredential.user.uid);
+                localStorage.setItem('uid', userCredential.user.uid)
                 setOpen(true);
                 navigate('/');
                 console.log('User Loged in successfully.');

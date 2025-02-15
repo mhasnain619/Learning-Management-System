@@ -78,7 +78,7 @@ export default function StudentList() {
 
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                    <TableHead>
+                    <TableHead sx={{}}>
                         <TableRow>
                             <StyledTableCell>Id</StyledTableCell>
                             <StyledTableCell>Student Name</StyledTableCell>

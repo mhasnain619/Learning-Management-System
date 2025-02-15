@@ -41,11 +41,17 @@ const UpdateSyllabus = () => {
     }, []);
 
 
-    const updateNewSyllabus = () => {
-        const update = updateDoc(doc(db, 'syllabus', id), UpdateSyllabusObj)
-        console.log('class object is ', update);
-        setUpdateSyllabusObj({ syllabusFile: '', syllabusClass: '', syllabusName: '' });
-        navigate('/syllabus/syllabus-list')
+    const updateNewSyllabus = async () => {
+        console.log('cis ', UpdateSyllabusObj);
+        try {
+            const update = await updateDoc(doc(db, 'syllabus', id), UpdateSyllabusObj)
+            console.log('class object is ', update);
+
+            setUpdateSyllabusObj({ syllabusFile: '', syllabusClass: '', syllabusName: '' });
+            navigate('/syllabus/syllabus-list')
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     return (
