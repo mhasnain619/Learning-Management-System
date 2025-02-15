@@ -219,9 +219,6 @@ function ResponsiveDrawer(props) {
                                 <Button onClick={() => navigate('/profile')} sx={{ textAlign: 'center' }}>Profile</Button>
                             </MenuItem>
                             <MenuItem onClick={handleCloseUserMenu}>
-                                <Button sx={{ textAlign: 'center' }}>Account</Button>
-                            </MenuItem>
-                            <MenuItem onClick={handleCloseUserMenu}>
                                 <Button onClick={() => navigate('/')} sx={{ textAlign: 'center' }}>Dashboard</Button>
                             </MenuItem>
                             <MenuItem onClick={handleCloseUserMenu}>
@@ -273,7 +270,7 @@ function ResponsiveDrawer(props) {
                 }}
             >
 
-                {document.location.pathname === '/' && <Box sx={{ py: 6 }}>
+                {document.location.pathname === '/' && <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px', py: 6 }}>
                     <h3>
                         Welcome to the Learning Management System (LMS)
                     </h3>

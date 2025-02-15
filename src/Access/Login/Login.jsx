@@ -27,7 +27,7 @@ const LoginPage = () => {
             .then((userCredential) => {
                 setOpen(true);
                 navigate('/');
-                // console.log('User Loged in successfully.');
+                console.log('User Loged in successfully.');
                 navigate('/')
 
             })

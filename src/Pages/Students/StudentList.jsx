@@ -102,7 +102,7 @@ export default function StudentList() {
                                 <StyledTableRow key={i}>
                                     <StyledTableCell>{e.id || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.userName || 'N/A'}</StyledTableCell>
-                                    <StyledTableCell>{e.userSchoolName || 'N/A'}</StyledTableCell>
+                                    <StyledTableCell>{e.schoolStuSchoolName || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.userClass || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.userEmail || 'N/A'}</StyledTableCell>
                                     <StyledTableCell>{e.userNumber || 'N/A'}</StyledTableCell>
