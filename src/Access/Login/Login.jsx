@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import loginImage from '../../assets/signupBgRemove.png';
 import waveImg from '../../assets/wave.png';
+import './Login.css'
 
 const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
