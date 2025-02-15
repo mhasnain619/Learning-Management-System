@@ -43,10 +43,10 @@ const SignupPage = () => {
         createUserWithEmailAndPassword(auth, credentials.email, credentials.password, credentials.confirmPassword)
             .then((userCredential) => {
                 const user = userCredential.user
-                console.log("User UID:", user.uid);
+                // console.log("User UID:", user.uid);
                 localStorage.setItem('uid', user.uid)
                 updateProfile(user, { displayName: credentials.name }).then(() => {
-                    console.log(userCredential)
+                    // console.log(userCredential)
                 }).catch((error) => {
                     setError(error.message)
                 })
@@ -101,7 +101,7 @@ const SignupPage = () => {
                 }} className="leftPanel">
                 <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={3000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
-                        Signup Successful!
+                        Account Created Successful!
                     </Alert>
                 </Snackbar>
                 {/* Error Snackbar */}

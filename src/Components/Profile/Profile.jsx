@@ -29,7 +29,7 @@ const UserProfile = () => {
         return () => unsubscribe(); // Cleanup listener
     }, [auth]);
     const logout = () => {
-        // Auth.signOut();
+        localStorage.removeItem('uid')
         navigate('/signup')
     }
     return (
@@ -110,7 +110,9 @@ const UserProfile = () => {
                     </CardContent>
                 </Card>
             ) : (
-                <CircularProgress />
+                <Box>
+                    <Typography variant="h6" component="h2" className="title">No User Found...</Typography>
+                </Box>
             )}
         </Box>
     );

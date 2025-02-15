@@ -27,7 +27,7 @@ const LoginPage = () => {
             .then((userCredential) => {
                 setOpen(true);
                 navigate('/');
-                console.log('User Loged in successfully.');
+                // console.log('User Loged in successfully.');
                 navigate('/')
 
             })
@@ -67,11 +67,6 @@ const LoginPage = () => {
 
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
-            <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
-                <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
-                    Login Successful!
-                </Alert>
-            </Snackbar>
             {/* Error Snackbar */}
             <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={!!error} autoHideDuration={3000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error" variant="filled">
@@ -92,7 +87,7 @@ const LoginPage = () => {
                 }} className="leftPanel">
                 <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
-                        Signup Successful!
+                        Loged In Successfully!
                     </Alert>
                 </Snackbar>
 
