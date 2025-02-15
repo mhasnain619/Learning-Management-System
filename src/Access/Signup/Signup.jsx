@@ -1,17 +1,15 @@
 import React, { useState } from "react";
-import { Grid, TextField, Button, Checkbox, FormControlLabel, Typography, Box, InputAdornment, IconButton } from "@mui/material";
+import { Grid, TextField, Button, Typography, Box, InputAdornment, IconButton, Snackbar, Alert } from "@mui/material";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import "./Signup.css";
-import loginImage from '../../assets/signupBgRemove.png'
-import Logo from '../../assets/logoRemoveBg.png'
-import waveImg from '../../assets/wave.png'
+import loginImage from '../../assets/signupBgRemove.png';
+import waveImg from '../../assets/wave.png';
 import { useNavigate } from "react-router-dom";
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
-import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { auth, db } from "../../FirebaseConfiq";
+
 const SignupPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [credentials, setCredentials] = useState({
@@ -20,69 +18,56 @@ const SignupPage = () => {
         password: "",
         confirmPassword: "",
     });
-    const [error, setError] = useState("");
+    const [error, setError] = useState({});
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
+    const validateInputs = () => {
+        let errors = {};
+        if (!credentials.name) errors.name = "Full name is required";
+        if (!credentials.email.includes("@")) errors.email = "Enter a valid email";
+        if (credentials.password.length < 6) errors.password = "Password should be at least 6 characters";
+        if (credentials.password !== credentials.confirmPassword) errors.confirmPassword = "Passwords do not match";
+        return errors;
+    };
+
     const getCredentials = () => {
-        if (!credentials.email.includes("@")) {
-            console.log("Invalid email format");
+        const validationErrors = validateInputs();
+        if (Object.keys(validationErrors).length > 0) {
+            setError(validationErrors);
             return;
         }
 
-        if (credentials.password.length < 6) {
-            console.log("Password should be at least 6 characters");
-            return;
-        }
-
-        if (credentials.password !== credentials.confirmPassword) {
-            console.log("Passwords do not match");
-            return;
-        }
-        createUserWithEmailAndPassword(auth, credentials.email, credentials.password, credentials.confirmPassword)
+        createUserWithEmailAndPassword(auth, credentials.email, credentials.password)
             .then((userCredential) => {
-                const user = userCredential.user
-                // console.log("User UID:", user.uid);
-                localStorage.setItem('uid', user.uid)
-                updateProfile(user, { displayName: credentials.name }).then(() => {
-                    // console.log(userCredential)
-                }).catch((error) => {
-                    setError(error.message)
-                })
-                // Save user data to Firestore
+                const user = userCredential.user;
+                localStorage.setItem('uid', user.uid);
+
+                updateProfile(user, { displayName: credentials.name }).catch((err) => setError({ general: err.message }));
+
                 const userObj = {
                     name: credentials.name,
                     email: credentials.email,
-                    uid: user.uid, // Store UID for reference
+                    uid: user.uid,
                 };
 
                 setDoc(doc(db, 'users', user.uid), userObj)
                     .then(() => console.log("User data saved to Firestore"))
-                    .catch((error) => console.log("Error saving user to Firestore:", error.message));
-                setOpen(true);
-                setTimeout(() => {
-                    navigate('/')
-                }, 2000);
+                    .catch((err) => setError({ general: err.message }));
 
+                setOpen(true);
+                setTimeout(() => navigate('/'), 2000);
             })
-            .catch((error) => {
-                setError(error.message)
-            });
+            .catch((err) => setError({ general: err.message }));
     };
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') return;
         setOpen(false);
-        setError('')
+        setError({});
     };
 
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
+    const handleClickShowPassword = () => setShowPassword(!showPassword);
 
     return (
         <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -100,25 +85,18 @@ const SignupPage = () => {
                 }} className="leftPanel">
                 <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={3000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
-                        Account Created Successful!
+                        Account Created Successfully!
                     </Alert>
                 </Snackbar>
-                {/* Error Snackbar */}
-                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={!!error} autoHideDuration={3000} onClose={handleClose}>
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={!!error.general} autoHideDuration={3000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="error" variant="filled">
-                        {error}
+                        {error.general}
                     </Alert>
                 </Snackbar>
                 <Box className='welComeTo'>
                     <Typography variant="h4" fontWeight='600' sx={{ color: 'white' }} gutterBottom>
-                        WELCOME TO Jawan Pakistan  Learning Management System
+                        WELCOME TO Jawan Pakistan Learning Management System
                     </Typography>
-                    {/* <Typography variant="h4" fontWeight='600' sx={{ color: 'white' }} gutterBottom>
-
-                    </Typography> */}
-                    {/* <Typography variant="h6" fontWeight='400' sx={{ color: '#FDFDFD' }} gutterBottom>
-                        With a user-friendly interface and accessible resources, Jawan Pakistan LMS is committed to building a skilled and knowledgeable workforce for a brighter future.
-                    </Typography> */}
                 </Box>
                 <Box sx={{ height: '250px', width: '350px' }}>
                     <img height='100%' width='100%' src={loginImage} alt="Learning System" className="image" />
@@ -136,6 +114,8 @@ const SignupPage = () => {
                         label="Full Name"
                         variant="outlined"
                         margin="normal"
+                        error={!!error.name}
+                        helperText={error.name}
                     />
                     <TextField
                         fullWidth
@@ -144,6 +124,8 @@ const SignupPage = () => {
                         variant="outlined"
                         margin="normal"
                         type="email"
+                        error={!!error.email}
+                        helperText={error.email}
                     />
                     <TextField
                         fullWidth
@@ -152,6 +134,8 @@ const SignupPage = () => {
                         type="password"
                         variant="outlined"
                         margin="normal"
+                        error={!!error.password}
+                        helperText={error.password}
                     />
                     <TextField
                         fullWidth
@@ -160,14 +144,14 @@ const SignupPage = () => {
                         type={showPassword ? "text" : "password"}
                         variant="outlined"
                         margin="normal"
+                        error={!!error.confirmPassword}
+                        helperText={error.confirmPassword}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
                                     <IconButton
                                         aria-label="toggle password visibility"
                                         onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
                                     >
                                         {showPassword ? <VisibilityOff /> : <Visibility />}
                                     </IconButton>

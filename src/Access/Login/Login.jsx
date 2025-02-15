@@ -1,103 +1,98 @@
 import React, { useState } from "react";
-import { Grid, TextField, Button, Checkbox, FormControlLabel, Typography, Box, InputAdornment, IconButton, Alert } from "@mui/material";
+import { Grid, TextField, Button, Checkbox, FormControlLabel, Typography, Box, InputAdornment, IconButton, Alert, Snackbar } from "@mui/material";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import "./Login.css";
-import loginImage from '../../assets/signupBgRemove.png'
-import Logo from '../../assets/logoRemoveBg.png'
-import waveImg from '../../assets/wave.png'
-import { getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../../FirebaseConfiq";
 import { useNavigate } from "react-router-dom";
-import Snackbar from '@mui/material/Snackbar';
-import { GoogleAuthProvider } from "firebase/auth";
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+import loginImage from '../../assets/signupBgRemove.png';
+import waveImg from '../../assets/wave.png';
+
 const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [userLoginData, setUserLoginData] = useState({
-        email: "",
-        password: "",
-    })
+    const [userLoginData, setUserLoginData] = useState({ email: "", password: "" });
+    const [errors, setErrors] = useState({ email: "", password: "" });
     const [error, setError] = useState("");
     const [open, setOpen] = useState(false);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
     const userLogedIn = () => {
+        let validationErrors = {};
+        if (!userLoginData.email) validationErrors.email = "Please enter your email.";
+        if (!userLoginData.password) validationErrors.password = "Please enter your password.";
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
         signInWithEmailAndPassword(auth, userLoginData.email, userLoginData.password)
             .then((userCredential) => {
                 console.log(userCredential.user.uid);
-                localStorage.setItem('uid', userCredential.user.uid)
+                localStorage.setItem('uid', userCredential.user.uid);
                 setOpen(true);
                 navigate('/');
-                console.log('User Loged in successfully.');
-                navigate('/')
-
-            })
-            .catch((error) => {
-                setError(error.message);
-            });
-
-    }
-    const loginWithGoogle = () => {
-        const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const user = result.user;
-
-                // Store UID in localStorage
-                localStorage.setItem("uid", user.uid);
-
-                console.log("Google Login Success:", user);
-                navigate('/dashboard'); // Redirect after login
             })
             .catch((error) => {
                 setError(error.message);
             });
     };
+
+    const loginWithGoogle = () => {
+        const provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                localStorage.setItem("uid", result.user.uid);
+                console.log("Google Login Success:", result.user);
+                navigate('/dashboard');
+            })
+            .catch((error) => {
+                setError(error.message);
+            });
+    };
+
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') return;
         setOpen(false);
         setError("");
     };
+
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
 
     const handleMouseDownPassword = (event) => {
-        event.preventDefault(); // Prevent default behavior
+        event.preventDefault();
     };
 
     return (
-        <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', }}>
+        <Grid container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {/* Error Snackbar */}
             <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={!!error} autoHideDuration={3000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error" variant="filled">
                     {error}
                 </Alert>
             </Snackbar>
-            <Grid item xs={12} md={6}
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    backgroundImage: `url(${waveImg})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
-                    height: '100vh',
-                    width: '100%',
-                }} className="leftPanel">
+
+            <Grid item xs={12} md={6} sx={{
+                display: 'flex', flexDirection: 'column', alignItems: 'center',
+                backgroundImage: `url(${waveImg})`, backgroundSize: 'cover',
+                backgroundPosition: 'center', backgroundRepeat: 'no-repeat',
+                height: '100vh', width: '100%',
+            }} className="leftPanel">
                 <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="success" variant="filled" sx={{ width: '100%' }}>
-                        Loged In Successfully!
+                        Logged In Successfully!
                     </Alert>
                 </Snackbar>
 
                 <Box className='welComeTo'>
-                    <Typography variant="h4" fontWeight='600' sx={{ color: '#FDFDFD', }} gutterBottom>
+                    <Typography variant="h4" fontWeight='600' sx={{ color: '#FDFDFD' }} gutterBottom>
                         Welcome Back
                     </Typography>
-                    <Typography variant="h6" fontWeight='400' sx={{ color: '#FDFDFD', }} gutterBottom>
+                    <Typography variant="h6" fontWeight='400' sx={{ color: '#FDFDFD' }} gutterBottom>
                         To stay connected with us please login with your personal info
                     </Typography>
                 </Box>
@@ -108,27 +103,31 @@ const LoginPage = () => {
                         className="downArrow"
                         onClick={() => {
                             const loginBox = document.getElementById("loginBox");
-                            if (loginBox) {
-                                loginBox.scrollIntoView({ behavior: "smooth" });
-                            }
+                            if (loginBox) loginBox.scrollIntoView({ behavior: "smooth" });
                         }}
                     />
                 </Box>
             </Grid>
+
             <Grid item xs={12} md={6} className="rightPanel">
                 <Box id='loginBox'>
                     <Typography variant="h5" gutterBottom>
                         LOGIN
                     </Typography>
-                    <TextField onChange={(e) => setUserLoginData({ ...userLoginData, email: e.target.value })} fullWidth label="Email" variant="outlined" margin="normal" />
 
+                    {/* Email Input Field with Error Handling */}
+                    <TextField
+                        onChange={(e) => setUserLoginData({ ...userLoginData, email: e.target.value })}
+                        fullWidth label="Email" variant="outlined" margin="normal"
+                        error={!!errors.email} helperText={errors.email}
+                    />
+
+                    {/* Password Input Field with Error Handling */}
                     <TextField
                         onChange={(e) => setUserLoginData({ ...userLoginData, password: e.target.value })}
-                        fullWidth
-                        label="Password"
-                        type={showPassword ? "text" : "password"} // Toggle between text and password type
-                        variant="outlined"
-                        margin="normal"
+                        fullWidth label="Password" type={showPassword ? "text" : "password"}
+                        variant="outlined" margin="normal"
+                        error={!!errors.password} helperText={errors.password}
                         InputProps={{
                             endAdornment: (
                                 <InputAdornment position="end">
@@ -144,25 +143,29 @@ const LoginPage = () => {
                             ),
                         }}
                     />
+
                     <FormControlLabel control={<Checkbox />} label="Remember me" />
 
                     <Button onClick={userLogedIn} fullWidth className="loginButton" size="large" variant="contained">
                         Login
                     </Button>
                 </Box>
+
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
                     <Typography variant="body2" align="center" className="orText">
-                        Don't have an account ?
+                        Don't have an account?
                     </Typography>
                     <Typography onClick={() => navigate('/signup')} variant="body2" align="center" color="primary" className="clickable">
                         Sign up
                     </Typography>
                 </Box>
-                <Typography variant="body2" align="center" color="primary" >
+
+                <Typography variant="body2" align="center" color="primary">
                     or
                 </Typography>
+
                 <Typography sx={{ mt: '5px' }} onClick={loginWithGoogle} variant="body2" align="center" color="primary" className="clickable">
-                    Sign in with google
+                    Sign in with Google
                 </Typography>
             </Grid>
         </Grid>
