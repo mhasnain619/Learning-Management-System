@@ -32,7 +32,9 @@
     background-color: #f9f9f9;
 }
 
-
+.downArrow {
+    display: none !important;
+}
 
 /* .loginButton {
     background-color: #d4ffd4 !important;
@@ -53,6 +55,15 @@
 }
 
 @media (max-width: 768px) {
+    .downArrow {
+        display: block !important;
+        color: #fff;
+        font-size: 150px;
+        position: absolute;
+        right: 5px;
+        top: 320px;
+    }
+
     .leftPanel {
         background-image: url('../../assets/forSmall.png');
     }

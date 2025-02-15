@@ -11,8 +11,8 @@ import { auth } from "../../FirebaseConfiq";
 import { useNavigate } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
 import { GoogleAuthProvider } from "firebase/auth";
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 const LoginPage = () => {
-    const [rememberMe, setRememberMe] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
     const [userLoginData, setUserLoginData] = useState({
         email: "",
@@ -101,12 +101,22 @@ const LoginPage = () => {
                         To stay connected with us please login with your personal info
                     </Typography>
                 </Box>
-                <Box sx={{ height: '250px', width: '350px' }}>
+                <Box sx={{ position: 'relative', height: '250px', width: '350px' }}>
                     <img height='100%' width='100%' src={loginImage} alt="Learning System" className="image" />
+                    <ArrowCircleDownIcon
+                        sx={{ fontSize: '40px' }}
+                        className="downArrow"
+                        onClick={() => {
+                            const loginBox = document.getElementById("loginBox");
+                            if (loginBox) {
+                                loginBox.scrollIntoView({ behavior: "smooth" });
+                            }
+                        }}
+                    />
                 </Box>
             </Grid>
             <Grid item xs={12} md={6} className="rightPanel">
-                <Box>
+                <Box id='loginBox'>
                     <Typography variant="h5" gutterBottom>
                         LOGIN
                     </Typography>
@@ -134,9 +144,9 @@ const LoginPage = () => {
                             ),
                         }}
                     />
-                    <FormControlLabel control={<Checkbox onChange={(e) => setRememberMe(e.target.checked)} />} label="Remember me" />
+                    <FormControlLabel control={<Checkbox />} label="Remember me" />
 
-                    <Button disabled={!rememberMe} onClick={userLogedIn} fullWidth className="loginButton" size="large" variant="contained">
+                    <Button onClick={userLogedIn} fullWidth className="loginButton" size="large" variant="contained">
                         Login
                     </Button>
                 </Box>
